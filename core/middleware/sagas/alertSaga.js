@@ -6,7 +6,6 @@ import { ALERT_TYPES } from "../../redux/actions/alertActions";
 export function* watchFetchAlerts() {
     while (true) {
         const { payload } = yield take(ALERT_TYPES.GET_ALERTS);
-        console.log(payload);
         try {
             const response = yield call(apiFetchAlerts, payload);
             yield put({ type: ALERT_TYPES.GET_ALERTS_SUCCESS, payload: response.data.data });

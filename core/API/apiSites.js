@@ -15,7 +15,7 @@ export const apiFetchSites = async ({ clientId }) => {
                 resolve(response)
             })
             .catch((error) => {
-                console.log(error);
+
                 reject(error);
             });
     });
@@ -30,7 +30,6 @@ export const apiFetchGroups = async ({ clientId, siteId }) => {
                 resolve(response)
             })
             .catch((error) => {
-                console.log(error);
                 reject(error);
             });
     });

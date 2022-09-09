@@ -14,7 +14,6 @@ export const DEVICE_TYPES = {
 };
 //Fetch sites actions
 export const ActionFetchDevices = (payload) => {
-    console.log(payload);
     return {
         type: DEVICE_TYPES.GET_DEVICES,
         payload,
@@ -37,7 +36,6 @@ export const ActionFetchDevicesFail = (payload) => {
 
 
 export const ActionFetchDevice = (payload) => {
-    console.log(payload);
     return {
         type: DEVICE_TYPES.GET_DEVICE,
         payload,

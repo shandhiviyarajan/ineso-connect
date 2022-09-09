@@ -22,11 +22,11 @@ const initialState = {
     data: null,
     error: null,
   },
-  upload_picture:{
-    isUploading:false,
-    data:null,
-    error:null
-  }
+  upload_picture: {
+    isUploading: false,
+    data: null,
+    error: null,
+  },
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -78,10 +78,10 @@ const profileReducer = (state = initialState, action) => {
       };
 
     case PROFILE_TYPES.EDIT_PROFILE_SUCCESS:
-      console.log(action);
       return {
         ...state,
-        profile:action.response && action.response.data ? action.response.data : null,
+        profile:
+          action.response && action.response.data ? action.response.data : null,
         profile_edit: {
           isSaving: false,
           data: null,
@@ -114,7 +114,8 @@ const profileReducer = (state = initialState, action) => {
     case PROFILE_TYPES.EDIT_GENERAL_PROFILE_SUCCESS:
       return {
         ...state,
-        more:action.response && action.response.data ? action.response.data : null,
+        more:
+          action.response && action.response.data ? action.response.data : null,
         general_edit: {
           isSaving: false,
           data: null,
@@ -158,7 +159,8 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         percentage: {
           isLoading: false,
-          data: action.percentage && action.percentage && action.percentage.data,
+          data:
+            action.percentage && action.percentage && action.percentage.data,
           error: null,
         },
       };
@@ -173,77 +175,68 @@ const profileReducer = (state = initialState, action) => {
         },
       };
 
+    case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE:
+      return {
+        ...state,
 
-      case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE:
-            return {
-              ...state,
+        upload_picture: {
+          isUploading: true,
+          data: null,
+          error: null,
+        },
+      };
 
-              upload_picture:{
-                isUploading:true,
-                data:null,
-                error:null
-              }
+    case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE_SUCCESS:
+      return {
+        ...state,
 
-            }
+        upload_picture: {
+          isUploading: false,
+          data: action.response,
+          error: null,
+        },
+      };
 
-            case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE_SUCCESS:
-            return {
-              ...state,
+    case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE_FAIL:
+      return {
+        ...state,
 
-              upload_picture:{
-                isUploading:false,
-                data:action.response,
-                error:null
-              }
+        upload_picture: {
+          isUploading: false,
+          data: null,
+          error: action.error,
+        },
+      };
 
-            }
-
-            case PROFILE_TYPES.UPLOAD_PROFIE_PICTURE_FAIL:
-            return {
-              ...state,
-
-              upload_picture:{
-                isUploading:false,
-                data:null,
-                error:action.error
-              }
-
-            }
-
-            //get profile picture
+    //get profile picture
 
     case PROFILE_TYPES.GET_PROFILE_PIC:
-      console.log(action);
-      return{
+      return {
         ...state,
-        picture:{
-          isLoading:true
-        }
-
-      }
+        picture: {
+          isLoading: true,
+        },
+      };
 
     case PROFILE_TYPES.GET_PROFILE_PIC_SUCCESS:
-      return{
+      return {
         ...state,
-        picture:{
-          isLoading:false,
-          data:action.response,
-          error:''
-        }
-
-
-      }
+        picture: {
+          isLoading: false,
+          data: action.response,
+          error: "",
+        },
+      };
 
     case PROFILE_TYPES.GET_PROFILE_PIC_FAIL:
-      return{
+      return {
         ...state,
-        picture:{
-          isLoading:false,
-          data:'',
-          error:action.error
-        }
-
-      }
+        picture: {
+          isLoading: false,
+          data: "",
+          error: action.error,
+        },
+      };
 
     default:
       return state;

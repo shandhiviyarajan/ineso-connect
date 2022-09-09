@@ -18,7 +18,7 @@ export const apiFetchClients = async () => {
                 resolve(response);
             })
             .catch((error) => {
-                console.log(error);
+
                 reject(error);
                 Message("error", error.message, error.response.data.message);
             });
