@@ -52,7 +52,6 @@ export const Dashboard = ({ navigation }) => {
 
   //get user info on load
   useEffect(() => {
-    console.log("fudkafjdljafkdjafkdjafj;l");
     if (isAuthenticated) {
       setClientToken(isAuthenticated);
       dispatchAction(ActionFetchClients());

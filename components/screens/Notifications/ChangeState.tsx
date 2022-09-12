@@ -26,22 +26,17 @@ function ChangeState({ route, navigation }) {
     },
   ];
 
-  const [payload, setPayload] = React.useState({
-    alertId: null,
-    clientId: null,
-    payload: null,
-  });
+  const [payload, setPayload] = React.useState(null);
   const handlePayload = (e) => {
-    setPayload((prevState) => ({
-      ...prevState,
-      alertId: route.params.alert.alertId,
-      clientId,
-      payload: e.value,
-    }));
+    setPayload(e.value);
   };
 
   const updateStatus = () => {
-    apiUpdateAlertState(payload)
+    apiUpdateAlertState({
+      alertId: route && route.params.alert.alertId,
+      clientId,
+      payload,
+    })
       .then(() => {
         Message("success", "Status updated !", "");
       })
@@ -85,6 +80,7 @@ function ChangeState({ route, navigation }) {
                 textAlign: "center",
               }}
             >
+              {JSON.stringify(payload)}
               {alert.name}
             </Text>
             <Text
@@ -119,7 +115,7 @@ function ChangeState({ route, navigation }) {
                 fontSize: 18,
                 fontWeight: "600",
               }}
-              selectedBtn={(e) => handlePayload(e)}
+              selectedBtn={handlePayload}
               activeColor={SystemColors.primary}
             />
           </View>

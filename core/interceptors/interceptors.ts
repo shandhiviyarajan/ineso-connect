@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-
+import { Alert, LogBox } from "react-native";
 import { Message } from "../../components/molecules/Toast";
-
+import jwt_decode from "jwt-decode";
 //set default api url
 let BASE_URL = "https://connect2.inesocompany.com/api";
 let TIME_OUT = 50000;
@@ -11,6 +11,8 @@ let axiosRequest = axios.create({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
 });
+
+let refreshCall = true;
 
 let authRequest = axios.create({
   baseURL: BASE_URL,
@@ -70,13 +72,21 @@ export const getToken = async () => {
   return await AsyncStorage.getItem("@access_token");
 };
 
+export const isTokenExpired = async () => {
+  let TOKEN = await getToken();
+  let { exp } = jwt_decode(TOKEN);
+
+  if (Date.now() >= exp * 1000) {
+    console.log(true);
+    return true; //expired
+  } else {
+    return false; //not expired
+  }
+};
+
 //handleErros
 const handleErrors = (code, error) => {
   switch (code) {
-    case 401:
-      Message("error", error.response.data.message, error.message);
-      break;
-
     case 403:
       Message("error", error.response.data.message, error.message);
       break;
@@ -124,11 +134,13 @@ export const setClientToken = (token: string | boolean | null) => {
 
 export const httpInstance = async () => {
   ACCESS_TOKEN = await getToken();
+  //not expired
   axiosRequest.interceptors.request.use(
     (config) => {
       config.headers.baseURL = BASE_URL;
       config.headers.timeout = TIME_OUT;
       config.headers["Content-Type"] = "application/json";
+      console.log("Authorization", ACCESS_TOKEN);
       config.headers.common["Authorization"] = `Bearer ${ACCESS_TOKEN}`;
       return config;
     },
@@ -143,8 +155,7 @@ export const httpInstance = async () => {
     },
     (error) => {
       //handle refresh token here
-      console.log(error);
-      handleErrors(error.code, error);
+      handleErrors(error.response.status, error);
       return Promise.reject(error);
     }
   );
