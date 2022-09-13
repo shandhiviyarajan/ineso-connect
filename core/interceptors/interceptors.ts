@@ -75,9 +75,7 @@ export const getToken = async () => {
 export const isTokenExpired = async () => {
   let TOKEN = await getToken();
   let { exp } = jwt_decode(TOKEN);
-
   if (Date.now() >= exp * 1000) {
-    console.log(true);
     return true; //expired
   } else {
     return false; //not expired
@@ -140,7 +138,6 @@ export const httpInstance = async () => {
       config.headers.baseURL = BASE_URL;
       config.headers.timeout = TIME_OUT;
       config.headers["Content-Type"] = "application/json";
-      console.log("Authorization", ACCESS_TOKEN);
       config.headers.common["Authorization"] = `Bearer ${ACCESS_TOKEN}`;
       return config;
     },

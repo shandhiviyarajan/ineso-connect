@@ -26,13 +26,18 @@ export const apiFetchAlerts = async ({
 export const apiUpdateAlertState = async ({
     clientId, alertId, payload
 }) => {
+
     const httpRequest = await httpInstance();
     return await new Promise((resolve, reject) => {
-        httpRequest.post(CLIENTS.UPDATE_STATE(clientId, alertId), payload)
+        console.log(httpRequest);
+        httpRequest.post(CLIENTS.UPDATE_STATE(clientId, alertId), {
+            "state": payload,
+        })
             .then((response) => {
                 resolve(response);
             })
             .catch((error) => {
+                console.log(error);
                 reject(error);
             });
     });

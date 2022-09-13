@@ -11,38 +11,46 @@ function ChangeState({ route, navigation }) {
   const alerts = useSelector((state) => state.alert.alerts);
   const clientId = useSelector((state) => state.client.clientId);
 
-  const data = [
+  const [data, setData] = React.useState([
     {
       label: "Open",
       value: "open",
+      index: 0,
     },
     {
       label: "Closed",
       value: "close",
+      index: 1,
     },
     {
       label: "Assigned",
       value: "assigned",
+      index: 2,
     },
-  ];
+  ]);
 
   const [payload, setPayload] = React.useState(null);
   const handlePayload = (e) => {
     setPayload(e.value);
   };
-
   const updateStatus = () => {
-    apiUpdateAlertState({
-      alertId: route && route.params.alert.alertId,
-      clientId,
-      payload,
-    })
-      .then(() => {
-        Message("success", "Status updated !", "");
+    if (payload) {
+      apiUpdateAlertState({
+        alertId: route && route.params.alert._id,
+        clientId,
+        payload,
       })
-      .catch(() => {
-        Message("error", "Error !", "Status update failed !");
-      });
+        .then(() => {
+          Message("success", "Status updated !", "");
+          navigation.navigate("Notifications");
+        })
+        .catch(() => {
+          navigation.navigate("Notifications");
+          Message("error", "Error !", "Status update failed !");
+        });
+    } else {
+      Message("warning", "Please select a state to update");
+    }
   };
 
   const AlertCard = ({ alert }) => {
@@ -80,7 +88,6 @@ function ChangeState({ route, navigation }) {
                 textAlign: "center",
               }}
             >
-              {JSON.stringify(payload)}
               {alert.name}
             </Text>
             <Text
@@ -100,6 +107,7 @@ function ChangeState({ route, navigation }) {
               }}
             >
               {alert.state}
+              {JSON.stringify(alert.state)}
             </Text>
           </View>
 
@@ -111,6 +119,9 @@ function ChangeState({ route, navigation }) {
           >
             <RadioButtonRN
               data={data}
+              initial={
+                data.filter((state) => state.value === alert.state)[0].index
+              }
               textStyle={{
                 fontSize: 18,
                 fontWeight: "600",
@@ -141,6 +152,7 @@ function ChangeState({ route, navigation }) {
                   color: "#fff",
                   fontSize: 18,
                   width: "100%",
+                  fontWeight: "600",
                   textAlign: "center",
                 }}
               >

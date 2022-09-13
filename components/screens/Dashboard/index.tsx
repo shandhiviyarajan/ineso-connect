@@ -9,7 +9,10 @@ import {
   LogoutAction,
   MeAction,
 } from "../../../core/redux/actions/authActions";
-import { setClientToken } from "../../../core/interceptors/interceptors";
+import {
+  isTokenExpired,
+  setClientToken,
+} from "../../../core/interceptors/interceptors";
 import {
   ActionFetchClient,
   ActionFetchClients,
@@ -51,13 +54,13 @@ export const Dashboard = ({ navigation }) => {
   });
 
   //get user info on load
-  useEffect(() => {
-    if (isAuthenticated) {
+  useEffect(async () => {
+    if (await isTokenExpired()) {
+      dispatchAction(LogoutAction());
+    } else {
       setClientToken(isAuthenticated);
       dispatchAction(ActionFetchClients());
       dispatchAction(MeAction());
-    } else {
-      dispatchAction(LogoutAction());
     }
   }, []);
 
