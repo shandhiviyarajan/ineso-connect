@@ -1,10 +1,15 @@
 import React from "react";
 import { View, Text, Image, TouchableHighlight } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Message } from "../../molecules/Toast";
 export const Welcome = ({ navigation }) => {
   const navigateTo = (screen) => {
     navigation.navigate(screen);
   };
+
+  React.useEffect(() => {
+    Message("warning", "Welcome to Ineso connect", "please login to continue");
+  }, []);
   return (
     <ScrollView
       contentContainerStyle={{
