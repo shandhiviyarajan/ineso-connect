@@ -7,6 +7,9 @@ export const Message = (type: string, title: string, message: string) => {
     type: type,
     text1: title,
     text2: message,
+    onPress() {
+      Toast.hide();
+    },
   });
 };
 
