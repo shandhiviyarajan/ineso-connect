@@ -8,7 +8,7 @@ export const Welcome = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    Message("warning", "Welcome to Ineso connect", "please login to continue");
+    Message("info", "Welcome to Ineso connect", "please login to continue");
   }, []);
   return (
     <ScrollView
