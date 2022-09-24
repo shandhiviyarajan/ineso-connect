@@ -6,7 +6,6 @@ export const Welcome = ({ navigation }) => {
   const navigateTo = (screen) => {
     navigation.navigate(screen);
   };
-
   React.useEffect(() => {
     Message("info", "Welcome to Ineso connect", "please login to continue");
   }, []);
@@ -86,40 +85,7 @@ export const Welcome = ({ navigation }) => {
                 color: "#fff",
               }}
             >
-              LOG IN
-            </Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => navigateTo("Login")}
-          activeOpacity={0.5}
-          underlayColor="#FFF"
-          style={{
-            width: "100%",
-            marginVertical: 24,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "#FFF",
-              borderWidth: 1,
-              borderColor: "#fff",
-              paddingHorizontal: 24,
-              paddingVertical: 12,
-              height: 48,
-              borderRadius: 0,
-              width: "100%",
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "500",
-                fontSize: 18,
-                color: "#B54E29",
-              }}
-            >
-              SIGN UP
+              CONTINUE
             </Text>
           </View>
         </TouchableHighlight>

@@ -11,6 +11,7 @@ import { LinkButton } from "../../atoms/LinkButton";
 
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
+  const groups = useSelector((state) => state.group.groups);
   const isLoading = useSelector((state) => state.device.device.isLoading);
   const [measures, setMeasures] = React.useState([]);
   function CommissionList({ children }) {
@@ -336,6 +337,11 @@ export const Device = ({ navigation }) => {
               >
                 Groups
               </Text>
+              <Text>{JSON.stringify(groups)}</Text>
+              {groups.data &&
+                groups.data.map((group) => (
+                  <Text key={group.id}>{group.name}</Text>
+                ))}
             </View>
             <View
               style={{
