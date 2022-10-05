@@ -8,6 +8,7 @@ import groupReducer from "./groupReducer";
 import alertReducer from "./alertReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
+import metaReducer from "./metaReducer";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
@@ -22,5 +23,6 @@ const rootReducer = combineReducers({
   group: groupReducer,
   device: deviceReducer,
   alert: alertReducer,
+  meta: metaReducer,
 });
 export default rootReducer;

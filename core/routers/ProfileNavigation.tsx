@@ -1,12 +1,12 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Dashboard } from "../../components/screens/Dashboard";
 import Profile from "../../components/screens/Profile";
 import Notifications from "../../components/screens/Notifications";
 import { Devices } from "../../components/screens/Devices";
 import { Device } from "../../components/screens/Devices/Device";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import ChangeState from "../../components/screens/Notifications/ChangeState";
+import QRScan from "../../components/screens/QRScan";
 export const ProfileNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -29,6 +29,7 @@ export const ProfileNavigation = () => {
         }}
       />
       <ProfileStack.Screen name="Device" component={Device} />
+      <ProfileStack.Screen name="QR" component={QRScan} />
       <ProfileStack.Screen
         name="DeviceGoogleMaps"
         component={DeviceGoogleMaps}
