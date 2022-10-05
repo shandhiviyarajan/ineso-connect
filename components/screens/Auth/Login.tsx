@@ -100,7 +100,7 @@ export const Login = ({ navigation }) => {
                   marginBottom: 12,
                 }}
               >
-                Log in to continue with Ineso and access IoT services and
+                Log in to continue with Connect and access IOT services and
                 more...
               </Text>
             </View>

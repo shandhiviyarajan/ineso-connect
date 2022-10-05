@@ -7,10 +7,11 @@ export const Welcome = ({ navigation }) => {
     navigation.navigate(screen);
   };
   React.useEffect(() => {
-    Message("info", "Welcome to Ineso connect", "please login to continue");
+    Message("info", "Welcome to Connect", "please login to continue");
   }, []);
   return (
     <ScrollView
+      alwaysBounceVertical={false}
       contentContainerStyle={{
         flex: 1,
         justifyContent: "center",
@@ -38,7 +39,7 @@ export const Welcome = ({ navigation }) => {
             fontWeight: "600",
           }}
         >
-          Ineso Connect
+          Connect
         </Text>
         <Text
           style={{

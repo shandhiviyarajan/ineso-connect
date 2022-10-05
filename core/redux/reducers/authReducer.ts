@@ -48,7 +48,7 @@ const authReducer = (
         isAuthenticated:
           action.payload &&
           action.payload.data &&
-          action.payload.data.access_token,
+          action.payload.data.data.access_token,
       };
 
     case AUTH_TYPES.LOGIN_FAIL:

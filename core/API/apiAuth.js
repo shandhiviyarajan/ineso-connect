@@ -15,14 +15,16 @@ export const apiLogin = async (payload: any) => {
   return await httpClient()
     .post(ApiAuth.LOGIN, payload)
     .then((response) => {
-      setClientToken(response && response.data && response.data.access_token);
-      setToken(response && response.data && response.data.access_token);
-      Message("success", "Login Successful !", "Welcome to profile app");
-      return response;
+      if (response.status === 200) {
+        setClientToken(response && response.data && response.data.data.access_token);
+        setToken(response && response.data && response.data.data.access_token);
+        Message("success", "Login Successful !", "Welcome to Connect");
+        return response;
+      }
+
     })
     .catch((error) => {
-      Alert.alert(error.message);
-      Message("error", "Login failed !", error.response.data.message);
+      Message("error", "Login failed !", error.response.data.error);
       return error;
     });
 };
