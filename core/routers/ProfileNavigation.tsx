@@ -7,6 +7,7 @@ import { Device } from "../../components/screens/Devices/Device";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import ChangeState from "../../components/screens/Notifications/ChangeState";
 import QRScan from "../../components/screens/QRScan";
+import QRSearch from "../../components/screens/QRScan/QRSearch";
 export const ProfileNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -34,6 +35,7 @@ export const ProfileNavigation = () => {
         name="DeviceGoogleMaps"
         component={DeviceGoogleMaps}
       />
+      <ProfileStack.Screen name="QRSearch" component={QRSearch} />
     </ProfileStack.Navigator>
   );
 };

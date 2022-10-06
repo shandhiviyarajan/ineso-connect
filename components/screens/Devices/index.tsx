@@ -24,6 +24,9 @@ export const Devices = ({ navigation }) => {
 
   const clientId = useSelector((state) => state.client.clientId);
 
+  const handleQRSearch = () => {
+    navigation.navigate("QRSearch");
+  };
   const handleDeviceClick = ({ vendor, serial }) => {
     dispatchAction(
       ActionFetchDevice({
@@ -285,20 +288,31 @@ export const Devices = ({ navigation }) => {
           }}
         />
         <TouchableHighlight
+          onPress={handleQRSearch}
           activeOpacity={0.5}
           underlayColor="#fff"
           style={{
             position: "absolute",
+            zIndex: 2000,
             top: 18,
             right: 20,
             width: 32,
             height: 32,
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 6,
             backgroundColor: SystemColors.primary,
           }}
         >
           <View>
-            <Text>QR</Text>
+            <Image
+              source={require("../../../assets/images/qr-icon.png")}
+              style={{
+                tintColor: "#fff",
+                width: 16,
+                height: 16,
+              }}
+            />
           </View>
         </TouchableHighlight>
       </View>
