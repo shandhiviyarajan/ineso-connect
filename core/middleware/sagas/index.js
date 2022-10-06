@@ -1,6 +1,5 @@
 import { all } from "redux-saga/effects";
 import * as authSaga from "./authSaga";
-import * as profileSaga from "./profileSaga";
 import * as clientSaga from "./clientSaga";
 import * as sitesSaga from "./sitesSaga";
 import * as groupSaga from "./groupSaga";
@@ -11,8 +10,6 @@ function* rootSaga() {
     authSaga.watchAuthUser(),
     //profile me
     authSaga.watchMe(),
-    //profile
-    profileSaga.watchGetUser(),
     //client
     clientSaga.watchFechClients(),
     clientSaga.watchFechClient(),

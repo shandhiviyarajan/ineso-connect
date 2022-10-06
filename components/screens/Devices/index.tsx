@@ -284,6 +284,23 @@ export const Devices = ({ navigation }) => {
             backgroundColor: "#fff",
           }}
         />
+        <TouchableHighlight
+          activeOpacity={0.5}
+          underlayColor="#fff"
+          style={{
+            position: "absolute",
+            top: 18,
+            right: 20,
+            width: 32,
+            height: 32,
+            borderRadius: 6,
+            backgroundColor: SystemColors.primary,
+          }}
+        >
+          <View>
+            <Text>QR</Text>
+          </View>
+        </TouchableHighlight>
       </View>
 
       <View

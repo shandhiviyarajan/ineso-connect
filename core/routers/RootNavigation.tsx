@@ -9,19 +9,16 @@ import { toastConfig } from "../../components/molecules/Toast";
 import Toast from "react-native-toast-message";
 import { ProfileNavigation } from "./ProfileNavigation";
 import { Welcome } from "../../components/screens/Auth/Welcome";
-import DeviceTabNavigation from "./DeviceTabNavigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import { Devices } from "../../components/screens/Devices";
-import DevicesList from "../../components/screens/Devices/DevicesList";
-
 //navigation stack
 const AuthStack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
-const Tab = createBottomTabNavigator();
 export const RootNavigator = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  const Tab = createBottomTabNavigator();
   return (
     <NavigationContainer>
       {isAuthenticated ? (

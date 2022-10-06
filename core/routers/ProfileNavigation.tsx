@@ -10,13 +10,13 @@ import QRScan from "../../components/screens/QRScan";
 export const ProfileNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
-    <ProfileStack.Navigator initialRouteName="QR">
+    <ProfileStack.Navigator initialRouteName="Dashboard">
       <ProfileStack.Screen
         options={{
           headerShown: false,
         }}
-        name="QR"
-        component={QRScan}
+        name="Dashboard"
+        component={Devices}
       />
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="Notifications" component={Notifications} />
@@ -29,7 +29,7 @@ export const ProfileNavigation = () => {
         }}
       />
       <ProfileStack.Screen name="Device" component={Device} />
-      <ProfileStack.Screen name="Dashboard" component={Devices} />
+      <ProfileStack.Screen name="QR" component={QRScan} />
       <ProfileStack.Screen
         name="DeviceGoogleMaps"
         component={DeviceGoogleMaps}

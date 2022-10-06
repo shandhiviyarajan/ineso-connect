@@ -30,7 +30,7 @@ function SelectBox(props) {
           height: 44,
           borderWidth: 2,
           borderColor: props.disabled ? "#999" : SystemColors.primary,
-          marginVertical: 12,
+          marginVertical: 6,
           paddingHorizontal: 24,
           borderRadius: 4,
         }}

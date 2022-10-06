@@ -13,8 +13,8 @@ function DeviceGoogleMaps() {
     initialRegion = {
       latitude: 45.781941,
       longitude: 4.748706,
-      latitudeDelta: 0,
-      longitudeDelta: 0,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
     };
   }, [devices]);
 
