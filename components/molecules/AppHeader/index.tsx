@@ -53,15 +53,14 @@ export const AppCustomHeader = (props) => {
             backgroundColor: SystemColors.primary,
             width: 44,
             height: 44,
-            borderRadius: 12,
             justifyContent: "center",
             alignItems: "center",
           }}
         >
           <Image
             style={{
-              width: 26,
-              height: 26,
+              width: 24,
+              height: 24,
             }}
             source={require("../../../assets/images/drawer_menu_icon.png")}
           />
@@ -90,8 +89,8 @@ export const AppCustomHeader = (props) => {
                 position: "absolute",
                 backgroundColor: "red",
                 zIndex: 100,
-                top: -0,
-                right: -5,
+                top: 4,
+                right: -0,
               }}
             >
               <Text
@@ -113,15 +112,17 @@ export const AppCustomHeader = (props) => {
             style={{
               position: "relative",
               overflow: "visible",
-              width: 24,
-              height: 24,
+              width: 44,
+              height: 44,
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Image
               source={require("../../../assets/images/alert-svgrepo-com.png")}
               style={{
-                width: 20,
-                height: 24,
+                width: 18,
+                height: 20,
               }}
             />
           </TouchableOpacity>
@@ -136,8 +137,8 @@ export const AppCustomHeader = (props) => {
             <Image
               source={require("../../../assets/images/profile_icon.png")}
               style={{
-                width: 32,
-                height: 32,
+                width: 24,
+                height: 24,
               }}
             />
           </TouchableOpacity>
