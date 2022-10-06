@@ -23,7 +23,6 @@ function QRSearch({ open, setQRModal }) {
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "rgba(0,0,0)",
           }}
         >
           <View
@@ -40,8 +39,8 @@ function QRSearch({ open, setQRModal }) {
               shadowRadius: 7,
               justifyContent: "center",
               alignContent: "center",
-              width: "80%",
-              height: 500,
+              width: "90%",
+              height: "50%",
               borderRadius: 6,
             }}
           >

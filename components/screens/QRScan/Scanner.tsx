@@ -22,6 +22,7 @@ function QRScanner({ scannerRef, type, handleReadQR }) {
               source={require("../../../assets/images/qr_code_marker.png")}
               resizeMode="cover"
               style={{
+                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 
   cameraContainer: {
     width: "100%",
-    height: "100%",
+    height: "50%",
     justifyContent: "center",
     alignItems: "center",
   },
