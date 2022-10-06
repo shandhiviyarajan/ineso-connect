@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 export const Button = (props) => {
+  const { underlayColor } = props;
   return (
     <TouchableHighlight
       style={{
@@ -20,7 +21,7 @@ export const Button = (props) => {
       }}
       {...props}
       activeOpacity={0.5}
-      underlayColor="#fff"
+      underlayColor={underlayColor ? underlayColor : "#fff"}
     >
       <View
         style={[

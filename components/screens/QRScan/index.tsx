@@ -11,6 +11,7 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { RNCamera } from "react-native-camera";
 import { Button } from "../../atoms/Button";
 import { AppCustomHeader } from "../../molecules/AppHeader";
+import QRScanner from "./Scanner";
 function QRScan({ navigation }) {
   const [qr, setQR] = React.useState(null);
   let scannerRef = React.useRef(null);
@@ -32,34 +33,10 @@ function QRScan({ navigation }) {
   return (
     <>
       <AppCustomHeader navigation={navigation} />
-
-      <QRCodeScanner
-        ref={(e) => {
-          scannerRef = e;
-        }}
-        customMarker={
-          <View style={styles.customMarker}>
-            <ImageBackground
-              source={require("../../../assets/images/qr_code_marker.png")}
-              resizeMode="cover"
-              style={{
-                flex: 1,
-                justifyContent: "center",
-              }}
-            />
-          </View>
-        }
-        cameraType={type}
-        showMarker={true}
-        containerStyle={styles.containerStyle}
-        cameraContainerStyle={styles.cameraContainer}
-        cameraStyle={{
-          width: Dimensions.get("window").height / 2.75,
-          height: "auto",
-        }}
-        reactivate={false}
-        onRead={handleReadQR}
-        flashMode={RNCamera.Constants.FlashMode.auto}
+      <QRScanner
+        scannerRef={scannerRef}
+        type={type}
+        handleReadQR={handleReadQR}
       />
       <View style={{ flex: 0.5 }}>
         <View style={styles.bottomContainer}>

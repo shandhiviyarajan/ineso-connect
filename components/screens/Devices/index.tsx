@@ -18,14 +18,16 @@ import GenerateImage from "../../../core/utils/GenerateImage";
 import { Dashboard } from "../Dashboard";
 import { ActivityIndicator } from "react-native-paper";
 import Collapsible from "react-native-collapsible";
+import QRSearch from "../QRScan/QRSearch";
 
 export const Devices = ({ navigation }) => {
   const dispatchAction = useDispatch();
 
   const clientId = useSelector((state) => state.client.clientId);
 
+  const [open, setQRModal] = React.useState(false);
   const handleQRSearch = () => {
-    navigation.navigate("QRSearch");
+    setQRModal(true);
   };
   const handleDeviceClick = ({ vendor, serial }) => {
     dispatchAction(
@@ -196,6 +198,7 @@ export const Devices = ({ navigation }) => {
   }
   return (
     <>
+      <QRSearch open={open} setQRModal={setQRModal} />
       <AppCustomHeader navigation={navigation} />
       {/* <View
         style={{
