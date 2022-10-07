@@ -19,6 +19,7 @@ import { Dashboard } from "../Dashboard";
 import { ActivityIndicator } from "react-native-paper";
 import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
+import { ActionSetQR } from "../../../core/redux/actions/qrActions";
 
 export const Devices = ({ navigation }) => {
   const dispatchAction = useDispatch();
@@ -26,9 +27,11 @@ export const Devices = ({ navigation }) => {
   const clientId = useSelector((state) => state.client.clientId);
 
   const [open, setQRModal] = React.useState(false);
-  const handleQRSearch = () => {
+  //open scanner modal
+  const openQRScannerSearch = () => {
     setQRModal(true);
   };
+  //handle device click
   const handleDeviceClick = ({ vendor, serial }) => {
     dispatchAction(
       ActionFetchDevice({
@@ -38,21 +41,32 @@ export const Devices = ({ navigation }) => {
     );
     navigation.navigate("Device");
   };
+  //all devices
   const devices = useSelector((state) => state.device.devices);
 
-  const [currentDevices, setDevices] = React.useState([]);
+  const QR_CODE = useSelector((state) => state.qr.QR_CODE);
 
+  const [currentDevices, setCurrentDevices] = React.useState([]);
+  //handle search
   const handleSearch = (value: any) => {
     let filtered = devices.data.filter((device: any) =>
       device.metadata.model.includes(value)
     );
     if (value.length > 0) {
-      setDevices(filtered);
+      setCurrentDevices(filtered);
     } else {
-      setDevices(devices.data);
+      setCurrentDevices(devices.data);
     }
   };
 
+  //handle QR Code search
+  const handleQRCodeSearch = () => {};
+
+  //const clear search
+
+  const handleClearSearch = () => {
+    dispatchAction(ActionSetQR(null));
+  };
   const [filter, setFilter] = React.useState(false);
 
   const toggleFilters = () => {
@@ -64,8 +78,24 @@ export const Devices = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    setDevices(devices && devices.data);
+    setCurrentDevices(devices && devices.data);
   }, [devices]);
+
+  React.useEffect(() => {
+    if (QR_CODE) {
+      let filter_with_qr =
+        devices &&
+        devices.data &&
+        devices.data.filter(
+          (device: { metadata: { qrcodeId: any } }) =>
+            device.metadata.qrcodeId === QR_CODE
+        );
+      setCurrentDevices(filter_with_qr);
+      console.log(filter_with_qr);
+    } else {
+      setCurrentDevices(devices && devices.data);
+    }
+  }, [QR_CODE]);
 
   function Online() {
     return (
@@ -291,7 +321,25 @@ export const Devices = ({ navigation }) => {
           }}
         />
         <TouchableHighlight
-          onPress={handleQRSearch}
+          style={{
+            position: "absolute",
+            zIndex: 2000,
+            top: 18,
+            right: 60,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 6,
+            borderWidth: 0,
+            height: 32,
+            paddingHorizontal: 12,
+          }}
+        >
+          <View>
+            <Text style={{ color: "#000" }}>x</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={openQRScannerSearch}
           activeOpacity={0.5}
           underlayColor="#fff"
           style={{
@@ -358,6 +406,9 @@ export const Devices = ({ navigation }) => {
               </Text>
             </View>
           </TouchableHighlight>
+        </View>
+        <View>
+          <Text>{QR_CODE}</Text>
         </View>
 
         <Collapsible collapsed={filter}>

@@ -9,6 +9,7 @@ import alertReducer from "./alertReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
 import metaReducer from "./metaReducer";
+import qrReducer from "./qrReducer";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
@@ -24,5 +25,6 @@ const rootReducer = combineReducers({
   device: deviceReducer,
   alert: alertReducer,
   meta: metaReducer,
+  qr: qrReducer,
 });
 export default rootReducer;
