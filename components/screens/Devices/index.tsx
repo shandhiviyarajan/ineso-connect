@@ -19,9 +19,11 @@ import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
 import { ActionSetQR } from "../../../core/redux/actions/qrActions";
 import { SelectBoxes } from "./SelectBoxes";
-import BottomTabController from "../../molecules/BottomTab";
-export const Devices = ({ navigation }) => {
+import { useNavigation } from "@react-navigation/native";
+const Devices = () => {
   const dispatchAction = useDispatch();
+
+  const navigation = useNavigation();
 
   const clientId = useSelector((state) => state.client.clientId);
 
@@ -201,6 +203,26 @@ export const Devices = ({ navigation }) => {
                 >
                   {device.metadata.model}
                 </Text>
+              </View>
+              <Text
+                style={{
+                  color: "#888",
+                  marginBottom: 5,
+                }}
+              >
+                {device.metadata.name}
+              </Text>
+
+              <View
+                style={{
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                {device.online_status && <Online />}
+                {!device.online_status && <OffLine />}
+
                 {device.metadata.active && (
                   <View
                     style={{
@@ -220,16 +242,6 @@ export const Devices = ({ navigation }) => {
                   </View>
                 )}
               </View>
-              <Text
-                style={{
-                  color: "#888",
-                  marginBottom: 5,
-                }}
-              >
-                {device.metadata.name} {device.metadata.qrcodeId}
-              </Text>
-              {device.online_status && <Online />}
-              {!device.online_status && <OffLine />}
             </View>
             <View
               style={{
@@ -529,7 +541,8 @@ export const Devices = ({ navigation }) => {
           )}
         </View>
       </View>
-      <BottomTabController />
     </>
   );
 };
+
+export default Devices;

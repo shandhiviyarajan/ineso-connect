@@ -1,21 +1,23 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Text, View } from "react-native";
-import { Devices } from "../../screens/Devices";
-import AboutTab from "../../screens/TabScreens/about";
-import HomeTab from "../../screens/TabScreens/home";
+import { SystemColors } from "../../../core/Styles/theme/colors";
+import Devices from "../../screens/Devices";
+import DeviceGoogleMaps from "../../screens/GoogleMap";
+
+const Tab = createBottomTabNavigator();
 
 function BottomTabController() {
-  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-      initialRouteName="Home Tab"
+      initialRouteName="Devices"
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: SystemColors.primary,
       }}
     >
-      <Tab.Screen name="Home Tab" component={HomeTab} />
-      <Tab.Screen name="About" component={AboutTab} />
+      <Tab.Screen name="Devices" component={Devices} />
+      <Tab.Screen name="Activate" component={Devices} />
+      <Tab.Screen name="Map" component={DeviceGoogleMaps} />
     </Tab.Navigator>
   );
 }

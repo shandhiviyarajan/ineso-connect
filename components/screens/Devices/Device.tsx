@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import MapView, { MarkerAnimated } from "react-native-maps";
 import { ActivityIndicator } from "react-native-paper";
 
 import { useSelector } from "react-redux";
@@ -354,21 +355,59 @@ export const Device = ({ navigation }) => {
               <CommissionList></CommissionList>
               <Button secondary>Declare an Incident</Button>
             </View>
-            <View style={styles.card}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "500",
-                  marginBottom: 12,
-                }}
-              >
-                Last location
-              </Text>
-              <CommissionList></CommissionList>
 
-              <Button secondary>Edit GPS Coodination</Button>
-            </View>
-
+            {activeDevice.metadata.gpsLocation && (
+              <>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    fontWeight: "500",
+                    marginBottom: 12,
+                  }}
+                >
+                  GPS location
+                </Text>
+                <View
+                  style={[
+                    styles.card,
+                    { padding: 0, overflow: "hidden", position: "relative" },
+                  ]}
+                >
+                  <MapView
+                    showsUserLocation={true}
+                    customMapStyle={[]}
+                    initialRegion={{
+                      latitude: activeDevice.metadata.gpsLocation.latitude,
+                      longitude: activeDevice.metadata.gpsLocation.longitude,
+                      latitudeDelta: 0.03,
+                      longitudeDelta: 0.03,
+                    }}
+                    style={{
+                      height: 280,
+                    }}
+                  >
+                    <MarkerAnimated
+                      coordinate={{
+                        latitude: activeDevice.metadata.gpsLocation.latitude,
+                        longitude: activeDevice.metadata.gpsLocation.longitude,
+                      }}
+                    />
+                  </MapView>
+                  <View
+                    style={{
+                      position: "absolute",
+                      width: 200,
+                      bottom: 6,
+                      left: "50%",
+                      marginLeft: -100,
+                    }}
+                  >
+                    <Button secondary>Edit GPS</Button>
+                  </View>
+                </View>
+              </>
+            )}
+            <CommissionList></CommissionList>
             <View style={styles.card}>
               <Text
                 style={{
@@ -379,11 +418,7 @@ export const Device = ({ navigation }) => {
               >
                 Groups
               </Text>
-              <Text>{JSON.stringify(groups)}</Text>
-              {groups.data &&
-                groups.data.map((group) => (
-                  <Text key={group.id}>{group.name}</Text>
-                ))}
+              <Text></Text>
             </View>
             <View
               style={{

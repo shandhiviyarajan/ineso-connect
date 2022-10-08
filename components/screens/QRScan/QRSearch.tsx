@@ -65,7 +65,7 @@ function QRSearch({ open, setQRModal }) {
               shadowRadius: 7,
               justifyContent: "center",
               alignItems: "center",
-              width: "60%",
+              width: "90%",
               height: "66%",
               borderRadius: 6,
             }}
@@ -77,19 +77,19 @@ function QRSearch({ open, setQRModal }) {
                 handleReadQR={handleReadQR}
               />
             </View>
-            <View style={{ flex: 0.05, width: "80%" }}>
+            <View style={{ flex: 0.1, width: "80%" }}>
               <Text
                 style={{
-                  marginTop: 12,
+                  marginTop: 0,
                   textAlign: "center",
-                  fontSize: 18,
+                  fontSize: 16,
                   color: "#fff",
                 }}
               >
                 Scan the QR code to search device
               </Text>
             </View>
-            <View style={{ flex: 0.1, width: "90%" }}>
+            <View style={{ flex: 0.1, width: "90%", marginBottom: 24 }}>
               <Button
                 underlayColor="#000"
                 secondary
