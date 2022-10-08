@@ -350,7 +350,7 @@ const Devices = () => {
             paddingVertical: 0,
             borderWidth: 0,
             borderColor: "rgba(181,78,41,.5)",
-            marginVertical: 12,
+            marginTop: 12,
             paddingHorizontal: 16,
             paddingLeft: 48,
             width: "100%",
