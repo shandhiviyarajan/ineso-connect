@@ -1,7 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { Text, View } from "react-native";
-import DeviceGoogleMaps from "../../screens/GoogleMap";
+import { Devices } from "../../screens/Devices";
+import AboutTab from "../../screens/TabScreens/about";
+import HomeTab from "../../screens/TabScreens/home";
 
 function BottomTabController() {
   const Tab = createBottomTabNavigator();
@@ -12,7 +14,8 @@ function BottomTabController() {
       }}
     >
       <Tab.Navigator>
-        <Tab.Screen name="Map" component={DeviceGoogleMaps} />
+        <Tab.Screen name="Devices" component={Devices} />
+        <Tab.Screen name="About" component={AboutTab} />
       </Tab.Navigator>
     </View>
   );
