@@ -1,12 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { AppCustomHeader } from "../../molecules/AppHeader";
 
 function AboutTab() {
-  return (
-    <View>
-      <Text>AboutTab</Text>
-    </View>
-  );
+  return <AppCustomHeader />;
 }
 
 export default AboutTab;

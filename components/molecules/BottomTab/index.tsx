@@ -8,16 +8,15 @@ import HomeTab from "../../screens/TabScreens/home";
 function BottomTabController() {
   const Tab = createBottomTabNavigator();
   return (
-    <View
-      style={{
-        height: 100,
+    <Tab.Navigator
+      initialRouteName="Home Tab"
+      screenOptions={{
+        headerShown: false,
       }}
     >
-      <Tab.Navigator>
-        <Tab.Screen name="Devices" component={Devices} />
-        <Tab.Screen name="About" component={AboutTab} />
-      </Tab.Navigator>
-    </View>
+      <Tab.Screen name="Home Tab" component={HomeTab} />
+      <Tab.Screen name="About" component={AboutTab} />
+    </Tab.Navigator>
   );
 }
 

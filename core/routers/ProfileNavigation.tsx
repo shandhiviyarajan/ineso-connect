@@ -8,34 +8,22 @@ import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import ChangeState from "../../components/screens/Notifications/ChangeState";
 import QRScan from "../../components/screens/QRScan";
 import QRSearch from "../../components/screens/QRScan/QRSearch";
-export const ProfileNavigation = () => {
+import BottomTabController from "../../components/molecules/BottomTab";
+export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
-    <ProfileStack.Navigator initialRouteName="Dashboard">
+    <ProfileStack.Navigator>
       <ProfileStack.Screen
         options={{
           headerShown: false,
         }}
         name="Dashboard"
-        component={Devices}
+        component={BottomTabController}
       />
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="Notifications" component={Notifications} />
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
-      <ProfileStack.Screen
-        name="Devices"
-        component={Devices}
-        options={{
-          headerShown: false,
-        }}
-      />
       <ProfileStack.Screen name="Device" component={Device} />
-      <ProfileStack.Screen name="QR" component={QRScan} />
-      <ProfileStack.Screen
-        name="DeviceGoogleMaps"
-        component={DeviceGoogleMaps}
-      />
-      <ProfileStack.Screen name="QRSearch" component={QRSearch} />
     </ProfileStack.Navigator>
   );
 };

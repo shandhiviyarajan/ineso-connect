@@ -7,11 +7,9 @@ import { AppDrawer } from "../../components/molecules/AppDrawer";
 import { useSelector } from "react-redux";
 import { toastConfig } from "../../components/molecules/Toast";
 import Toast from "react-native-toast-message";
-import { ProfileNavigation } from "./ProfileNavigation";
+import { ProfileStackNavigation } from "./ProfileNavigation";
 import { Welcome } from "../../components/screens/Auth/Welcome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import DeviceGoogleMaps from "../../components/screens/GoogleMap";
-import { Devices } from "../../components/screens/Devices";
 //navigation stack
 const AuthStack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
@@ -32,7 +30,7 @@ export const RootNavigator = () => {
             <DrawerStack.Screen
               options={{ headerShown: false }}
               name="ProfileNavigation"
-              component={ProfileNavigation}
+              component={ProfileStackNavigation}
             />
           </DrawerStack.Navigator>
         </>
