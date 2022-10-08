@@ -10,8 +10,6 @@ import image from "../../../assets/images/map-marker.png";
 const DeviceGoogleMaps = () => {
   const devices = useSelector((state) => state.device.devices);
 
-  const navigation = useNavigation();
-
   let initialRegion = {};
   React.useEffect(() => {
     initialRegion = {
@@ -254,18 +252,36 @@ const DeviceGoogleMaps = () => {
           showsUserLocation={true}
           customMapStyle={[]}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
+            latitude:
+              devices &&
+              devices.data &&
+              devices.data[0].metadata.gpsLocation.latitude,
+            longitude:
+              devices &&
+              devices.data &&
+              devices.data[0].metadata.gpsLocation.longitude,
+            latitudeDelta: 0.0003,
+            longitudeDelta: 0.0003,
           }}
           style={{
             ...StyleSheet.absoluteFillObject,
           }}
         >
-          {coordinates.map(({ key, location }) => (
-            <Marker key={key} image={image} coordinate={location} />
-          ))}
+          {devices &&
+            devices.data &&
+            devices.data.map((device, i) => (
+              <Marker
+                key={device.id}
+                coordinate={{
+                  longitude:
+                    device.metadata.gpsLocation.longitude +
+                    Math.random() * (i % 2 === 0 ? -0.0001 : 0.001),
+                  latitude:
+                    device.metadata.gpsLocation.latitude +
+                    Math.random() * (i % 2 === 0 ? -0.001 : 0.001),
+                }}
+              />
+            ))}
         </MapView>
       </View>
     </>

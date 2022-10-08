@@ -379,8 +379,8 @@ export const Device = ({ navigation }) => {
                     initialRegion={{
                       latitude: activeDevice.metadata.gpsLocation.latitude,
                       longitude: activeDevice.metadata.gpsLocation.longitude,
-                      latitudeDelta: 0.03,
-                      longitudeDelta: 0.03,
+                      latitudeDelta: 0.003,
+                      longitudeDelta: 0.003,
                     }}
                     style={{
                       height: 280,
@@ -388,8 +388,8 @@ export const Device = ({ navigation }) => {
                   >
                     <MarkerAnimated
                       coordinate={{
-                        latitude: activeDevice.metadata.gpsLocation.latitude,
                         longitude: activeDevice.metadata.gpsLocation.longitude,
+                        latitude: activeDevice.metadata.gpsLocation.latitude,
                       }}
                     />
                   </MapView>
