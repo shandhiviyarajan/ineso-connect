@@ -16,10 +16,11 @@ import moment from "moment";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Dashboard } from "../Dashboard";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator } from "react-native";
 import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
 import { ActionSetQR } from "../../../core/redux/actions/qrActions";
+import { SelectBoxes } from "./SelectBoxes";
 
 export const Devices = ({ navigation }) => {
   const dispatchAction = useDispatch();
@@ -78,7 +79,9 @@ export const Devices = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    setCurrentDevices(devices && devices.data);
+    if (devices.data) {
+      setCurrentDevices(devices && devices.data);
+    }
   }, [devices]);
 
   React.useEffect(() => {
@@ -192,6 +195,7 @@ export const Devices = ({ navigation }) => {
                 }}
               >
                 {device.metadata.model}
+                {device.metadata.qrcodeId}
               </Text>
               <Text
                 style={{
@@ -299,7 +303,7 @@ export const Devices = ({ navigation }) => {
         </View>
         <TextInput
           onChangeText={(value) => handleSearch(value)}
-          placeholder="Search"
+          placeholder="Search by name or QR Code "
           placeholderTextColor="#888"
           clearButtonMode="always"
           autoCapitalize="none"
@@ -320,24 +324,45 @@ export const Devices = ({ navigation }) => {
             backgroundColor: "#fff",
           }}
         />
-        <TouchableHighlight
-          style={{
-            position: "absolute",
-            zIndex: 2000,
-            top: 18,
-            right: 60,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 6,
-            borderWidth: 0,
-            height: 32,
-            paddingHorizontal: 12,
-          }}
-        >
-          <View>
-            <Text style={{ color: "#000" }}>x</Text>
-          </View>
-        </TouchableHighlight>
+        {QR_CODE && (
+          <TouchableHighlight
+            underlayColor="#fff"
+            onPress={handleClearSearch}
+            style={{
+              position: "absolute",
+              zIndex: 2000,
+              top: 18,
+              right: 60,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 44,
+              borderWidth: 0,
+              height: 32,
+
+              paddingHorizontal: 12,
+              backgroundColor: "#f1f1f1",
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#999" }}>Clear</Text>
+              <Image
+                source={require("../../../assets/images/close-icon.png")}
+                style={{
+                  width: 10,
+                  height: 10,
+                  marginLeft: 6,
+                  tintColor: "#999",
+                }}
+              />
+            </View>
+          </TouchableHighlight>
+        )}
         <TouchableHighlight
           onPress={openQRScannerSearch}
           activeOpacity={0.5}
@@ -367,7 +392,9 @@ export const Devices = ({ navigation }) => {
           </View>
         </TouchableHighlight>
       </View>
-
+      <View>
+        <Text>{QR_CODE}</Text>
+      </View>
       <View
         style={{
           flex: 1,
@@ -388,7 +415,7 @@ export const Devices = ({ navigation }) => {
           >
             <View
               style={{
-                paddingHorizontal: 6,
+                paddingHorizontal: 12,
                 paddingVertical: 6,
                 backgroundColor: SystemColors.primary,
                 borderRadius: 12,
@@ -407,12 +434,9 @@ export const Devices = ({ navigation }) => {
             </View>
           </TouchableHighlight>
         </View>
-        <View>
-          <Text>{QR_CODE}</Text>
-        </View>
 
         <Collapsible collapsed={filter}>
-          <Dashboard navigation={navigation} />
+          <SelectBoxes navigation={navigation} />
         </Collapsible>
 
         <View
@@ -421,8 +445,29 @@ export const Devices = ({ navigation }) => {
             justifyContent: "center",
           }}
         >
-          {devices.isLoading && <ActivityIndicator />}
-          {devices.data && devices.data.length === 0 && (
+          {devices.isLoading && (
+            <View
+              style={{
+                position: "absolute",
+                width: 44,
+                height: 44,
+                borderRadius: 6,
+                backgroundColor: "#fff",
+                zIndex: 3000,
+                elevation: 5,
+                left: "50%",
+                top: "50%",
+                marginTop: -22,
+                marginLeft: -22,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ActivityIndicator color={SystemColors.primary} />
+            </View>
+          )}
+
+          {currentDevices && currentDevices.length === 0 && (
             <View
               style={{
                 flex: 1,
@@ -430,10 +475,18 @@ export const Devices = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <Text>No Devices Found !</Text>
+              <Text
+                style={{
+                  fontWeight: "700",
+                  fontSize: 16,
+                }}
+              >
+                {!QR_CODE && <>No devices found !</>}
+                {QR_CODE && <>No devices found for below QR code -{QR_CODE}</>}
+              </Text>
             </View>
           )}
-          {currentDevices && (
+          {!devices.isLoading && currentDevices && currentDevices.length > 0 && (
             <ScrollView
               onScrollBeginDrag={onScrollBeginDrag}
               contentContainerStyle={{

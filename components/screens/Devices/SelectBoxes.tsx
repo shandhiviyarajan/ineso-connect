@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, ScrollView, StyleSheet, Alert, Image } from "react-native";
-
+import React, { useEffect } from "react";
+import { Text, View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { HeaderStatusBar } from "../../atoms/StatusBar";
-import { Button } from "../../atoms/Button";
-import { AppCustomHeader } from "../../molecules/AppHeader";
 import {
   LogoutAction,
   MeAction,
@@ -22,13 +18,10 @@ import {
 } from "../../../core/redux/actions/clientsActions";
 import SelectBox from "../../atoms/SelectBox";
 import { ActionFetchSites } from "../../../core/redux/actions/siteActions";
-
-import { ActivityIndicator } from "react-native-paper";
-
 import { ActionFetchGroups } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
-export const Dashboard = ({ navigation }) => {
+export const SelectBoxes = ({ navigation }) => {
   //auth status
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   //dispatcher
@@ -38,14 +31,8 @@ export const Dashboard = ({ navigation }) => {
   const clients = useSelector((state) => state.client.clients);
   const client = useSelector((state) => state.client.client.data);
   const clientId = useSelector((state) => state.client.clientId);
-
   const sites = useSelector((state) => state.site.sites);
-  const siteId = useSelector((state) => state.client.siteId);
-
   const groups = useSelector((state) => state.group.groups);
-  const groupId = useSelector((state) => state.client.groupId);
-
-  const devices = useSelector((state) => state.device.devices);
 
   const [payload, setPayload] = React.useState({
     clientId: false,

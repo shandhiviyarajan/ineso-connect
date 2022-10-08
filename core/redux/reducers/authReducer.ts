@@ -40,9 +40,6 @@ const authReducer = (
     case AUTH_TYPES.LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
-        user_id:
-          action.payload && action.payload.data && action.payload.data.user_id,
         isLoading: false,
         error: null,
         isAuthenticated:
@@ -56,7 +53,7 @@ const authReducer = (
         ...state,
         user: false,
         isLoading: false,
-        error: action.error,
+        error: action.payload,
         isAuthenticated: false,
       };
 

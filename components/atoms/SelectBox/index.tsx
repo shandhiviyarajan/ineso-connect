@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Platform, Text, View } from "react-native";
+import { Image, Platform, StyleSheet, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 function SelectBox(props) {
@@ -7,7 +7,7 @@ function SelectBox(props) {
     <>
       <SelectDropdown
         {...props}
-        defaultButtonText={props.placeholder}
+        defaultButtonText={props.value ? props.value : props.placeholder}
         dropdownStyle={{
           borderRadius: 4,
           marginTop: Platform.OS === "ios" ? 0 : -24,
@@ -16,7 +16,7 @@ function SelectBox(props) {
         renderCustomizedRowChild={(item) => (
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: "500",
             }}
           >
@@ -29,16 +29,20 @@ function SelectBox(props) {
           paddingVertical: 0,
           height: 44,
           borderWidth: 2,
-          borderColor: props.disabled ? "#999" : SystemColors.primary,
+          borderColor: props.disabled
+            ? "#999"
+            : props.value
+            ? "#000"
+            : SystemColors.primary,
           marginVertical: 6,
-          paddingHorizontal: 24,
+          paddingHorizontal: 12,
           borderRadius: 4,
         }}
         renderDropdownIcon={() => (
           <View>
             <Image
               source={require("../../../assets/images/down-arrow-svgrepo-com.png")}
-              style={{ height: 9, width: 20, tintColor: SystemColors.primary }}
+              style={{ height: 11, width: 20, tintColor: SystemColors.primary }}
             />
           </View>
         )}
@@ -54,5 +58,9 @@ function SelectBox(props) {
     </>
   );
 }
+
+const style = StyleSheet.create({
+  buttonStyle: {},
+});
 
 export default SelectBox;

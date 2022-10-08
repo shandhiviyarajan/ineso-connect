@@ -132,6 +132,8 @@ export const setClientToken = (token: string | boolean | null) => {
 
 export const httpInstance = async () => {
   ACCESS_TOKEN = await getToken();
+
+  console.log(ACCESS_TOKEN);
   //not expired
   axiosRequest.interceptors.request.use(
     (config) => {

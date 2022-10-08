@@ -136,12 +136,40 @@ export const Device = ({ navigation }) => {
     "Sensor_Firmware_Version",
     "Sensor_Humidity",
     "Sensor_Temperature",
+    "humidity",
+    "temperature",
+    "exposure",
+    "pm1",
+    "pm2_5",
+    "pm10",
+    "pm0_3",
+    "pm0_5",
+    "acousticPressure",
+    "frequentation",
+    "occupancy",
+    "battery",
+    "tilt",
+    "irrigation",
+    "occupancy",
+    "activity",
+    "respiration",
+    "heartbeat",
+    "falldown",
+    "rssi",
+    "uv",
+    "co2",
+    "voc",
+    "iaqi",
+    "viralRisk",
+    "power",
+    "valve",
+    "tamper",
   ];
 
   React.useEffect(() => {
     if (activeDevice) {
       let filterdMeasures = Object.entries(activeDevice.lastMeasurement).filter(
-        (m) => measurementKeys.includes(m[0])
+        (m) => measurementKeys.includes(m[0]) && m[1] !== null
       );
       setMeasures(filterdMeasures);
     }
@@ -285,11 +313,14 @@ export const Device = ({ navigation }) => {
               >
                 Commissioning
               </Text>
-              <CommissionList>Date: June 13, 2022</CommissionList>
-
-              <CommissionList>Operating time: 4 Days</CommissionList>
-              <CommissionList>State: Online Battery</CommissionList>
-              <CommissionList>Level: Full</CommissionList>
+              {activeDevice &&
+                activeDevice.metadata &&
+                activeDevice.metadata.lifecycle.map((cycle) => (
+                  <CommissionList>
+                    {cycle.state.toUpperCase()} -{" "}
+                    {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")}
+                  </CommissionList>
+                ))}
             </View>
 
             <View style={styles.card}>
@@ -316,15 +347,9 @@ export const Device = ({ navigation }) => {
               >
                 Last location
               </Text>
-              <CommissionList>This device is fixed</CommissionList>
-              <LinkButton
-                style={{
-                  fontSize: 16,
-                  paddingTop: 3,
-                }}
-              >
-                Edit GPS Coodination
-              </LinkButton>
+              <CommissionList></CommissionList>
+
+              <Button secondary>Edit GPS Coodination</Button>
             </View>
 
             <View style={styles.card}>
