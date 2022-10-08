@@ -10,18 +10,16 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
-import { LinkButton } from "../../atoms/LinkButton";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import moment from "moment";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
 import GenerateImage from "../../../core/utils/GenerateImage";
-import { Dashboard } from "../Dashboard";
 import { ActivityIndicator } from "react-native";
 import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
 import { ActionSetQR } from "../../../core/redux/actions/qrActions";
 import { SelectBoxes } from "./SelectBoxes";
-
+import BottomTabController from "../../molecules/BottomTab";
 export const Devices = ({ navigation }) => {
   const dispatchAction = useDispatch();
 
@@ -188,22 +186,47 @@ export const Devices = ({ navigation }) => {
               />
             </View>
             <View>
-              <Text
+              <View
                 style={{
-                  fontSize: 18,
-                  marginBottom: 5,
+                  flexDirection: "row",
                 }}
               >
-                {device.metadata.model}
-                {device.metadata.qrcodeId}
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginBottom: 5,
+                    marginRight: 12,
+                    fontWeight: "500",
+                  }}
+                >
+                  {device.metadata.model}
+                </Text>
+                {device.metadata.active && (
+                  <View
+                    style={{
+                      backgroundColor: "green",
+                      width: 72,
+                      height: 24,
+                      borderRadius: 44,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{ color: "#fff", width: 72, textAlign: "center" }}
+                    >
+                      Active
+                    </Text>
+                  </View>
+                )}
+              </View>
               <Text
                 style={{
                   color: "#888",
                   marginBottom: 5,
                 }}
               >
-                {device.metadata.name}
+                {device.metadata.name} {device.metadata.qrcodeId}
               </Text>
               {device.online_status && <Online />}
               {!device.online_status && <OffLine />}
@@ -506,6 +529,7 @@ export const Devices = ({ navigation }) => {
           )}
         </View>
       </View>
+      <BottomTabController />
     </>
   );
 };

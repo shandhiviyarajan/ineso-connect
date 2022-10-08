@@ -73,7 +73,7 @@ export const Device = ({ navigation }) => {
             fontSize: 20,
           }}
         >
-          {isNaN(value) ? value : parseInt(value)}
+          {isNaN(value) ? value : parseFloat(value).toFixed(2)}
         </Text>
       </View>
     );
@@ -164,12 +164,20 @@ export const Device = ({ navigation }) => {
     "power",
     "valve",
     "tamper",
+    "overload",
+    "underrange",
+    "vBat",
+    "pressure",
+    "occupancy",
+    "maximumNoise",
+    "iaqi",
+    "averageNoise",
   ];
 
   React.useEffect(() => {
     if (activeDevice) {
       let filterdMeasures = Object.entries(activeDevice.lastMeasurement).filter(
-        (m) => measurementKeys.includes(m[0]) && m[1] !== null
+        (m) => measurementKeys.includes(m[0]) && m[1] !== null && m[1]
       );
       setMeasures(filterdMeasures);
     }
@@ -261,6 +269,14 @@ export const Device = ({ navigation }) => {
                   marginBottom: 6,
                 }}
               >
+                Brand : {activeDevice.brand}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginBottom: 6,
+                }}
+              >
                 Vendor: {activeDevice.vendor}
               </Text>
               <Text
@@ -317,8 +333,9 @@ export const Device = ({ navigation }) => {
                 activeDevice.metadata &&
                 activeDevice.metadata.lifecycle.map((cycle) => (
                   <CommissionList>
-                    {cycle.state.toUpperCase()} -{" "}
-                    {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")}
+                    {cycle.state.toUpperCase()} -
+                    {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")} -
+                    {cycle.desc}
                   </CommissionList>
                 ))}
             </View>
