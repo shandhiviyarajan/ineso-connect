@@ -169,6 +169,8 @@ const Devices = () => {
               flexDirection: "row",
               elevation: 5,
               shadowColor: "#666",
+              borderRightWidth: device.metadata.qrcodeId ? 2 : 0,
+              borderRightColor: SystemColors.success,
               shadowOffset: {
                 width: 0,
                 height: 0,
