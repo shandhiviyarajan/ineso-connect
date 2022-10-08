@@ -527,6 +527,7 @@ const Devices = () => {
               contentContainerStyle={{
                 paddingHorizontal: 12,
                 paddingVertical: 12,
+                paddingBottom: 72,
                 justifyContent: devices.isLoading ? "center" : "flex-start",
               }}
             >
