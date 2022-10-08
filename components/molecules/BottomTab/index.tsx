@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Platform, Text, View } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import Devices from "../../screens/Devices";
 import DeviceGoogleMaps from "../../screens/GoogleMap";
@@ -14,11 +14,11 @@ function BottomTabController() {
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
-          bottom: 12,
+          bottom: 24,
           left: 48,
           right: 48,
           backgroundColor: SystemColors.primary,
-          height: 56,
+          height: 64,
           borderRadius: 12,
         },
         tabBarShowLabel: false,
@@ -34,8 +34,11 @@ function BottomTabController() {
             <View
               style={{
                 width: 64,
+                height: 56,
+
                 justifyContent: "center",
                 alignItems: "center",
+                marginBottom: Platform.OS === "ios" ? -28 : 0,
               }}
             >
               <Image
@@ -54,12 +57,14 @@ function BottomTabController() {
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 64,
+                width: 84,
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 100,
-                backgroundColor: SystemColors.success,
-                width: 84,
+                backgroundColor: focused
+                  ? SystemColors.success
+                  : SystemColors.primary,
+
                 height: 84,
                 marginTop: -12,
                 position: "absolute",
@@ -91,6 +96,7 @@ function BottomTabController() {
                 width: 64,
                 justifyContent: "center",
                 alignItems: "center",
+                marginBottom: Platform.OS === "ios" ? -28 : 0,
               }}
             >
               <Image

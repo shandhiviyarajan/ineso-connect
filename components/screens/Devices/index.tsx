@@ -523,6 +523,7 @@ const Devices = () => {
           )}
           {!devices.isLoading && currentDevices && currentDevices.length > 0 && (
             <ScrollView
+              scrollEventThrottle={1}
               onScrollBeginDrag={onScrollBeginDrag}
               contentContainerStyle={{
                 paddingHorizontal: 12,

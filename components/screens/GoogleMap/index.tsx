@@ -68,11 +68,15 @@ const DeviceGoogleMaps = () => {
             latitude:
               devices &&
               devices.data &&
-              devices.data[0].metadata.gpsLocation.latitude,
+              devices.data[0].metadata.gpsLocation.latitude
+                ? devices.data[0].metadata.gpsLocation.latitude
+                : 45.781941,
             longitude:
               devices &&
               devices.data &&
-              devices.data[0].metadata.gpsLocation.longitude,
+              devices.data[0].metadata.gpsLocation.longitude
+                ? devices.data[0].metadata.gpsLocation.longitude
+                : 4.748706,
             latitudeDelta: 0.0003,
             longitudeDelta: 0.0003,
           }}
