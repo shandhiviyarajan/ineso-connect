@@ -11,7 +11,7 @@ import { Button } from "../../atoms/Button";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import QRScanner from "./Scanner";
 function QRActivate({ navigation }) {
-  const [qr, setQR] = React.useState(null);
+  const [qr, setQR] = React.useState("test");
   let scannerRef = React.useRef(null);
   const [type, setCamType] = React.useState("back");
   const [isLoading, setLoading] = React.useState(false);
@@ -31,12 +31,15 @@ function QRActivate({ navigation }) {
   return (
     <>
       <AppCustomHeader navigation={navigation} />
-      <QRScanner
-        scannerRef={scannerRef}
-        type={type}
-        handleReadQR={handleReadQR}
-      />
-      <View style={{ flex: 0.5 }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#222",
+        }}
+      >
         <View style={styles.bottomContainer}>
           {isLoading && (
             <>
@@ -46,13 +49,13 @@ function QRActivate({ navigation }) {
           {!isLoading && (
             <>
               <Text style={styles.bottomContainerText}>
-                Scan the QR code to activate your device
+                Scan the QR code to search & activate your device
               </Text>
             </>
           )}
         </View>
       </View>
-      <View style={{ flex: 0.5 }}>
+      <View style={{ flex: 1, backgroundColor: "#222" }}>
         {qr && (
           <Button
             onPress={() => {
@@ -63,6 +66,18 @@ function QRActivate({ navigation }) {
             Scan again ?
           </Button>
         )}
+      </View>
+      <View
+        style={{
+          flex: 6,
+          backgroundColor: "#000",
+        }}
+      >
+        <QRScanner
+          scannerRef={scannerRef}
+          type={type}
+          handleReadQR={handleReadQR}
+        />
       </View>
     </>
   );
@@ -87,8 +102,10 @@ const styles = StyleSheet.create({
   bottomContainerText: {
     color: "#000",
     fontSize: 16,
+    fontWeight: "500",
     textAlign: "center",
-    marginTop: 24,
+    width: 240,
+    color: "#fff",
   },
   containerStyle: {
     flex: 2.5,
