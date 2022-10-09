@@ -4,15 +4,13 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  ImageBackground,
   Dimensions,
 } from "react-native";
-import QRCodeScanner from "react-native-qrcode-scanner";
-import { RNCamera } from "react-native-camera";
+
 import { Button } from "../../atoms/Button";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import QRScanner from "./Scanner";
-function QRScan({ navigation }) {
+function QRActivate({ navigation }) {
   const [qr, setQR] = React.useState(null);
   let scannerRef = React.useRef(null);
   const [type, setCamType] = React.useState("back");
@@ -107,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QRScan;
+export default QRActivate;

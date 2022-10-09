@@ -4,6 +4,7 @@ import { Image, Platform, Text, View } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import Devices from "../../screens/Devices";
 import DeviceGoogleMaps from "../../screens/GoogleMap";
+import QRActivate from "../../screens/QRScan";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +34,7 @@ function BottomTabController() {
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 64,
+                width: 56,
                 height: 56,
 
                 justifyContent: "center",
@@ -42,17 +43,18 @@ function BottomTabController() {
               }}
             >
               <Image
-                style={{ tintColor: focused ? "#fff" : "#000" }}
-                source={require("../../../assets/images/map-marker.png")}
+                style={{
+                  tintColor: focused ? "#fff" : "#000",
+                }}
+                source={require("../../../assets/images/list-icon.png")}
               />
-              <Text style={{ color: focused ? "#fff" : "#000" }}>Devices</Text>
             </View>
           ),
         }}
       />
       <Tab.Screen
         name="Activate"
-        component={Devices}
+        component={QRActivate}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -61,10 +63,7 @@ function BottomTabController() {
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 100,
-                backgroundColor: focused
-                  ? SystemColors.success
-                  : SystemColors.primary,
-
+                backgroundColor: SystemColors.primary,
                 height: 84,
                 marginTop: -12,
                 position: "absolute",
@@ -73,15 +72,18 @@ function BottomTabController() {
                 shadowColor: "#000",
                 shadowOpacity: 0.15,
                 shadowRadius: 15,
-                borderWidth: 4,
+                borderWidth: focused ? 4 : 2,
                 borderColor: SystemColors.primary_light,
               }}
             >
               <Image
-                style={{ tintColor: focused ? "#fff" : "#000" }}
-                source={require("../../../assets/images/map-marker.png")}
+                style={{
+                  tintColor: focused ? "#fff" : "#fff",
+                  width: 32,
+                  height: 32,
+                }}
+                source={require("../../../assets/images/plus-icon.png")}
               />
-              <Text style={{ color: focused ? "#fff" : "#000" }}>Activate</Text>
             </View>
           ),
         }}
@@ -93,7 +95,8 @@ function BottomTabController() {
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 64,
+                width: 56,
+                height: 56,
                 justifyContent: "center",
                 alignItems: "center",
                 marginBottom: Platform.OS === "ios" ? -28 : 0,
@@ -103,7 +106,6 @@ function BottomTabController() {
                 style={{ tintColor: focused ? "#fff" : "#000" }}
                 source={require("../../../assets/images/map-marker.png")}
               />
-              <Text style={{ color: focused ? "#fff" : "#000" }}>Map</Text>
             </View>
           ),
         }}

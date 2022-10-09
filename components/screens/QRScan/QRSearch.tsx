@@ -50,6 +50,7 @@ function QRSearch({ open, setQRModal }) {
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "#000",
           }}
         >
           <View
