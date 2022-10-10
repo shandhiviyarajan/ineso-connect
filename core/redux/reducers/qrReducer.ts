@@ -23,7 +23,7 @@ const qrReducer = (state = initialState, action) => {
 
         activate: {
           isLoading: false,
-          data: action.payload,
+          data: false,
           errors: false,
         },
       };

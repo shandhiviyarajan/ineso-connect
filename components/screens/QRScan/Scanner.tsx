@@ -9,13 +9,10 @@ import {
 import { RNCamera } from "react-native-camera";
 import QRCodeScanner from "react-native-qrcode-scanner";
 
-function QRScanner({ scannerRef, type, handleReadQR }) {
+function QRScanner({ type, handleReadQR }) {
   return (
     <>
       <QRCodeScanner
-        ref={(e) => {
-          scannerRef = e;
-        }}
         customMarker={
           <View style={styles.customMarker}>
             <ImageBackground
@@ -37,7 +34,7 @@ function QRScanner({ scannerRef, type, handleReadQR }) {
           width: Dimensions.get("window").height / 2.75,
           height: "auto",
         }}
-        reactivate={false}
+        reactivate={true}
         onRead={handleReadQR}
         flashMode={RNCamera.Constants.FlashMode.auto}
       />

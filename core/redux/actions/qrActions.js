@@ -6,7 +6,7 @@ export const QR_TYPES = {
     SET_QR_SUCCESS: "SET_QR_SUCCESS",
     SET_QR_FAIL: "SET_QR_FAIL",
 
-    ACTIVATE_DEVICE: "ACTIVATE_DEVICES",
+    ACTIVATE_DEVICE: "ACTIVATE_DEVICE",
     ACTIVATE_DEVICE_SUCCESS: "ACTIVATE_DEVICE_SUCCESS",
     ACTIVATE_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL"
 };
@@ -24,7 +24,12 @@ export const ActionSetQRSuccess = (payload) => {
         payload,
     };
 };
-
+export const ActionActivateDevice = (payload) => {
+    return {
+        type: QR_TYPES.ACTIVATE_DEVICE,
+        payload,
+    };
+};
 export const ActionActivateDeviceSuccess = (payload) => {
     return {
         type: QR_TYPES.ACTIVATE_DEVICE_SUCCESS,

@@ -6,26 +6,38 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import {
+  ActionSetQR,
+  ActionActivateDevice,
+} from "../../../core/redux/actions/qrActions";
 
 import { Button } from "../../atoms/Button";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import QRScanner from "./Scanner";
 function QRActivate({ navigation }) {
   const [qr, setQR] = React.useState("test");
-  let scannerRef = React.useRef(null);
-  const [type, setCamType] = React.useState("back");
-  const [isLoading, setLoading] = React.useState(false);
-  const handleReadQR = (e) => {
-    console.log(e);
 
+  const [type, setCamType] = React.useState("back");
+
+  const [isLoading, setLoading] = React.useState(false);
+
+  const dispatchAction = useDispatch();
+
+  const handleReadQR = (e) => {
     if (e.type === "QR_CODE" && !isLoading) {
       setLoading(true);
     }
     setTimeout(() => {
-      let key = e.data ? e.data.split("&id=")[1] : null;
-      setQR(key);
+      let qr = e.data ? e.data.split("&id=")[1] : null;
+      setQR(qr);
       setLoading(false);
+      dispatchAction(ActionSetQR(qr));
     }, 3000);
+  };
+
+  const handleActivateDevice = () => {
+    dispatchAction(ActionActivateDevice());
   };
 
   return (
@@ -55,29 +67,14 @@ function QRActivate({ navigation }) {
           )}
         </View>
       </View>
-      <View style={{ flex: 1, backgroundColor: "#222" }}>
-        {qr && (
-          <Button
-            onPress={() => {
-              setQR(null);
-              scannerRef.reactivate();
-            }}
-          >
-            Scan again ?
-          </Button>
-        )}
-      </View>
+
       <View
         style={{
           flex: 6,
           backgroundColor: "#000",
         }}
       >
-        <QRScanner
-          scannerRef={scannerRef}
-          type={type}
-          handleReadQR={handleReadQR}
-        />
+        <QRScanner type={type} handleReadQR={handleReadQR} />
       </View>
     </>
   );
