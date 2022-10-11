@@ -45,7 +45,7 @@ function QRActivate({ navigation }) {
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#222",
+          backgroundColor: "#fff",
         }}
       >
         <View style={styles.bottomContainer}>
@@ -57,7 +57,7 @@ function QRActivate({ navigation }) {
           {!isLoading && (
             <>
               <Text style={styles.bottomContainerText}>
-                Scan the QR code to search & activate your device
+                Activate your device by Scanning the QR code.
               </Text>
             </>
           )}
@@ -94,11 +94,12 @@ const styles = StyleSheet.create({
   },
   bottomContainerText: {
     color: "#000",
-    fontSize: 16,
+    fontSize: 20,
+    lineHeight: 24,
     fontWeight: "500",
     textAlign: "center",
     width: 240,
-    color: "#fff",
+    color: "#000",
   },
   containerStyle: {
     flex: 2.5,

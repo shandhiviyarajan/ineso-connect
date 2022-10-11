@@ -25,7 +25,7 @@ function QRScanner({ type, handleReadQR }) {
         containerStyle={styles.containerStyle}
         cameraContainerStyle={styles.cameraContainer}
         cameraStyle={{
-          width: Dimensions.get("window").height / 2.75,
+          width: Dimensions.get("window").height / 2.5,
           height: "auto",
         }}
         reactivate={true}
