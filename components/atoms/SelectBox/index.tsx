@@ -42,13 +42,13 @@ function SelectBox(props) {
           <View>
             <Image
               source={require("../../../assets/images/down-arrow-svgrepo-com.png")}
-              style={{ height: 11, width: 20, tintColor: SystemColors.primary }}
+              style={{ height: 11, width: 20, tintColor: "#666" }}
             />
           </View>
         )}
         buttonTextStyle={{
           fontSize: 14,
-          color: props.disabled ? "#888" : SystemColors.primary,
+          color: props.disabled ? "#d6d6d6" : "#666",
           textAlign: "left",
           paddingHorizontal: 0,
           marginLeft: -1,

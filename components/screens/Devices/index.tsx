@@ -186,7 +186,7 @@ const Devices = () => {
               height: 96,
               flex: 1,
               flexDirection: "row",
-              elevation: 5,
+              elevation: 3,
               shadowColor: "#666",
               borderWidth: 1,
               borderColor: "#d6d6d6",
@@ -194,8 +194,8 @@ const Devices = () => {
                 width: 0,
                 height: 0,
               },
-              shadowOpacity: 0.1,
-              shadowRadius: 7,
+              shadowOpacity: 0.05,
+              shadowRadius: 5,
             }}
           >
             <View
