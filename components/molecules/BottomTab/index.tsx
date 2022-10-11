@@ -15,12 +15,12 @@ function BottomTabController() {
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
-          bottom: 16,
-          left: 16,
-          right: 16,
-          backgroundColor: SystemColors.primary,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "#eee",
           height: 56,
-          borderRadius: 24,
+          borderRadius: 0,
           borderWidth: 0,
         },
         tabBarShowLabel: false,

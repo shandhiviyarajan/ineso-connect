@@ -3,6 +3,7 @@
 export const QR_TYPES = {
     // sites types
     SET_QR: "SET_QR",
+    SET_PAYLOAD: "SET_PAYLOAD",
     SET_QR_SUCCESS: "SET_QR_SUCCESS",
     SET_QR_FAIL: "SET_QR_FAIL",
 
@@ -14,6 +15,14 @@ export const QR_TYPES = {
     SEARCH_DEVICE_SUCCESS: "SEARCH_DEVICE_SUCCESS",
     SEARCH_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL"
 };
+
+export const setSearchPayload = (payload) => {
+    return {
+        type: QR_TYPES.SET_PAYLOAD,
+        payload,
+    };
+}
+
 //set QR code  sites actions
 export const ActionSetQR = (payload) => {
     return {
@@ -24,6 +33,7 @@ export const ActionSetQR = (payload) => {
 
 
 export const ActionSearchDevice = (payload) => {
+
     return {
         type: QR_TYPES.SEARCH_DEVICE,
         payload,

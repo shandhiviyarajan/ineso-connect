@@ -2,8 +2,11 @@ import React from "react";
 import { View, Text, Modal, Alert, Pressable } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { useDispatch } from "react-redux";
-import { ActionSetQR } from "../../../core/redux/actions/qrActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ActionSearchDevice,
+  ActionSetQR,
+} from "../../../core/redux/actions/qrActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { aesDecrypt } from "../../../core/utils/Backend";
 import { Button } from "../../atoms/Button";
@@ -11,9 +14,9 @@ import QRScanner from "./Scanner";
 function QRSearch({ open, setQRModal }) {
   const requestClose = () => {};
 
-  const [value, setValue] = React.useState(null);
-
   const [progress, setProgress] = React.useState(false);
+
+  const clientId = useSelector((state) => state.client.clientId);
 
   const dispatchAction = useDispatch();
 
@@ -21,8 +24,6 @@ function QRSearch({ open, setQRModal }) {
     if (e.data && e.data.split("&id=").length > 0) {
       //decrypt the data id
       let qr_code = aesDecrypt(e.data.split("&id=")[1]);
-      //set value to local state
-      setValue(qr_code);
       setProgress(true);
 
       setTimeout(() => {
@@ -30,6 +31,13 @@ function QRSearch({ open, setQRModal }) {
         //set value to redux
         dispatchAction(
           ActionSetQR("ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd")
+        );
+
+        dispatchAction(
+          ActionSearchDevice({
+            clientId,
+            qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd",
+          })
         );
 
         setQRModal(false);

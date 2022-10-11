@@ -16,24 +16,24 @@ function SelectBox(props) {
         renderCustomizedRowChild={(item) => (
           <Text
             style={{
-              fontSize: 17,
-              fontWeight: "500",
+              fontSize: 16,
+              fontWeight: "400",
             }}
           >
             {item}
           </Text>
         )}
         buttonStyle={{
-          backgroundColor: SystemColors.primary_light,
+          backgroundColor: "#fff",
           width: "100%",
           paddingVertical: 0,
           height: 44,
-          borderWidth: 2,
+          borderWidth: 1,
           borderColor: props.disabled
-            ? "#999"
+            ? "#d9d9d9"
             : props.value
-            ? "#000"
-            : SystemColors.primary,
+            ? "#d9d9d9"
+            : "#d9d9d9",
           marginVertical: 6,
           paddingHorizontal: 12,
           borderRadius: 4,
@@ -47,7 +47,7 @@ function SelectBox(props) {
           </View>
         )}
         buttonTextStyle={{
-          fontSize: 16,
+          fontSize: 14,
           color: props.disabled ? "#888" : SystemColors.primary,
           textAlign: "left",
           paddingHorizontal: 0,

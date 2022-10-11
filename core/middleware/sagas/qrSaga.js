@@ -1,5 +1,5 @@
 import { call, put, take } from "redux-saga/effects";
-import { apiSearchDevice, apiActiveDevice } from '../../API/apiQR';
+import { apiSearchDevices, apiActiveDevice } from '../../API/apiQR';
 import { QR_TYPES } from "../../redux/actions/qrActions";
 
 //saga watcher for activate devices
@@ -20,7 +20,8 @@ export function* watchQRSearchDevice() {
     while (true) {
         const { payload } = yield take(QR_TYPES.SEARCH_DEVICE);
         try {
-            const response = yield call(apiSearchDevice, payload);
+            const response = yield call(apiSearchDevices, payload);
+            console.log(response);
             yield put({ type: QR_TYPES.SEARCH_DEVICE_SUCCESS, payload: response.data.data });
         } catch (error) {
             yield put({ type: QR_TYPES.SEARCH_DEVICE_FAIL, payload: error });

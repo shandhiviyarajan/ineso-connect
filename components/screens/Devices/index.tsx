@@ -12,7 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import moment from "moment";
-import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
+import {
+  ActionFetchDevice,
+  ActionFetchDevices,
+} from "../../../core/redux/actions/deviceActions";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { ActivityIndicator } from "react-native";
 import Collapsible from "react-native-collapsible";
@@ -23,6 +26,7 @@ import {
 } from "../../../core/redux/actions/qrActions";
 import { SelectBoxes } from "./SelectBoxes";
 import { useNavigation } from "@react-navigation/native";
+import { Message } from "../../molecules/Toast";
 const Devices = () => {
   const dispatchAction = useDispatch();
 
@@ -33,8 +37,20 @@ const Devices = () => {
   const [filter, setFilter] = React.useState(false);
 
   const [open, setQRModal] = React.useState(false);
+
+  //all devices
+  const devices = useSelector((state) => state.device.devices);
+
+  const QR_CODE = useSelector((state) => state.qr.QR_CODE);
+
+  const [currentDevices, setCurrentDevices] = React.useState([]);
   //open scanner modal
   const openQRScannerSearch = () => {
+    if (!clientId) {
+      Message("error", "Please select a client !", "Client id not found !");
+      return;
+    }
+    dispatchAction(ActionSetQR(null));
     setQRModal(true);
   };
   //handle device click
@@ -47,12 +63,7 @@ const Devices = () => {
     );
     navigation.navigate("Device");
   };
-  //all devices
-  const devices = useSelector((state) => state.device.devices);
 
-  const QR_CODE = useSelector((state) => state.qr.QR_CODE);
-
-  const [currentDevices, setCurrentDevices] = React.useState([]);
   //handle search
   const handleTextSearch = (value: any) => {
     let filtered =
@@ -72,6 +83,14 @@ const Devices = () => {
 
   const handleClearSearch = () => {
     dispatchAction(ActionSetQR(null));
+
+    dispatchAction(
+      ActionFetchDevices({
+        clientId,
+        siteId,
+        groupId,
+      })
+    );
   };
 
   const toggleFilters = () => {
@@ -162,15 +181,15 @@ const Devices = () => {
               position: "relative",
               marginBottom: 10,
               padding: 12,
-              borderRadius: 4,
+              borderRadius: 6,
               backgroundColor: "#fff",
               height: 96,
               flex: 1,
               flexDirection: "row",
               elevation: 5,
               shadowColor: "#666",
-              borderRightWidth: device.metadata.qrcodeId ? 2 : 0,
-              borderRightColor: SystemColors.success,
+              borderWidth: 1,
+              borderColor: "#d6d6d6",
               shadowOffset: {
                 width: 0,
                 height: 0,
@@ -271,48 +290,6 @@ const Devices = () => {
     <>
       <QRSearch open={open} setQRModal={setQRModal} />
       <AppCustomHeader navigation={navigation} />
-      {/* <View
-        style={{
-          paddingHorizontal: 12,
-          paddingVertical: 0,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <View>
-          <TouchableHighlight
-            onPress={() => {
-              navigation.navigate("DeviceGoogleMaps");
-            }}
-            activeOpacity={0.5}
-            underlayColor="none"
-          >
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: "transparent",
-                borderRadius: 24,
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={require("../../../assets/images/map-marker.png")}
-                style={{
-                  width: 20,
-                  height: 24,
-                  marginRight: 0,
-                  tintColor: SystemColors.primary,
-                }}
-              />
-            </View>
-          </TouchableHighlight>
-        </View>
-      </View> */}
-
       <View
         style={{
           paddingHorizontal: 12,
@@ -332,9 +309,9 @@ const Devices = () => {
           <Image
             source={require("../../../assets/images/search-icon.png")}
             style={{
-              width: 20,
-              height: 20,
-              opacity: 0.25,
+              width: 16,
+              height: 16,
+              opacity: 1,
             }}
           />
         </View>
@@ -346,17 +323,17 @@ const Devices = () => {
           autoCapitalize="none"
           style={{
             height: 44,
-            fontSize: 18,
+            fontSize: 14,
             color: "#000",
             textAlign: "left",
             paddingVertical: 0,
-            borderWidth: 0,
-            borderColor: "rgba(181,78,41,.5)",
+            borderWidth: 1,
+            borderColor: "#d8d8d8",
             marginTop: 12,
             paddingHorizontal: 16,
-            paddingLeft: 48,
+            paddingLeft: 40,
             width: "100%",
-            borderRadius: 12,
+            borderRadius: 6,
             fontWeight: "400",
             backgroundColor: "#fff",
           }}
@@ -376,14 +353,14 @@ const Devices = () => {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 6,
-            backgroundColor: SystemColors.primary,
+            backgroundColor: "#fff",
           }}
         >
           <View>
             <Image
               source={require("../../../assets/images/qr-icon.png")}
               style={{
-                tintColor: "#fff",
+                tintColor: "#666",
                 width: 16,
                 height: 16,
               }}
@@ -472,7 +449,7 @@ const Devices = () => {
             width: "100%",
             flexDirection: "row",
             justifyContent: "flex-end",
-            paddingHorizontal: 12,
+            paddingHorizontal: 0,
           }}
         >
           <TouchableHighlight
@@ -483,17 +460,17 @@ const Devices = () => {
             <View
               style={{
                 paddingHorizontal: 12,
-                paddingVertical: 6,
-                backgroundColor: SystemColors.primary,
-                borderRadius: 12,
-                marginBottom: 6,
+                paddingTop: 6,
+                backgroundColor: "transparent",
+                borderRadius: 0,
+                marginBottom: 0,
               }}
             >
               <Text
                 style={{
                   textAlign: "right",
                   fontWeight: "600",
-                  color: "#fff",
+                  color: "#666",
                 }}
               >
                 {filter ? "Show Filters" : "Hide Filters"}
@@ -566,7 +543,7 @@ const Devices = () => {
             >
               {currentDevices.map((device, index) => (
                 <DeviceCard
-                  key={device._id + index}
+                  key={"device" + index}
                   device={device}
                   onPress={() => handleDeviceClick(device)}
                 />

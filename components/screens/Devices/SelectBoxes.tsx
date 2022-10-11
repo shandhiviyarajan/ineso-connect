@@ -134,7 +134,7 @@ export const SelectBoxes = ({ navigation }) => {
       <View
         style={{
           alignItems: "center",
-          backgroundColor: "#F2F6FC",
+          backgroundColor: "transparent",
         }}
       >
         <View style={ContentStyle.card}>
@@ -265,19 +265,10 @@ const ContentStyle = StyleSheet.create({
     paddingBottom: 12,
   },
   card: {
-    backgroundColor: "#FFFFFF",
-    width: "95%",
+    width: "100%",
     borderRadius: 12,
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     paddingVertical: 12,
     marginVertical: 0,
-    elevation: 5,
-    shadowColor: "#d9d9d9",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
   },
 });

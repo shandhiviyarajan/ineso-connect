@@ -30,14 +30,12 @@ const deviceReducer = (state = initialState, action) => {
     case QR_TYPES.SEARCH_DEVICE_SUCCESS:
       return {
         ...state,
-
         devices: {
           isLoading: false,
           data: action.payload,
           errors: false,
         },
       };
-
     case QR_TYPES.SEARCH_DEVICE_FAIL:
       return {
         ...state,
