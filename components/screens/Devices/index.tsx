@@ -17,7 +17,10 @@ import GenerateImage from "../../../core/utils/GenerateImage";
 import { ActivityIndicator } from "react-native";
 import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
-import { ActionSetQR } from "../../../core/redux/actions/qrActions";
+import {
+  ActionSearchDevice,
+  ActionSetQR,
+} from "../../../core/redux/actions/qrActions";
 import { SelectBoxes } from "./SelectBoxes";
 import { useNavigation } from "@react-navigation/native";
 const Devices = () => {
@@ -26,6 +29,8 @@ const Devices = () => {
   const navigation = useNavigation();
 
   const clientId = useSelector((state) => state.client.clientId);
+
+  const [filter, setFilter] = React.useState(false);
 
   const [open, setQRModal] = React.useState(false);
   //open scanner modal
@@ -49,10 +54,13 @@ const Devices = () => {
 
   const [currentDevices, setCurrentDevices] = React.useState([]);
   //handle search
-  const handleSearch = (value: any) => {
-    let filtered = devices.data.filter((device: any) =>
-      device.metadata.model.includes(value)
-    );
+  const handleTextSearch = (value: any) => {
+    let filtered =
+      devices &&
+      devices.data &&
+      devices.data.filter((device: any) =>
+        device.metadata.model.includes(value)
+      );
     if (value.length > 0) {
       setCurrentDevices(filtered);
     } else {
@@ -60,15 +68,11 @@ const Devices = () => {
     }
   };
 
-  //handle QR Code search
-  const handleQRCodeSearch = () => {};
-
   //const clear search
 
   const handleClearSearch = () => {
     dispatchAction(ActionSetQR(null));
   };
-  const [filter, setFilter] = React.useState(false);
 
   const toggleFilters = () => {
     setFilter(!filter);
@@ -84,19 +88,15 @@ const Devices = () => {
     }
   }, [devices]);
 
+  //search by qr code if client id and qr code is valid
   React.useEffect(() => {
-    if (QR_CODE) {
-      let filter_with_qr =
-        devices &&
-        devices.data &&
-        devices.data.filter(
-          (device: { metadata: { qrcodeId: any } }) =>
-            device.metadata.qrcodeId === QR_CODE
-        );
-      setCurrentDevices(filter_with_qr);
-      console.log(filter_with_qr);
-    } else {
-      setCurrentDevices(devices && devices.data);
+    if (QR_CODE && clientId) {
+      dispatchAction(
+        ActionSearchDevice({
+          clientId,
+          qr_code: QR_CODE,
+        })
+      );
     }
   }, [QR_CODE]);
 
@@ -339,7 +339,7 @@ const Devices = () => {
           />
         </View>
         <TextInput
-          onChangeText={(value) => handleSearch(value)}
+          onChangeText={(value) => handleTextSearch(value)}
           placeholder="Search by name or QR Code "
           placeholderTextColor="#888"
           clearButtonMode="always"
@@ -410,6 +410,7 @@ const Devices = () => {
           <View
             style={{
               flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <Text
@@ -447,14 +448,14 @@ const Devices = () => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ color: "#999" }}>Clear</Text>
+              <Text style={{ color: "#666" }}>Clear</Text>
               <Image
                 source={require("../../../assets/images/close-icon.png")}
                 style={{
                   width: 10,
                   height: 10,
                   marginLeft: 6,
-                  tintColor: "#999",
+                  tintColor: "#666",
                 }}
               />
             </View>

@@ -1,4 +1,5 @@
 import { DEVICE_TYPES } from "../actions/deviceActions";
+import { QR_TYPES } from "../actions/qrActions";
 
 const initialState = {
   devices: {
@@ -16,6 +17,38 @@ const initialState = {
 
 const deviceReducer = (state = initialState, action) => {
   switch (action.type) {
+    case QR_TYPES.SEARCH_DEVICE:
+      return {
+        ...state,
+        devices: {
+          isLoading: true,
+          data: null,
+          errors: false,
+        },
+      };
+
+    case QR_TYPES.SEARCH_DEVICE_SUCCESS:
+      return {
+        ...state,
+
+        devices: {
+          isLoading: false,
+          data: action.payload,
+          errors: false,
+        },
+      };
+
+    case QR_TYPES.SEARCH_DEVICE_FAIL:
+      return {
+        ...state,
+
+        devices: {
+          isLoading: false,
+          data: null,
+          errors: action.payload,
+        },
+      };
+
     case DEVICE_TYPES.GET_SEARCH:
       return {
         ...state,

@@ -5,8 +5,14 @@ import * as sitesSaga from "./sitesSaga";
 import * as groupSaga from "./groupSaga";
 import * as deviceSaga from "./deviceSaga";
 import * as alertSaga from "./alertSaga";
+
+import * as qrSaga from "./qrSaga";
 function* rootSaga() {
   yield all([
+    //qr search and active 
+    qrSaga.watchActivateDevice(),
+    qrSaga.watchQRSearchDevice(),
+
     authSaga.watchAuthUser(),
     //profile me
     authSaga.watchMe(),

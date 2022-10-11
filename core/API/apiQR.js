@@ -23,3 +23,22 @@ export const apiSearchDevices = async ({
     });
 };
 
+
+export const apiActiveDevice = async ({
+    clientId, deviceId
+}) => {
+    const httpRequest = await httpInstance();
+    return await new Promise((resolve, reject) => {
+        httpRequest.get(ACTIVATE.ACTIVATE_DEVICE(clientId, deviceId))
+            .then((response) => {
+                console.log(response);
+                resolve(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    });
+};
+
+
