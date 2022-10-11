@@ -15,12 +15,13 @@ function BottomTabController() {
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
-          bottom: 24,
-          left: 24,
-          right: 24,
+          bottom: 16,
+          left: 16,
+          right: 16,
           backgroundColor: SystemColors.primary,
-          height: 64,
+          height: 56,
           borderRadius: 24,
+          borderWidth: 0,
         },
         tabBarShowLabel: false,
         headerShown: false,
@@ -45,6 +46,8 @@ function BottomTabController() {
               <Image
                 style={{
                   tintColor: focused ? "#fff" : "#000",
+                  width: 20,
+                  height: 16,
                 }}
                 source={require("../../../assets/images/list-icon.png")}
               />
@@ -59,28 +62,28 @@ function BottomTabController() {
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 84,
+                width: 64,
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 100,
-                backgroundColor: SystemColors.primary,
-                height: 84,
+                backgroundColor: SystemColors.primary_light,
+                height: 64,
                 marginTop: -12,
                 position: "absolute",
-                top: -24,
+                top: -6,
                 elevation: 5,
                 shadowColor: "#000",
                 shadowOpacity: 0.15,
                 shadowRadius: 15,
                 borderWidth: focused ? 4 : 2,
-                borderColor: SystemColors.primary_light,
+                borderColor: SystemColors.primary,
               }}
             >
               <Image
                 style={{
-                  tintColor: focused ? "#fff" : "#fff",
-                  width: 32,
-                  height: 32,
+                  tintColor: SystemColors.primary,
+                  width: 24,
+                  height: 24,
                 }}
                 source={require("../../../assets/images/plus-icon.png")}
               />

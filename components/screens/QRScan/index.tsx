@@ -7,17 +7,11 @@ import {
   Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import {
-  ActionSetQR,
-  ActionActivateDevice,
-} from "../../../core/redux/actions/qrActions";
-
-import { Button } from "../../atoms/Button";
+import { ActionActivateDevice } from "../../../core/redux/actions/qrActions";
+import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import QRScanner from "./Scanner";
 function QRActivate({ navigation }) {
-  const [qr, setQR] = React.useState("test");
-
   const [type, setCamType] = React.useState("back");
 
   const [isLoading, setLoading] = React.useState(false);
@@ -30,9 +24,11 @@ function QRActivate({ navigation }) {
     }
     setTimeout(() => {
       let qr = e.data ? e.data.split("&id=")[1] : null;
-      setQR(qr);
+      let qr_code = null;
+      if (qr) {
+        qr_code = aesDecrypt(qr);
+      }
       setLoading(false);
-      dispatchAction(ActionSetQR(qr));
     }, 3000);
   };
 

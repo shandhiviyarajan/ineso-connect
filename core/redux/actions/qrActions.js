@@ -8,7 +8,11 @@ export const QR_TYPES = {
 
     ACTIVATE_DEVICE: "ACTIVATE_DEVICE",
     ACTIVATE_DEVICE_SUCCESS: "ACTIVATE_DEVICE_SUCCESS",
-    ACTIVATE_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL"
+    ACTIVATE_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL",
+
+    SEARCH_DEVICE: "SEARCH_DEVICE",
+    SEARCH_DEVICE_SUCCESS: "SEARCH_DEVICE_SUCCESS",
+    SEARCH_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL"
 };
 //set QR code  sites actions
 export const ActionSetQR = (payload) => {
@@ -18,12 +22,27 @@ export const ActionSetQR = (payload) => {
     };
 };
 
-export const ActionSetQRSuccess = (payload) => {
+
+export const ActionSearchDevice = (payload) => {
     return {
-        type: QR_TYPES.ACTIVATE_DEVICE,
+        type: QR_TYPES.SEARCH_DEVICE,
         payload,
     };
 };
+export const ActionSearchDeviceSuccess = (payload) => {
+    return {
+        type: QR_TYPES.SEARCH_DEVICE_SUCCESS,
+        payload,
+    };
+};
+
+export const ActionSearchDeviceFail = (payload) => {
+    return {
+        type: QR_TYPES.SEARCH_DEVICE_FAIL,
+        payload,
+    };
+};
+
 export const ActionActivateDevice = (payload) => {
     return {
         type: QR_TYPES.ACTIVATE_DEVICE,

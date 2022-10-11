@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Dimensions,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Dimensions, ImageBackground, StyleSheet, View } from "react-native";
 import { RNCamera } from "react-native-camera";
 import QRCodeScanner from "react-native-qrcode-scanner";
 

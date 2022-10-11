@@ -361,45 +361,7 @@ const Devices = () => {
             backgroundColor: "#fff",
           }}
         />
-        {QR_CODE && (
-          <TouchableHighlight
-            underlayColor="#fff"
-            onPress={handleClearSearch}
-            style={{
-              position: "absolute",
-              zIndex: 2000,
-              top: 18,
-              right: 60,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 44,
-              borderWidth: 0,
-              height: 32,
 
-              paddingHorizontal: 12,
-              backgroundColor: "#f1f1f1",
-            }}
-          >
-            <View
-              style={{
-                justifyContent: "center",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "#999" }}>Clear</Text>
-              <Image
-                source={require("../../../assets/images/close-icon.png")}
-                style={{
-                  width: 10,
-                  height: 10,
-                  marginLeft: 6,
-                  tintColor: "#999",
-                }}
-              />
-            </View>
-          </TouchableHighlight>
-        )}
         <TouchableHighlight
           onPress={openQRScannerSearch}
           activeOpacity={0.5}
@@ -429,9 +391,76 @@ const Devices = () => {
           </View>
         </TouchableHighlight>
       </View>
-      <View>
-        <Text>{QR_CODE}</Text>
-      </View>
+      {QR_CODE && (
+        <View
+          style={{
+            marginTop: 6,
+            backgroundColor: "#fff",
+            borderRadius: 12,
+            paddingHorizontal: 12,
+            paddingVertical: 6,
+            marginHorizontal: 12,
+            marginBottom: 6,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "600",
+                fontSize: 16,
+                color: SystemColors.primary,
+              }}
+            >
+              Searched QR Code
+            </Text>
+            <Text> - {QR_CODE}</Text>
+          </View>
+
+          <TouchableHighlight
+            underlayColor="#fff"
+            onPress={handleClearSearch}
+            style={{
+              position: "relative",
+              zIndex: 2000,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 44,
+              borderWidth: 0,
+              height: 32,
+
+              paddingHorizontal: 12,
+              backgroundColor: "#f1f1f1",
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#999" }}>Clear</Text>
+              <Image
+                source={require("../../../assets/images/close-icon.png")}
+                style={{
+                  width: 10,
+                  height: 10,
+                  marginLeft: 6,
+                  tintColor: "#999",
+                }}
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
+      )}
       <View
         style={{
           flex: 1,
