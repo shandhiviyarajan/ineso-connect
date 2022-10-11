@@ -22,6 +22,8 @@ function BottomTabController() {
           height: 56,
           borderRadius: 0,
           borderWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: "#d8d8d8",
         },
         tabBarShowLabel: false,
         headerShown: false,
@@ -45,7 +47,7 @@ function BottomTabController() {
             >
               <Image
                 style={{
-                  tintColor: focused ? "#fff" : "#000",
+                  tintColor: focused ? SystemColors.primary : "#666",
                   width: 20,
                   height: 16,
                 }}
@@ -66,22 +68,22 @@ function BottomTabController() {
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 100,
-                backgroundColor: SystemColors.primary_light,
+                backgroundColor: "#fff",
                 height: 64,
                 marginTop: -12,
                 position: "absolute",
                 top: -6,
                 elevation: 5,
                 shadowColor: "#000",
-                shadowOpacity: 0.15,
-                shadowRadius: 15,
-                borderWidth: focused ? 4 : 2,
-                borderColor: SystemColors.primary,
+                shadowOpacity: 0.1,
+                shadowRadius: 10,
+
+                borderColor: "#666",
               }}
             >
               <Image
                 style={{
-                  tintColor: SystemColors.primary,
+                  tintColor: focused ? SystemColors.primary : "#666",
                   width: 24,
                   height: 24,
                 }}
@@ -106,7 +108,7 @@ function BottomTabController() {
               }}
             >
               <Image
-                style={{ tintColor: focused ? "#fff" : "#000" }}
+                style={{ tintColor: focused ? SystemColors.primary : "#666" }}
                 source={require("../../../assets/images/map-marker.png")}
               />
             </View>
