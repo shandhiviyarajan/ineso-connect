@@ -38,6 +38,8 @@ const Devices = () => {
 
   const [open, setQRModal] = React.useState(false);
 
+  const payload_ids = useSelector((state) => state.qr.payload);
+
   //all devices
   const devices = useSelector((state) => state.device.devices);
 
@@ -84,13 +86,8 @@ const Devices = () => {
   const handleClearSearch = () => {
     dispatchAction(ActionSetQR(null));
 
-    dispatchAction(
-      ActionFetchDevices({
-        clientId,
-        siteId,
-        groupId,
-      })
-    );
+    //refetch with selected client id, site id, group id
+    dispatchAction(ActionFetchDevices(payload_ids));
   };
 
   const toggleFilters = () => {
@@ -179,7 +176,7 @@ const Devices = () => {
             style={{
               width: "100%",
               position: "relative",
-              marginBottom: 10,
+              marginBottom: 6,
               padding: 12,
               borderRadius: 6,
               backgroundColor: "#fff",
@@ -225,15 +222,20 @@ const Devices = () => {
                   {device.metadata.model}
                 </Text>
               </View>
-              <Text
+              <View
                 style={{
-                  color: "#888",
-                  marginBottom: 5,
+                  minWidth: 280,
                 }}
               >
-                {device.metadata.name}
-              </Text>
-
+                <Text
+                  style={{
+                    color: "#888",
+                    marginBottom: 5,
+                  }}
+                >
+                  {device.metadata.name}
+                </Text>
+              </View>
               <View
                 style={{
                   justifyContent: "space-between",
@@ -247,17 +249,15 @@ const Devices = () => {
                 {device.metadata.active && (
                   <View
                     style={{
-                      backgroundColor: "green",
-                      width: 72,
+                      backgroundColor: "#fff",
+                      width: "auto",
                       height: 24,
                       borderRadius: 44,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <Text
-                      style={{ color: "#fff", width: 72, textAlign: "center" }}
-                    >
+                    <Text style={{ color: "green", textAlign: "center" }}>
                       Active
                     </Text>
                   </View>

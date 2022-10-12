@@ -16,7 +16,7 @@ export const QR_TYPES = {
     SEARCH_DEVICE_FAIL: "ACTIVATE_DEVICE_FAIL"
 };
 
-export const setSearchPayload = (payload) => {
+export const ActionUpdatePayload = (payload) => {
     return {
         type: QR_TYPES.SET_PAYLOAD,
         payload,

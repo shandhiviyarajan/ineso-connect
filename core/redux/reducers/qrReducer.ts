@@ -7,10 +7,17 @@ const initialState = {
     data: null,
     errors: null,
   },
+  payload: false,
 };
 
 const qrReducer = (state = initialState, action) => {
   switch (action.type) {
+    case QR_TYPES.SET_PAYLOAD:
+      return {
+        ...state,
+        payload: action.payload,
+      };
+
     case QR_TYPES.SET_QR:
       return {
         ...state,

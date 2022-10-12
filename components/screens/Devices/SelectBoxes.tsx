@@ -21,6 +21,7 @@ import { ActionFetchSites } from "../../../core/redux/actions/siteActions";
 import { ActionFetchGroups } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
+import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
 export const SelectBoxes = ({ navigation }) => {
   //auth status
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -114,6 +115,7 @@ export const SelectBoxes = ({ navigation }) => {
   };
 
   React.useEffect(() => {
+    dispatchAction(ActionUpdatePayload(payload));
     dispatchAction(ActionFetchDevices(payload));
   }, [payload]);
 

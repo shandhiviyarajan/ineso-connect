@@ -26,22 +26,17 @@ function QRSearch({ open, setQRModal }) {
       let qr_code = aesDecrypt(e.data.split("&id=")[1]);
       setProgress(true);
 
+      dispatchAction(ActionSetQR("ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410"));
+      dispatchAction(
+        ActionSearchDevice({
+          clientId,
+          qr_code: "ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410",
+        })
+      );
       setTimeout(() => {
         setProgress(false);
-        //set value to redux
-        dispatchAction(
-          ActionSetQR("ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd")
-        );
-
-        dispatchAction(
-          ActionSearchDevice({
-            clientId,
-            qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd",
-          })
-        );
-
         setQRModal(false);
-      }, 1500);
+      }, 2000);
     }
   };
   return (

@@ -1,11 +1,36 @@
 import React from "react";
-import { Dimensions, ImageBackground, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import { RNCamera } from "react-native-camera";
+import { Text } from "react-native-paper";
 import QRCodeScanner from "react-native-qrcode-scanner";
 
 function QRScanner({ type, handleReadQR }) {
   return (
     <>
+      <TouchableHighlight
+        style={{
+          position: "relative",
+          width: 160,
+          padding: 16,
+          borderRadius: 6,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Re Scan
+          </Text>
+        </View>
+      </TouchableHighlight>
       <QRCodeScanner
         customMarker={
           <View style={styles.customMarker}>

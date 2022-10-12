@@ -77,8 +77,8 @@ const DeviceGoogleMaps = () => {
               devices.data[0].metadata.gpsLocation.longitude
                 ? devices.data[0].metadata.gpsLocation.longitude
                 : 4.748706,
-            latitudeDelta: 0.0003,
-            longitudeDelta: 0.0003,
+            latitudeDelta: 0.003,
+            longitudeDelta: 0.003,
           }}
           style={{
             ...StyleSheet.absoluteFillObject,
