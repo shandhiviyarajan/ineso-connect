@@ -164,8 +164,8 @@ const GenerateImage = model => {
         case 'BB12_001_CWF_W':
             return require('../../catalog/BB12_001_CWF_W/picture.png');
 
-        case 'levante_SSL_868':
-            return require('../../catalog/levante_SSL_868/picture.png');
+        case 'LEVANTE_SSL_868':
+            return require('../../catalog/LEVANTE_SSL_868/picture.png');
 
         case 'SVL_DN15DA_868_BSP_S':
             return require('../../catalog/SVL_DN15DA_868_BSP_S/picture.png');

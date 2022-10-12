@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   LogoutAction,
@@ -131,6 +131,39 @@ export const SelectBoxes = ({ navigation }) => {
     }
   }, [client]);
 
+  const [defaultClient, setDefaultClient] = React.useState(null);
+
+  React.useEffect(() => {
+    console.log(clients);
+
+    if (clients.data) {
+      dispatchAction(ActionSetClientId(clients.data[0].id));
+
+      setDefaultClient(clients.data[0]);
+
+      dispatchAction(
+        ActionFetchSites({
+          clientId: clients.data[0].id,
+        })
+      );
+
+      //fetch single client for alerts
+
+      dispatchAction(
+        ActionFetchClient({
+          clientId: clients.data[0].id,
+        })
+      );
+
+      setPayload((prevState) => ({
+        ...prevState,
+        clientId: clients.data[0].id,
+        siteId: false,
+        groupId: false,
+      }));
+    }
+  }, [clients]);
+
   return (
     <>
       <View
@@ -142,6 +175,7 @@ export const SelectBoxes = ({ navigation }) => {
         <View style={ContentStyle.card}>
           <View>
             <SelectBox
+              defaultValue={defaultClient}
               placeholder="CLIENTS"
               onSelect={(client) => {
                 handleClientSelect(client);

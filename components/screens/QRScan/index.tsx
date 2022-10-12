@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Alert,
+  TouchableHighlight,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -16,11 +17,16 @@ import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
+import { Modal } from "react-native-paper";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
 
+  const client = useSelector((state) => state.client.client.data);
+
   const clientId = useSelector((state) => state.client.clientId);
+
+  const activate = useSelector((state) => state.qr.activate);
   const [isLoading, setLoading] = React.useState(false);
 
   const [qr_code, setQRCode] = React.useState(null);
@@ -42,10 +48,11 @@ function QRActivate() {
 
   React.useEffect(() => {
     if (qr_code) {
+      Alert.alert("Scaning...");
       dispatchAction(
         ActionActivateDevice({
           clientId,
-          qr_code: "ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410",
+          qr_code,
         })
       );
     }
@@ -53,17 +60,13 @@ function QRActivate() {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!clientId) {
-        Alert.alert(
-          "Please select a Client",
-          "Client id not available to perform the QR Scan search",
-          [
-            {
-              text: "Return to Devices",
-              onPress: () => navigation.navigate("Devices"),
-              style: "cancel",
-            },
-          ]
+      if (client) {
+        Alert.alert("Scaning...");
+        dispatchAction(
+          ActionActivateDevice({
+            clientId,
+            qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-1fdafdaf",
+          })
         );
       }
     }, [])
@@ -72,39 +75,46 @@ function QRActivate() {
   return (
     <>
       <AppCustomHeader navigation={navigation} />
-      {clientId && (
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-          }}
-        >
-          <View style={styles.bottomContainer}>
-            {!clientId && (
+
+      <Modal visible={true}></Modal>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <View style={styles.bottomContainer}>
+          {!client && (
+            <>
               <Text style={styles.bottomContainerText}>
                 Please select a Client & Start Scanning the QR Code
               </Text>
-            )}
-            {isLoading && (
-              <>
-                <ActivityIndicator color="#000" />
-              </>
-            )}
-            {!isLoading && (
-              <>
-                <Text style={styles.bottomContainerText}>
-                  Activate your device by Scanning the QR code.
-                </Text>
-              </>
-            )}
-          </View>
+              <TouchableHighlight>
+                <View>
+                  <Text>View Devices</Text>
+                </View>
+              </TouchableHighlight>
+            </>
+          )}
+          {isLoading && client && (
+            <>
+              <ActivityIndicator color="#000" />
+            </>
+          )}
+          {!isLoading && client && (
+            <>
+              <Text style={styles.bottomContainerText}>
+                Activate your device by Scanning the QR code.
+              </Text>
+            </>
+          )}
         </View>
-      )}
+      </View>
 
-      {clientId && (
+      {client && (
         <>
           <View
             style={{

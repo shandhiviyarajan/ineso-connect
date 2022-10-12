@@ -7,7 +7,6 @@ import {
   View,
 } from "react-native";
 import { RNCamera } from "react-native-camera";
-import { Text } from "react-native-paper";
 import QRCodeScanner from "react-native-qrcode-scanner";
 
 function QRScanner({ type, handleReadQR }) {
@@ -21,15 +20,7 @@ function QRScanner({ type, handleReadQR }) {
           borderRadius: 6,
         }}
       >
-        <View>
-          <Text
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Re Scan
-          </Text>
-        </View>
+        <View></View>
       </TouchableHighlight>
       <QRCodeScanner
         customMarker={
