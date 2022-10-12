@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Alert,
   Dimensions,
   ImageBackground,
   StyleSheet,
@@ -8,29 +7,22 @@ import {
   View,
 } from "react-native";
 import { RNCamera } from "react-native-camera";
-import { Text } from "react-native-paper";
 import QRCodeScanner from "react-native-qrcode-scanner";
 
-function QRScanner({ type, handleReadQR, resetScanner }) {
-  let scannerRef = React.useRef(null);
-
+function QRScanner({ type, handleReadQR }) {
   return (
     <>
       <TouchableHighlight
-        onPress={() => {
-          resetScanner(scannerRef);
-        }}
         style={{
           position: "relative",
-          width: 0,
-          padding: 0,
-          borderRadius: 0,
+          width: 160,
+          padding: 16,
+          borderRadius: 6,
         }}
-      ></TouchableHighlight>
+      >
+        <View></View>
+      </TouchableHighlight>
       <QRCodeScanner
-        ref={({ e }) => {
-          scannerRef = e;
-        }}
         customMarker={
           <View style={styles.customMarker}>
             <ImageBackground
@@ -52,7 +44,7 @@ function QRScanner({ type, handleReadQR, resetScanner }) {
           width: Dimensions.get("window").height / 2.5,
           height: "auto",
         }}
-        reactivate={false}
+        reactivate={true}
         onRead={handleReadQR}
         flashMode={RNCamera.Constants.FlashMode.auto}
       />

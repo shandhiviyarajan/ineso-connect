@@ -8,10 +8,10 @@ export function* watchActivateDevice() {
     while (true) {
         const { payload } = yield take(QR_TYPES.ACTIVATE_DEVICE);
         const response = yield call(apiSearchDevices, payload);
-        if (response && response.status === 200) {
-            let deviceId = `${response && response.data.data[0].vendor}:${response && response.data.data[0].serial}`
-
+        console.log("response", response);
+        if (response && response.status === 200 && response.data.data && response.data.data[0]) {
             try {
+                let deviceId = `${response && response.data.data[0].vendor}:${response && response.data.data[0].serial}`;
                 const activeResponse = yield call(apiActiveDevice, {
                     clientId: payload.clientId,
                     deviceId,
@@ -25,6 +25,9 @@ export function* watchActivateDevice() {
                 Message("error", error.response.data.message, " ");
                 yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: error });
             }
+        } else {
+            yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: "Device not found" });
+            Message("error", "Device not found", "")
         }
     }
 };

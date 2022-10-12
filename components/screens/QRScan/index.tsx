@@ -8,8 +8,6 @@ import {
   Dimensions,
   Alert,
   TouchableHighlight,
-  Modal,
-  Image,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -19,13 +17,16 @@ import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
-import { SystemColors } from "../../../core/Styles/theme/colors";
-import GenerateImage from "../../../core/utils/GenerateImage";
+import { Modal } from "react-native-paper";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
 
+  const client = useSelector((state) => state.client.client.data);
+
   const clientId = useSelector((state) => state.client.clientId);
+
+  const activate = useSelector((state) => state.qr.activate);
   const [isLoading, setLoading] = React.useState(false);
 
   const [qr_code, setQRCode] = React.useState(null);
@@ -47,6 +48,7 @@ function QRActivate() {
 
   React.useEffect(() => {
     if (qr_code) {
+      Alert.alert("Scaning...");
       dispatchAction(
         ActionActivateDevice({
           clientId,
@@ -58,181 +60,61 @@ function QRActivate() {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (clientId) {
-        console.log(clientId);
-      } else {
-        Alert.alert(
-          "Please select a Client",
-          "Client id not available to perform the QR Scan search",
-          [
-            {
-              text: "Return to Devices",
-              onPress: () => navigation.navigate("Devices"),
-              style: "cancel",
-            },
-          ]
+      if (client) {
+        Alert.alert("Scaning...");
+        dispatchAction(
+          ActionActivateDevice({
+            clientId,
+            qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-1fdafdaf",
+          })
         );
       }
     }, [])
   );
 
-  const resetScanner = (scannerRef) => {
-    scannerRef.reactivate();
-  };
-
   return (
     <>
       <AppCustomHeader navigation={navigation} />
-      <Modal animationType="fade" visible={true} transparent={true}>
-        {!isLoading && (
-          <>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgba(255,255,255,.85)",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  textAlign: "center",
-                  fontWeight: "600",
-                  paddingVertical: 24,
-                }}
-              >
-                No Devices found !
-              </Text>
 
-              <TouchableHighlight
-                onPress={resetScanner}
-                style={{
-                  backgroundColor: "#000",
-                  width: 160,
-                  paddingVertical: 12,
-                  paddingHorizontal: 12,
-                }}
-              >
+      <Modal visible={true}></Modal>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <View style={styles.bottomContainer}>
+          {!client && (
+            <>
+              <Text style={styles.bottomContainerText}>
+                Please select a Client & Start Scanning the QR Code
+              </Text>
+              <TouchableHighlight>
                 <View>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "#fff",
-                      fontSize: 16,
-                    }}
-                  >
-                    RE SCAN
-                  </Text>
+                  <Text>View Devices</Text>
                 </View>
               </TouchableHighlight>
-            </View>
-          </>
-        )}
-
-        {isLoading && (
-          <>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgba(255,255,255,.85)",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  textAlign: "center",
-                  fontWeight: "600",
-                  paddingVertical: 6,
-                }}
-              >
-                INEPL-S04-02-868
+            </>
+          )}
+          {isLoading && client && (
+            <>
+              <ActivityIndicator color="#000" />
+            </>
+          )}
+          {!isLoading && client && (
+            <>
+              <Text style={styles.bottomContainerText}>
+                Activate your device by Scanning the QR code.
               </Text>
-              <Text style={{ fontSize: 16, paddingVertical: 6 }}>
-                PM light sensor
-              </Text>
-              <Image
-                source={GenerateImage("INEPL-S04-02-868")}
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-              />
-              <View
-                style={{
-                  backgroundColor: "#fff",
-                  paddingHorizontal: 12,
-                  paddingVertical: 12,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "green",
-                    fontWeight: "600",
-                    paddingVertical: 24,
-                    fontSize: 24,
-                  }}
-                >
-                  Device Activated !
-                </Text>
-              </View>
-
-              <TouchableHighlight
-                onPress={resetScanner}
-                style={{
-                  backgroundColor: "#000",
-                  width: 160,
-                  paddingVertical: 12,
-                  paddingHorizontal: 12,
-                  marginVertical: 12,
-                }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "#fff",
-                      fontSize: 16,
-                    }}
-                  >
-                    View Device
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          </>
-        )}
-      </Modal>
-
-      {clientId && (
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-          }}
-        >
-          <View style={styles.bottomContainer}>
-            {isLoading && (
-              <>
-                <ActivityIndicator color="#000" />
-              </>
-            )}
-            {!isLoading && (
-              <>
-                <Text style={styles.bottomContainerText}>
-                  Activate your device by Scanning the QR code.{" "}
-                </Text>
-              </>
-            )}
-          </View>
+            </>
+          )}
         </View>
-      )}
-      {clientId && (
+      </View>
+
+      {client && (
         <>
           <View
             style={{
@@ -240,11 +122,7 @@ function QRActivate() {
               backgroundColor: "#000",
             }}
           >
-            <QRScanner
-              type={type}
-              handleReadQR={handleReadQR}
-              resetScanner={resetScanner}
-            />
+            <QRScanner type={type} handleReadQR={handleReadQR} />
           </View>
         </>
       )}
