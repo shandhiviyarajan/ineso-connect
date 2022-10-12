@@ -27,7 +27,6 @@ const qrReducer = (state = initialState, action) => {
     case QR_TYPES.ACTIVATE_DEVICE:
       return {
         ...state,
-
         activate: {
           isLoading: false,
           data: false,

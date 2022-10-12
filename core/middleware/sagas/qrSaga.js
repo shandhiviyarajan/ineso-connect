@@ -25,8 +25,6 @@ export function* watchActivateDevice() {
                 Message("error", error.response.data.message, " ");
                 yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: error });
             }
-
-
         }
     }
 };

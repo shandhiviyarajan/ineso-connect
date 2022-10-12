@@ -7,6 +7,9 @@ import {
   ActivityIndicator,
   Dimensions,
   Alert,
+  TouchableHighlight,
+  Modal,
+  Image,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -16,6 +19,8 @@ import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
+import { SystemColors } from "../../../core/Styles/theme/colors";
+import GenerateImage from "../../../core/utils/GenerateImage";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
@@ -45,7 +50,7 @@ function QRActivate() {
       dispatchAction(
         ActionActivateDevice({
           clientId,
-          qr_code: "ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410",
+          qr_code,
         })
       );
     }
@@ -53,7 +58,9 @@ function QRActivate() {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!clientId) {
+      if (clientId) {
+        console.log(clientId);
+      } else {
         Alert.alert(
           "Please select a Client",
           "Client id not available to perform the QR Scan search",
@@ -69,9 +76,136 @@ function QRActivate() {
     }, [])
   );
 
+  const resetScanner = (scannerRef) => {
+    scannerRef.reactivate();
+  };
+
   return (
     <>
       <AppCustomHeader navigation={navigation} />
+      <Modal animationType="fade" visible={true} transparent={true}>
+        {!isLoading && (
+          <>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgba(255,255,255,.85)",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  textAlign: "center",
+                  fontWeight: "600",
+                  paddingVertical: 24,
+                }}
+              >
+                No Devices found !
+              </Text>
+
+              <TouchableHighlight
+                onPress={resetScanner}
+                style={{
+                  backgroundColor: "#000",
+                  width: 160,
+                  paddingVertical: 12,
+                  paddingHorizontal: 12,
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#fff",
+                      fontSize: 16,
+                    }}
+                  >
+                    RE SCAN
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </>
+        )}
+
+        {isLoading && (
+          <>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgba(255,255,255,.85)",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  textAlign: "center",
+                  fontWeight: "600",
+                  paddingVertical: 6,
+                }}
+              >
+                INEPL-S04-02-868
+              </Text>
+              <Text style={{ fontSize: 16, paddingVertical: 6 }}>
+                PM light sensor
+              </Text>
+              <Image
+                source={GenerateImage("INEPL-S04-02-868")}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              />
+              <View
+                style={{
+                  backgroundColor: "#fff",
+                  paddingHorizontal: 12,
+                  paddingVertical: 12,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "green",
+                    fontWeight: "600",
+                    paddingVertical: 24,
+                    fontSize: 24,
+                  }}
+                >
+                  Device Activated !
+                </Text>
+              </View>
+
+              <TouchableHighlight
+                onPress={resetScanner}
+                style={{
+                  backgroundColor: "#000",
+                  width: 160,
+                  paddingVertical: 12,
+                  paddingHorizontal: 12,
+                  marginVertical: 12,
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#fff",
+                      fontSize: 16,
+                    }}
+                  >
+                    View Device
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </>
+        )}
+      </Modal>
+
       {clientId && (
         <View
           style={{
@@ -83,11 +217,6 @@ function QRActivate() {
           }}
         >
           <View style={styles.bottomContainer}>
-            {!clientId && (
-              <Text style={styles.bottomContainerText}>
-                Please select a Client & Start Scanning the QR Code
-              </Text>
-            )}
             {isLoading && (
               <>
                 <ActivityIndicator color="#000" />
@@ -96,14 +225,13 @@ function QRActivate() {
             {!isLoading && (
               <>
                 <Text style={styles.bottomContainerText}>
-                  Activate your device by Scanning the QR code.
+                  Activate your device by Scanning the QR code.{" "}
                 </Text>
               </>
             )}
           </View>
         </View>
       )}
-
       {clientId && (
         <>
           <View
@@ -112,7 +240,11 @@ function QRActivate() {
               backgroundColor: "#000",
             }}
           >
-            <QRScanner type={type} handleReadQR={handleReadQR} />
+            <QRScanner
+              type={type}
+              handleReadQR={handleReadQR}
+              resetScanner={resetScanner}
+            />
           </View>
         </>
       )}

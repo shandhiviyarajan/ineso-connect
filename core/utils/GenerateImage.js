@@ -3,6 +3,8 @@ import { Alert } from "react-native";
 
 const GenerateImage = model => {
     switch (model) {
+        case 'LEVANTE_SSL_868':
+            return require("../../catalog/LEVANTE_SSL_868/picture.png");
         case 'INERI-TAG-HIGH_LOW_BED':
             return require("../../catalog/ineso/INERI-TAG-HIGH_LOW_BED/picture.png");
         case 'INESP-PM1-01-433':
@@ -128,26 +130,19 @@ const GenerateImage = model => {
 
             return require('../../catalog/ineso/INESL-S04-02-868/picture.png');
         case 'INESP-CR1-01-868':
-
             return require('../../catalog/ineso/INESP-CR1-01-868/picture.png');
         case 'INERI-TAG-MAXISKY':
-
             return require('../../catalog/ineso/INERI-TAG-MAXISKY/picture.png');
 
         case 'INEDL-R01-868':
-
             return require('../../catalog/ineso/INEDL-R01-01-868/picture.png');
 
         case 'INEDL-R01-01-868':
-
             return require('../../catalog/ineso/INEDL-R01-01-868/picture.png');
         case 'INEDL-R01-02-868':
-
-
             return require('../../catalog/ineso/INEDL-R01-02-868/picture.png');
 
         case 'INERI-TAG-RESIDENT_BOX':
-
             return require('../../catalog/ineso/INERI-TAG-RESIDENT_BOX/picture.png');
 
         case 'INEMS-PM1-01-868':
@@ -163,19 +158,14 @@ const GenerateImage = model => {
             return require('../../catalog/BB10_LBV_CLP_W/picture.png');
         case 'BB12_001_CWF_W':
             return require('../../catalog/BB12_001_CWF_W/picture.png');
-
         case 'levante_SSL_868':
-            return require('../../catalog/levante_SSL_868/picture.png');
-
+            return require('../../catalog/LEVANTE_SSL_868/picture.png');
         case 'SVL_DN15DA_868_BSP_S':
             return require('../../catalog/SVL_DN15DA_868_BSP_S/picture.png');
-
         case 'SSL_868':
             return require('../../catalog/SSL_868/picture.png');
-
         case 'VSR10_WR':
             return require('../../catalog/VSR10_WR/picture.png');
-
         case 'WD600_UMB':
             return require('../../catalog/WD600_UMB/picture.png');
         case 'WD700_UMB':

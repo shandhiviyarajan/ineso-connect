@@ -8,6 +8,7 @@ export function* watchAuthUser() {
     const { payload } = yield take(AUTH_TYPES.LOGIN_START);
     try {
       const response = yield call(apiLogin, payload);
+      console.log(response);
       yield put({ type: AUTH_TYPES.LOGIN_SUCCESS, payload: response });
     } catch (error) {
       yield put({ type: AUTH_TYPES.LOGIN_FAIL, payload: error });
