@@ -1,10 +1,7 @@
 import React from "react";
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { StyleSheet, Text, View } from "react-native";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { useSelector } from "react-redux";
-import GenerateImage from "../../../core/utils/GenerateImage";
-import { AppCustomHeader } from "../../molecules/AppHeader";
-import { useNavigation } from "@react-navigation/native";
 
 import image from "../../../assets/images/map-marker.png";
 const DeviceGoogleMaps = () => {
@@ -88,7 +85,7 @@ const DeviceGoogleMaps = () => {
             devices.data &&
             devices.data.map((device, i) => (
               <Marker
-                key={device.id}
+                key={"map-marker" + i}
                 coordinate={{
                   longitude:
                     device.metadata.gpsLocation.longitude +

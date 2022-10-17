@@ -162,6 +162,20 @@ const Devices = () => {
       </View>
     );
   }
+
+  function ActiveDevice() {
+    return (
+      <View
+        style={{
+          backgroundColor: "#fff",
+          height: 32,
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ color: "green", textAlign: "center" }}>Active</Text>
+      </View>
+    );
+  }
   function DeviceCard({ onPress, device }) {
     return (
       <>
@@ -222,11 +236,7 @@ const Devices = () => {
                   {device.metadata.model}
                 </Text>
               </View>
-              <View
-                style={{
-                  minWidth: 280,
-                }}
-              >
+              <View>
                 <Text
                   style={{
                     color: "#888",
@@ -238,30 +248,15 @@ const Devices = () => {
               </View>
               <View
                 style={{
-                  justifyContent: "space-between",
                   flexDirection: "row",
                   alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "50%",
                 }}
               >
                 {device.online_status && <Online />}
                 {!device.online_status && <OffLine />}
-
-                {device.metadata.active && (
-                  <View
-                    style={{
-                      backgroundColor: "#fff",
-                      width: "auto",
-                      height: 24,
-                      borderRadius: 44,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{ color: "green", textAlign: "center" }}>
-                      Active
-                    </Text>
-                  </View>
-                )}
+                {device.metadata.active && <ActiveDevice />}
               </View>
             </View>
             <View

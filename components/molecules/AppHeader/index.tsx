@@ -22,7 +22,7 @@ export const AppCustomHeader = (props) => {
   };
 
   const alerts = useSelector((state) => state.alert.alerts.data);
-
+  const devices = useSelector((state) => state.device.devices);
   return (
     <>
       <View
@@ -31,26 +31,17 @@ export const AppCustomHeader = (props) => {
           position: "relative",
           zIndex: 1000,
           height: Platform.OS === "android" ? 56 : 90,
-          backgroundColor: SystemColors.primary,
           paddingTop: Platform.OS === "android" ? 6 : 40,
           paddingHorizontal: 12,
           flexDirection: "row",
           alignSelf: "center",
           justifyContent: "space-between",
-          elevation: 25,
-          shadowColor: "rgba(94, 132, 194, 1)",
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowOpacity: 0.5,
-          shadowRadius: 10,
+          elevation: 0,
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => handleDrawer()}
           style={{
-            backgroundColor: SystemColors.primary,
             width: 44,
             height: 44,
             justifyContent: "center",
@@ -61,10 +52,27 @@ export const AppCustomHeader = (props) => {
             style={{
               width: 24,
               height: 24,
+              tintColor: SystemColors.primary,
             }}
             source={require("../../../assets/images/drawer_menu_icon.png")}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <View>
+          <Text
+            style={{
+              fontSize: 22,
+              marginVertical: 4,
+              fontWeight: "500",
+            }}
+          >
+            My Devices
+          </Text>
+          <Text>
+            {devices && devices.data && devices.data.length
+              ? devices && devices.data && devices.data.length + " Devices"
+              : ""}
+          </Text>
+        </View>
 
         <View
           style={{
@@ -121,6 +129,7 @@ export const AppCustomHeader = (props) => {
             <Image
               source={require("../../../assets/images/alert-svgrepo-com.png")}
               style={{
+                tintColor: SystemColors.primary,
                 width: 18,
                 height: 20,
               }}
@@ -137,6 +146,7 @@ export const AppCustomHeader = (props) => {
             <Image
               source={require("../../../assets/images/profile_icon.png")}
               style={{
+                tintColor: SystemColors.primary,
                 width: 24,
                 height: 24,
               }}

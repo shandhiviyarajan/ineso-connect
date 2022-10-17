@@ -8,6 +8,7 @@ import {
   Dimensions,
   Alert,
   TouchableHighlight,
+  Modal,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -17,7 +18,6 @@ import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
-import { Modal } from "react-native-paper";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
@@ -48,7 +48,6 @@ function QRActivate() {
 
   React.useEffect(() => {
     if (qr_code) {
-      Alert.alert("Scaning...");
       dispatchAction(
         ActionActivateDevice({
           clientId,
@@ -58,25 +57,113 @@ function QRActivate() {
     }
   }, [qr_code]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (client) {
-        Alert.alert("Scaning...");
-        dispatchAction(
-          ActionActivateDevice({
-            clientId,
-            qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-1fdafdaf",
-          })
-        );
-      }
-    }, [])
-  );
+  useFocusEffect(React.useCallback(() => {}, []));
+
+  const [feedback, setFeedBackModal] = React.useState(false);
+  const [success, setSuccessModal] = React.useState(false);
+  React.useEffect(() => {
+    console.log(activate);
+    if (activate.errors) {
+      setFeedBackModal(true);
+    }
+
+    if (activate.data) {
+      setSuccessModal(true);
+    }
+  }, [activate]);
 
   return (
     <>
       <AppCustomHeader navigation={navigation} />
 
-      <Modal visible={true}></Modal>
+      <Modal visible={feedback} transparent={false} animationType="fade">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "600",
+              fontSize: 24,
+            }}
+          >
+            Device Not found
+          </Text>
+          <TouchableHighlight
+            style={{
+              backgroundColor: "#000",
+              width: 160,
+              paddingVertical: 12,
+              marginVertical: 12,
+            }}
+            onPress={() => {
+              navigation.navigate("Devices");
+              setFeedBackModal(false);
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  color: "#fff",
+                  fontSize: 16,
+                  fontWeight: "600",
+                  textAlign: "center",
+                }}
+              >
+                Close
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </Modal>
+
+      <Modal visible={success} transparent={false} animationType="fade">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "600",
+              color: "green",
+              fontSize: 24,
+            }}
+          >
+            Device Activated !
+          </Text>
+          <TouchableHighlight
+            style={{
+              backgroundColor: "#000",
+              width: 160,
+              paddingVertical: 12,
+              marginVertical: 12,
+            }}
+            onPress={() => {
+              navigation.navigate("Devices");
+              setSuccessModal(false);
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  color: "#fff",
+                  fontSize: 16,
+                  fontWeight: "600",
+                  textAlign: "center",
+                }}
+              >
+                Close
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </Modal>
       <View
         style={{
           flex: 1,
