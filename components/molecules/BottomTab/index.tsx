@@ -3,8 +3,8 @@ import React from "react";
 import { Image, Platform, Text, View } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import Devices from "../../screens/Devices";
-import DeviceGoogleMaps from "../../screens/GoogleMap";
 import QRActivate from "../../screens/QRScan";
+import Settings from "../../screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,9 +49,9 @@ function BottomTabController() {
                 style={{
                   tintColor: focused ? SystemColors.primary : "#666",
                   width: 20,
-                  height: 16,
+                  height: 20,
                 }}
-                source={require("../../../assets/images/list-icon.png")}
+                source={require("../../../assets/images/home-icon.png")}
               />
             </View>
           ),
@@ -95,7 +95,7 @@ function BottomTabController() {
       />
       <Tab.Screen
         name="Map"
-        component={DeviceGoogleMaps}
+        component={Settings}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -109,7 +109,7 @@ function BottomTabController() {
             >
               <Image
                 style={{ tintColor: focused ? SystemColors.primary : "#666" }}
-                source={require("../../../assets/images/map-marker.png")}
+                source={require("../../../assets/images/settings-icon.png")}
               />
             </View>
           ),
