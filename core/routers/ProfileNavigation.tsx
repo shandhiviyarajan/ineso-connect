@@ -2,13 +2,10 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../../components/screens/Profile";
 import Notifications from "../../components/screens/Notifications";
-import { Devices } from "../../components/screens/Devices";
 import { Device } from "../../components/screens/Devices/Device";
-import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import ChangeState from "../../components/screens/Notifications/ChangeState";
-import QRScan from "../../components/screens/QRScan";
-import QRSearch from "../../components/screens/QRScan/QRSearch";
 import BottomTabController from "../../components/molecules/BottomTab";
+import SettingsScreen from "../../components/screens/Settings";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -24,6 +21,7 @@ export const ProfileStackNavigation = () => {
       <ProfileStack.Screen name="Notifications" component={Notifications} />
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
       <ProfileStack.Screen name="Device" component={Device} />
+      <ProfileStack.Screen name="Settings" component={SettingsScreen} />
     </ProfileStack.Navigator>
   );
 };

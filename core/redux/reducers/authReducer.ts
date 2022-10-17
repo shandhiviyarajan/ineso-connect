@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AUTH_TYPES } from "../actions/authActions";
 
 const initialState = {
@@ -25,9 +26,15 @@ const authReducer = (
     };
     error: any;
     payload: any;
+    appConfig: null;
   }
 ) => {
   switch (action.type) {
+    case AUTH_TYPES.SET_CONFIG:
+      return {
+        ...state,
+        appConfig: action.payload,
+      };
     case AUTH_TYPES.LOGIN_START:
       return {
         ...state,

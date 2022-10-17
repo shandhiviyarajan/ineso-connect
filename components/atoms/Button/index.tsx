@@ -5,10 +5,17 @@ import {
   TouchableHighlight,
   ActivityIndicator,
   StyleSheet,
-  Image,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
+
 export const Button = (props) => {
+  const appConfig = useSelector((state) => state.auth.appConfig);
+  React.useEffect(() => {
+    SystemColors.primary =
+      appConfig && appConfig.color ? appConfig.color : "#c44518";
+  }, [appConfig]);
+
   const { underlayColor } = props;
   return (
     <TouchableHighlight

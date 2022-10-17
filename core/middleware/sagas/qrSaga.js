@@ -8,7 +8,7 @@ export function* watchActivateDevice() {
     while (true) {
         const { payload } = yield take(QR_TYPES.ACTIVATE_DEVICE);
         const response = yield call(apiSearchDevices, payload);
-        console.log("response", response);
+
         if (response && response.status === 200 && response.data.data && response.data.data[0]) {
             try {
                 let deviceId = `${response && response.data.data[0].vendor}:${response && response.data.data[0].serial}`;
@@ -38,7 +38,7 @@ export function* watchQRSearchDevice() {
         const { payload } = yield take(QR_TYPES.SEARCH_DEVICE);
         try {
             const response = yield call(apiSearchDevices, payload);
-            console.log(response);
+
             yield put({ type: QR_TYPES.SEARCH_DEVICE_SUCCESS, payload: response.data.data });
         } catch (error) {
             yield put({ type: QR_TYPES.SEARCH_DEVICE_FAIL, payload: error });

@@ -13,11 +13,11 @@ export const apiSearchDevices = async ({
     return await new Promise((resolve, reject) => {
         httpRequest.get(ACTIVATE.SEARCH_DEVICE(clientId, qr_code))
             .then((response) => {
-                console.log("search", response);
+
                 resolve(response);
             })
             .catch((error) => {
-                console.log(error);
+
                 reject(error);
             });
     });
@@ -31,7 +31,7 @@ export const apiActiveDevice = async ({
     return await new Promise((resolve, reject) => {
         httpRequest.post(ACTIVATE.ACTIVATE_DEVICE(clientId, deviceId))
             .then((response) => {
-                console.log("active", response);
+
                 resolve(response);
             })
             .catch((error) => {

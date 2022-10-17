@@ -5,7 +5,7 @@ import { SystemColors } from "../../../core/Styles/theme/colors";
 import Devices from "../../screens/Devices";
 import DeviceGoogleMaps from "../../screens/GoogleMap";
 import QRActivate from "../../screens/QRScan";
-import Settings from "../../screens/Settings";
+import SettingsScreen from "../../screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,12 +65,12 @@ function BottomTabController() {
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 64,
+                width: 56,
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 100,
                 backgroundColor: "#fff",
-                height: 64,
+                height: 56,
                 marginTop: -12,
                 position: "absolute",
                 top: -6,
@@ -85,8 +85,8 @@ function BottomTabController() {
               <Image
                 style={{
                   tintColor: focused ? SystemColors.primary : "#666",
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                 }}
                 source={require("../../../assets/images/plus-icon.png")}
               />
@@ -96,7 +96,7 @@ function BottomTabController() {
       />
       <Tab.Screen
         name="Map"
-        component={DeviceGoogleMaps}
+        component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

@@ -62,7 +62,6 @@ function QRActivate() {
   const [feedback, setFeedBackModal] = React.useState(false);
   const [success, setSuccessModal] = React.useState(false);
   React.useEffect(() => {
-    console.log(activate);
     if (activate.errors) {
       setFeedBackModal(true);
     }

@@ -28,7 +28,6 @@ export const apiFetchDevices = async ({ clientId, siteId, groupId }) => {
         httpRequest = await httpInstance();
         httpRequest.get(url)
             .then((response) => {
-                console.log(response);
                 resolve(response);
             })
             .catch((error) => {

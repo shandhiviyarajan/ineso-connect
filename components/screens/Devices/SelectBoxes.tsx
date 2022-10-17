@@ -134,8 +134,6 @@ export const SelectBoxes = ({ navigation }) => {
   const [defaultClient, setDefaultClient] = React.useState(null);
 
   React.useEffect(() => {
-    console.log(clients);
-
     if (clients.data) {
       dispatchAction(ActionSetClientId(clients.data[0].id));
 

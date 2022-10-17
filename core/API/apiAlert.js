@@ -29,7 +29,6 @@ export const apiUpdateAlertState = async ({
 
     const httpRequest = await httpInstance();
     return await new Promise((resolve, reject) => {
-        console.log(httpRequest);
         httpRequest.post(CLIENTS.UPDATE_STATE(clientId, alertId), {
             "state": payload,
         })
@@ -37,7 +36,7 @@ export const apiUpdateAlertState = async ({
                 resolve(response);
             })
             .catch((error) => {
-                console.log(error);
+
                 reject(error);
             });
     });

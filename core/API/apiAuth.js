@@ -33,12 +33,10 @@ export const apiLogout = async () => {
   return await httpClient()
     .get(ApiAuth.LOGOUT)
     .then((response) => {
-      setClientToken(response && response.data && response.data.access_token);
       Message("success", "Logged out", "");
       return response;
     })
     .catch((error) => {
-      Alert.alert(error.message);
       Message("error", "Logout failed !", error.response.data.message);
       return error;
     });

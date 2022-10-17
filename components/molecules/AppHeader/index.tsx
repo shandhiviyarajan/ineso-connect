@@ -3,12 +3,15 @@ import { View, Platform, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { StatusBar } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MeAction } from "../../../core/redux/actions/authActions";
 
 export const AppCustomHeader = (props) => {
   const navigation = useNavigation();
+  const me = useSelector((state) => state.auth.me.data);
+  const alerts = useSelector((state) => state.alert.alerts.data);
+  const devices = useSelector((state) => state.device.devices);
   const handleDrawer = () => {
     navigation.openDrawer();
   };
@@ -21,8 +24,12 @@ export const AppCustomHeader = (props) => {
     props.navigation.navigate("Notifications");
   };
 
-  const alerts = useSelector((state) => state.alert.alerts.data);
-  const devices = useSelector((state) => state.device.devices);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(MeAction());
+  }, []);
+
   return (
     <>
       <View

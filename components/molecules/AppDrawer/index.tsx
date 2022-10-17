@@ -20,24 +20,7 @@ import { SystemColors } from "../../../core/Styles/theme/colors";
 //app drawer
 export const AppDrawer = (props) => {
   const isLoading = useSelector((state) => state.auth.isLoading);
-
-  const navigation = useNavigation();
-
-  const dispatch = useDispatch();
-
   const me = useSelector((state) => state.auth.me.data);
-  React.useEffect(() => {
-    dispatch(MeAction());
-  }, [isLoading]);
-  const handleLogout = () => {
-    navigation.dispatch(DrawerActions.closeDrawer());
-    dispatch(LogoutAction());
-  };
-
-  const handleNavigation = (name) => {
-    props.navigation.navigate(name);
-  };
-
   return (
     <>
       <View style={{ flex: 1, backgroundColor: "#F2F6FC" }}>

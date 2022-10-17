@@ -1,10 +1,45 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { View, Text, Image, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+  ImageBackground,
+  Dimensions,
+  Alert,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
+import { ActionSetConfig } from "../../../core/redux/actions/authActions";
+
+import { SystemColors } from "../../../core/Styles/theme/colors";
+
 export const Welcome = ({ navigation }) => {
   const navigateTo = (screen) => {
     navigation.navigate(screen);
   };
+
+  const me = useSelector((state) => state.auth.me.data);
+
+  const appConfig = useSelector((state) => state.auth.appConfig);
+
+  const dispatchAction = useDispatch();
+
+  React.useEffect(() => {
+    navigation.addListener("state", () => {
+      AsyncStorage.getItem("@app-config").then((response) => {
+        console.log("welcome", response);
+        dispatchAction(ActionSetConfig(JSON.parse(response)));
+      });
+    });
+  }, []);
+
+  React.useEffect(() => {
+    SystemColors.primary =
+      appConfig && appConfig.color ? appConfig.color : "#c44518";
+  }, [appConfig]);
   return (
     <ScrollView
       alwaysBounceVertical={false}
@@ -13,89 +48,151 @@ export const Welcome = ({ navigation }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: 24,
-        backgroundColor: "#B54E29",
+        backgroundColor: SystemColors.primary,
       }}
     >
-      <View
+      <ImageBackground
+        resizeMode="cover"
         style={{
-          flex: 0.75,
-          justifyContent: "center",
-          alignItems: "center",
+          width: Dimensions.get("screen").width,
+          height: Dimensions.get("screen").height,
         }}
+        source={
+          appConfig && appConfig.background
+            ? {
+                uri: appConfig.background,
+              }
+            : require("../../../assets/images/app_bg.png")
+        }
       >
-        <Image
-          source={require("../../../assets/images/InesoMobileAppIcon.png")}
-          style={{ height: 200, width: 200 }}
-        />
-        <Text
+        <View
           style={{
-            fontSize: 36,
-            marginBottom: 12,
-            color: "#fff",
-            fontWeight: "600",
+            backgroundColor: "#000",
+            opacity: 0.25,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            position: "absolute",
+          }}
+        ></View>
+        <View
+          style={{
+            flex: 0.75,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          Connect
-        </Text>
-        <Text
-          style={{
-            fontSize: 20,
-            textAlign: "center",
-            color: "#f6f6f6",
-          }}
-        >
-          The blockchain-driven IoT platform to put your business at the next
-          level
-        </Text>
-      </View>
-      <View
-        style={{
-          flex: 0.25,
-          width: "100%",
-        }}
-      >
-        <TouchableHighlight
-          onPress={() => navigateTo("Login")}
-          activeOpacity={0.5}
-          underlayColor="#B54E29"
-          style={{
-            width: "100%",
-          }}
-        >
-          <View
+          {appConfig && appConfig.logo && (
+            <Image
+              style={{
+                width: "50%",
+                height: "50%",
+                maxHeight: 200,
+              }}
+              source={{
+                uri: appConfig.logo,
+              }}
+            />
+          )}
+
+          {!(appConfig && appConfig.logo) && (
+            <Image
+              style={{
+                width: "50%",
+                height: "50%",
+                maxHeight: 200,
+              }}
+              source={require("../../../assets/images/InesoMobileAppIcon.png")}
+            />
+          )}
+          <Text
             style={{
-              backgroundColor: "#B54E29",
-              borderWidth: 1,
-              borderColor: "#fff",
-              paddingHorizontal: 24,
-              paddingVertical: 12,
-              height: 48,
-              borderRadius: 0,
-              width: "100%",
+              fontSize: 36,
+              marginBottom: 12,
+              color: "#fff",
+              fontWeight: "600",
             }}
           >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "500",
-                fontSize: 18,
-                color: "#fff",
-              }}
-            >
-              CONTINUE
-            </Text>
-          </View>
-        </TouchableHighlight>
-        <Text
+            Connect
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              marginBottom: 12,
+              fontWeight: "600",
+              textAlign: "center",
+              color: SystemColors.primary_light,
+            }}
+          >
+            {appConfig && appConfig.name ? appConfig.name : ""}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              color: SystemColors.primary_light,
+            }}
+          >
+            The blockchain-driven IoT platform to put your business at the next
+            level
+          </Text>
+        </View>
+        <View
           style={{
-            color: "#ccc",
-            paddingVertical: 12,
-            textAlign: "center",
+            flex: 0.25,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          Version 1.0.0
-        </Text>
-      </View>
+          <TouchableHighlight
+            onPress={() => navigateTo("Login")}
+            activeOpacity={0.5}
+            underlayColor="#fff"
+            style={{
+              width: "80%",
+            }}
+          >
+            <View
+              style={{
+                paddingHorizontal: 24,
+                paddingVertical: 12,
+                height: 48,
+                borderRadius: 0,
+                width: "100%",
+                borderWidth: 1,
+                borderColor:
+                  appConfig && appConfig.color ? appConfig.color : "#fff",
+                backgroundColor:
+                  appConfig && appConfig.color
+                    ? appConfig.color
+                    : "transparent",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "500",
+                  fontSize: 18,
+                  color: "#fff",
+                }}
+              >
+                CONTINUE
+              </Text>
+            </View>
+          </TouchableHighlight>
+          <Text
+            style={{
+              color: "#d8d8d8",
+              paddingVertical: 12,
+              textAlign: "center",
+            }}
+          >
+            Version 2.0.0
+          </Text>
+        </View>
+      </ImageBackground>
     </ScrollView>
   );
 };

@@ -30,9 +30,18 @@ export const AUTH_TYPES = {
   RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS",
   RESET_PASSWORD_FAIL: "RESET_PASSWORD_FAIL",
 
+  SET_CONFIG: "SET_CONFIG",
+
 
 
 };
+
+export const ActionSetConfig = (payload) => {
+  return {
+    type: AUTH_TYPES.SET_CONFIG,
+    payload
+  }
+}
 //login actions
 export const LoginAction = (payload) => {
   return {
@@ -67,6 +76,9 @@ export const MeSuccessAction = (payload) => {
     type: AUTH_TYPES.ME_SUCCESS,
     payload,
   };
+
+
+
 };
 
 export const MeFailAction = (payload) => {

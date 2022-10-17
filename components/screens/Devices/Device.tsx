@@ -365,12 +365,17 @@ export const Device = ({ navigation }) => {
                     marginBottom: 12,
                   }}
                 >
-                  GPS location
+                  Last location
                 </Text>
                 <View
                   style={[
                     styles.card,
-                    { padding: 0, overflow: "hidden", position: "relative" },
+                    {
+                      padding: 0,
+                      overflow: "hidden",
+                      position: "relative",
+                      paddingBottom: 24,
+                    },
                   ]}
                 >
                   <MapView
@@ -383,7 +388,8 @@ export const Device = ({ navigation }) => {
                       longitudeDelta: 0.003,
                     }}
                     style={{
-                      height: 280,
+                      height: 160,
+                      marginBottom: 24,
                     }}
                   >
                     <MarkerAnimated
@@ -393,17 +399,8 @@ export const Device = ({ navigation }) => {
                       }}
                     />
                   </MapView>
-                  <View
-                    style={{
-                      position: "absolute",
-                      width: 200,
-                      bottom: 6,
-                      left: "50%",
-                      marginLeft: -100,
-                    }}
-                  >
-                    <Button secondary>Edit GPS</Button>
-                  </View>
+
+                  <Button secondary>Edit GPS coordinates</Button>
                 </View>
               </>
             )}

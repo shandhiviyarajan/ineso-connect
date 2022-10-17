@@ -4,8 +4,8 @@ import { Alert, LogBox } from "react-native";
 import { Message } from "../../components/molecules/Toast";
 import jwt_decode from "jwt-decode";
 //set default api url
-let BASE_URL = "https://connect-staging.inesocompany.com/api";
-//let BASE_URL = "https://connect.inesocompany.com/api";
+//let BASE_URL = "https://connect-staging.inesocompany.com/api";
+let BASE_URL = "https://connect.inesocompany.com/api";
 let TIME_OUT = 50000;
 let ACCESS_TOKEN: any = false;
 let axiosRequest = axios.create({
@@ -69,6 +69,11 @@ export const setToken = async (value: any) => {
   await AsyncStorage.setItem("@access_token", value);
 };
 
+export const removeToken = async () => {
+  await AsyncStorage.removeItem("@access_token");
+
+  console.log("test");
+};
 export const getToken = async () => {
   return await AsyncStorage.getItem("@access_token");
 };

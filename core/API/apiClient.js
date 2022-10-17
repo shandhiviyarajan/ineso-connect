@@ -19,7 +19,6 @@ export const apiFetchClients = async () => {
             })
             .catch((error) => {
                 reject(error);
-                Message("error", error.message, error.response.data.message);
             });
     });
 };
@@ -30,11 +29,9 @@ export const apiFetchClient = async ({ clientId }) => {
         httpRequest.get(CLIENTS.GET_CLIENT(clientId))
             .then((response) => {
                 resolve(response);
-
             })
             .catch((error) => {
                 reject(error);
-                Message("error", error.message, error.response.data.message);
             });
     });
 };
@@ -47,9 +44,7 @@ export const apiGetConfig = async ({ clientId }) => {
                 resolve(response);
             })
             .catch((error) => {
-
                 reject(error);
-                Message("error", error.message, error.response.data.message);
             });
     });
 };
