@@ -74,6 +74,7 @@ const DeviceGoogleMaps = () => {
         <MapView
           showsUserLocation={true}
           customMapStyle={[]}
+          zoomEnabled={true}
           initialRegion={{
             latitude:
               devices &&
@@ -117,7 +118,7 @@ const DeviceGoogleMaps = () => {
                     borderRadius: 44,
                     elevation: 5,
                     shadowOpacity: 0.15,
-                    shadowColor: "rgba(0,0,0,.15)",
+                    shadowColor: "rgba(0,0,0,.5)",
                     justifyContent: "center",
                     alignItems: "center",
                   }}

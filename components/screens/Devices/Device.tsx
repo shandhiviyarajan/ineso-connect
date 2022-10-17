@@ -301,11 +301,11 @@ export const Device = ({ navigation }) => {
                 Measurement
               </Text>
               {measures &&
-                measures.map((measure) => (
+                measures.map((measure, i) => (
                   <DeviceInfo
                     title={measure[0]}
                     value={measure[1]}
-                    key={measure[0]}
+                    key={"measure" + i}
                   />
                 ))}
 
@@ -332,8 +332,8 @@ export const Device = ({ navigation }) => {
               </Text>
               {activeDevice &&
                 activeDevice.metadata &&
-                activeDevice.metadata.lifecycle.map((cycle) => (
-                  <CommissionList>
+                activeDevice.metadata.lifecycle.map((cycle, i) => (
+                  <CommissionList key={"cycle" + i}>
                     {cycle.state.toUpperCase()} -
                     {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")} -
                     {cycle.desc}
