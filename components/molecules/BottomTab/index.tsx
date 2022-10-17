@@ -3,6 +3,7 @@ import React from "react";
 import { Image, Platform, Text, View } from "react-native";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import Devices from "../../screens/Devices";
+import DeviceGoogleMaps from "../../screens/GoogleMap";
 import QRActivate from "../../screens/QRScan";
 import Settings from "../../screens/Settings";
 
@@ -95,7 +96,7 @@ function BottomTabController() {
       />
       <Tab.Screen
         name="Map"
-        component={Settings}
+        component={DeviceGoogleMaps}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

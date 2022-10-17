@@ -74,8 +74,6 @@ function QRActivate() {
 
   return (
     <>
-      <AppCustomHeader navigation={navigation} />
-
       <Modal visible={feedback} transparent={false} animationType="fade">
         <View
           style={{
@@ -205,7 +203,7 @@ function QRActivate() {
         <>
           <View
             style={{
-              flex: 6,
+              flex: 4,
               backgroundColor: "#000",
             }}
           >
@@ -227,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   bottomContainer: {
-    padding: 12,
+    padding: 24,
     paddingHorizontal: 24,
     borderRadius: 50,
     color: "#000",
@@ -235,25 +233,11 @@ const styles = StyleSheet.create({
   },
   bottomContainerText: {
     color: "#000",
-    fontSize: 20,
-    lineHeight: 24,
+    paddingTop: 24,
+    fontSize: 24,
     fontWeight: "500",
     textAlign: "center",
     width: 240,
-    color: "#000",
-  },
-  containerStyle: {
-    flex: 2.5,
-    justifyContent: "flex-end",
-    alignContent: "flex-end",
-    backgroundColor: "#000",
-  },
-
-  cameraContainer: {
-    width: "100%",
-    height: "50%",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
