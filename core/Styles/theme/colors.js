@@ -3,7 +3,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 let primaryColor = "#B54E29";
 AsyncStorage.getItem("@app-config")
     .then(response => {
-        console.log("colors", response);
         primaryColor = JSON.parse(response).color;
     });
 

@@ -30,7 +30,6 @@ export const Welcome = ({ navigation }) => {
   React.useEffect(() => {
     navigation.addListener("state", () => {
       AsyncStorage.getItem("@app-config").then((response) => {
-        console.log("welcome", response);
         dispatchAction(ActionSetConfig(JSON.parse(response)));
       });
     });

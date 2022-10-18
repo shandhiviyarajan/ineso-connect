@@ -18,7 +18,7 @@ export function* watchAuthUser() {
 
         SystemColors.primary = responseProfile.data.data.distributor.color;
 
-        console.log(responseProfile.data.data.distributor);
+
 
         let config = {
           color: SystemColors.primary,
@@ -30,7 +30,7 @@ export function* watchAuthUser() {
         };
         //set app config data
 
-        console.log(config);
+
         AsyncStorage.setItem("@app-config", JSON.stringify(config));
 
         yield put({

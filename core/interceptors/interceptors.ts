@@ -71,8 +71,6 @@ export const setToken = async (value: any) => {
 
 export const removeToken = async () => {
   await AsyncStorage.removeItem("@access_token");
-
-  console.log("test");
 };
 export const getToken = async () => {
   return await AsyncStorage.getItem("@access_token");

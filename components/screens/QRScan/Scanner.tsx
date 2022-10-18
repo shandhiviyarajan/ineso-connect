@@ -44,7 +44,7 @@ function QRScanner({ type, handleReadQR }) {
           width: Dimensions.get("window").height / 2.5,
           height: "auto",
         }}
-        reactivate={true}
+        reactivate={false}
         onRead={handleReadQR}
         flashMode={RNCamera.Constants.FlashMode.auto}
       />

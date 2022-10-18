@@ -20,7 +20,7 @@ export const ProfileStackNavigation = () => {
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="Notifications" component={Notifications} />
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
-      <ProfileStack.Screen name="Device" component={Device} />
+      <ProfileStack.Screen name="All devices" component={Device} />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />
     </ProfileStack.Navigator>
   );

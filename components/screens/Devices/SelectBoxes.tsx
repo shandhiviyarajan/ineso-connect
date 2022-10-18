@@ -212,7 +212,18 @@ export const SelectBoxes = ({ navigation }) => {
                   </>
                 );
               }}
-              data={sites.data && sites.data ? sites.data : []}
+              data={
+                sites.data && sites.data
+                  ? [
+                      {
+                        name: "All sites",
+                        vendor: "",
+                        serial: "",
+                      },
+                      ...sites.data,
+                    ]
+                  : []
+              }
             />
           </View>
 
@@ -226,12 +237,12 @@ export const SelectBoxes = ({ navigation }) => {
               buttonTextAfterSelection={({ name }) => {
                 return (
                   <>
-                    <Text>{name}</Text>
+                    <Text>{name === "_default_" ? "All groups" : name}</Text>
                   </>
                 );
               }}
               rowTextForSelection={({ name }) => {
-                return name;
+                return name === "_default_" ? "All groups" : name;
               }}
               data={groups.data && groups.data ? groups.data : []}
             />
