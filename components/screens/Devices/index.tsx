@@ -216,7 +216,12 @@ const Devices = () => {
             >
               <Image
                 source={GenerateImage(device.metadata.model)}
-                style={{ height: 48, width: 48, borderRadius: 8 }}
+                style={{
+                  height: 48,
+                  width: 48,
+                  borderRadius: 8,
+                  tintColor: SystemColors.primary,
+                }}
               />
             </View>
             <View>
