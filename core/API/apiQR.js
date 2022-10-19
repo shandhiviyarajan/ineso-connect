@@ -14,6 +14,7 @@ export const apiSearchDevices = async ({
         httpRequest.get(ACTIVATE.SEARCH_DEVICE(clientId, qr_code))
             .then((response) => {
 
+                console.log(response.data.data);
                 resolve(response);
             })
             .catch((error) => {

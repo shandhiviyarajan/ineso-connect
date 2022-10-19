@@ -6,6 +6,7 @@ import { Device } from "../../components/screens/Devices/Device";
 import ChangeState from "../../components/screens/Notifications/ChangeState";
 import BottomTabController from "../../components/molecules/BottomTab";
 import SettingsScreen from "../../components/screens/Settings";
+import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -19,6 +20,13 @@ export const ProfileStackNavigation = () => {
       />
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="Notifications" component={Notifications} />
+      <ProfileStack.Screen
+        name="Device Maps"
+        component={DeviceGoogleMaps}
+        options={{
+          title: "All devices",
+        }}
+      />
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
       <ProfileStack.Screen name="All devices" component={Device} />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />

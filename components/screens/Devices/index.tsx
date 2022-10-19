@@ -107,7 +107,7 @@ const Devices = () => {
 
   //search by qr code if client id and qr code is valid
   React.useEffect(() => {
-    if (QR_CODE && clientId) {
+    if (QR_CODE) {
       dispatchAction(
         ActionSearchDevice({
           clientId,
@@ -215,7 +215,7 @@ const Devices = () => {
               }}
             >
               <Image
-                source={GenerateImage(device.metadata.model)}
+                source={GenerateImage(device && device.metadata?.model)}
                 style={{
                   height: 48,
                   width: 48,

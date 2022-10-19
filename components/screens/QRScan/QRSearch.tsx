@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, Alert } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +9,7 @@ import {
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { aesDecrypt } from "../../../core/utils/Backend";
 import { Button } from "../../atoms/Button";
+import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
 function QRSearch({ open, setQRModal }) {
   const requestClose = () => {};
@@ -20,7 +21,9 @@ function QRSearch({ open, setQRModal }) {
   const dispatchAction = useDispatch();
 
   const handleReadQR = (e) => {
+    // Alert.alert("Scanning");
     let qr_code = null;
+    console.log(e.data.split("&id="));
     if (
       e &&
       e.data &&
@@ -28,22 +31,27 @@ function QRSearch({ open, setQRModal }) {
       e.data.split("&id=").length > 0 &&
       e.data.split("&id=")[1]
     ) {
+      Message("success", "QR Code valid", "please wait... ");
       //decrypt the data id
-      qr_code = aesDecrypt(e.data.split("&id=")[1] && e.data.split("&id=")[1]);
+      qr_code = aesDecrypt(e.data.split("&id=")[1]);
 
       setProgress(true);
 
+      console.log(qr_code);
       dispatchAction(ActionSetQR(qr_code));
       dispatchAction(
         ActionSearchDevice({
           clientId,
-          qr_code: qr_code,
+          qr_code,
         })
       );
       setTimeout(() => {
         setProgress(false);
         setQRModal(false);
-      }, 2000);
+      }, 1500);
+    } else {
+      setQRModal(false);
+      Message("error", "QR Code not found", "Not a valid QR code ");
     }
   };
   return (
@@ -82,11 +90,7 @@ function QRSearch({ open, setQRModal }) {
             }}
           >
             <View style={{ flex: 0.8 }}>
-              <QRScanner
-                type="back"
-                scannerRef={null}
-                handleReadQR={handleReadQR}
-              />
+              <QRScanner type="back" handleReadQR={handleReadQR} />
             </View>
             <View style={{ flex: 0.1, width: "80%" }}>
               <Text

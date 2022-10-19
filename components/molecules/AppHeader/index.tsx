@@ -24,6 +24,10 @@ export const AppCustomHeader = (props) => {
     props.navigation.navigate("Notifications");
   };
 
+  const handleMapNav = () => {
+    props.navigation.navigate("Device Maps");
+  };
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -88,6 +92,29 @@ export const AppCustomHeader = (props) => {
             height: 44,
           }}
         ></View>
+
+        <View>
+          <TouchableOpacity
+            onPress={handleMapNav}
+            style={{
+              position: "relative",
+              overflow: "visible",
+              width: 44,
+              height: 44,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../../../assets/images/map-marker.png")}
+              style={{
+                height: 22,
+                width: 17,
+                tintColor: SystemColors.primary,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             marginRight: 24,

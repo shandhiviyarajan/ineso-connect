@@ -34,6 +34,7 @@ export const ActionSetQR = (payload) => {
 
 export const ActionSearchDevice = (payload) => {
 
+    console.log("QR_Type", payload);
     return {
         type: QR_TYPES.SEARCH_DEVICE,
         payload,

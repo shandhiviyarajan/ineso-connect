@@ -142,7 +142,7 @@ function QRActivate() {
               marginVertical: 12,
             }}
             onPress={() => {
-              navigation.navigate("Devices");
+              navigation.navigate("All devices");
               setSuccessModal(false);
             }}
           >
