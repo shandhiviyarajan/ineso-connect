@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, Modal, Alert, Pressable } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
-import QRCodeScanner from "react-native-qrcode-scanner";
+import { View, Text, Modal } from "react-native";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   ActionSearchDevice,
@@ -21,16 +20,24 @@ function QRSearch({ open, setQRModal }) {
   const dispatchAction = useDispatch();
 
   const handleReadQR = (e) => {
-    if (e.data && e.data.split("&id=").length > 0) {
+    let qr_code = null;
+    if (
+      e &&
+      e.data &&
+      e.data.split("&id=") &&
+      e.data.split("&id=").length > 0 &&
+      e.data.split("&id=")[1]
+    ) {
       //decrypt the data id
-      let qr_code = aesDecrypt(e.data.split("&id=")[1]);
+      qr_code = aesDecrypt(e.data.split("&id=")[1] && e.data.split("&id=")[1]);
+
       setProgress(true);
 
-      dispatchAction(ActionSetQR("ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410"));
+      dispatchAction(ActionSetQR(qr_code));
       dispatchAction(
         ActionSearchDevice({
           clientId,
-          qr_code: "ineso:1ba7430b-1b4c-4688-9a76-56ad39c7b410",
+          qr_code: qr_code,
         })
       );
       setTimeout(() => {

@@ -19,7 +19,7 @@ function BottomTabController() {
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: "#eee",
+          backgroundColor: "#f1f1f1",
           height: 56,
           borderRadius: 0,
           borderWidth: 0,
@@ -48,7 +48,7 @@ function BottomTabController() {
             >
               <Image
                 style={{
-                  tintColor: focused ? SystemColors.primary : "#666",
+                  tintColor: focused ? SystemColors.primary : "#888",
                   width: 20,
                   height: 20,
                 }}
@@ -84,7 +84,7 @@ function BottomTabController() {
             >
               <Image
                 style={{
-                  tintColor: focused ? SystemColors.primary : "#666",
+                  tintColor: focused ? SystemColors.primary : "#888",
                   width: 20,
                   height: 20,
                 }}
@@ -109,7 +109,7 @@ function BottomTabController() {
               }}
             >
               <Image
-                style={{ tintColor: focused ? SystemColors.primary : "#666" }}
+                style={{ tintColor: focused ? SystemColors.primary : "#888" }}
                 source={require("../../../assets/images/settings-icon.png")}
               />
             </View>

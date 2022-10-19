@@ -6,6 +6,7 @@ import { ActivityIndicator } from "react-native-paper";
 
 import { useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
+import { toCapitalize } from "../../../core/utils/Capitalize";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
 import { LinkButton } from "../../atoms/LinkButton";
@@ -31,18 +32,19 @@ export const Device = ({ navigation }) => {
     );
   }
 
-  function DeviceInfo({ title, value }) {
+  function DeviceInfo({ title, value, index }) {
     return (
       <View
         style={{
           flex: 1,
           paddingVertical: 12,
-          paddingHorizontal: 12,
+          paddingHorizontal: 24,
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
           borderBottomWidth: 0.5,
           borderBottomColor: "#d8d8d8",
+          backgroundColor: index % 2 === 0 ? "#f1f1f0" : "#fff",
         }}
       >
         <View
@@ -53,20 +55,13 @@ export const Device = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <Image
-            source={require("../../../assets/images/InesoLogoBanner.png")}
-            style={{
-              width: 32,
-              height: 32,
-              marginRight: 12,
-            }}
-          />
           <Text
             style={{
               fontSize: 16,
+              fontWeight: "500",
             }}
           >
-            {title}
+            {toCapitalize(title)}
           </Text>
         </View>
         <Text
@@ -211,6 +206,7 @@ export const Device = ({ navigation }) => {
                 width: 56,
                 height: 56,
                 marginRight: 12,
+                tintColor: SystemColors.primary,
               }}
             ></Image>
             <View>
@@ -305,6 +301,7 @@ export const Device = ({ navigation }) => {
                   <DeviceInfo
                     title={measure[0]}
                     value={measure[1]}
+                    index={i}
                     key={"measure" + i}
                   />
                 ))}

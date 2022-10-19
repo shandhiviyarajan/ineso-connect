@@ -89,18 +89,27 @@ export const SelectBoxes = ({ navigation }) => {
     const { vendor, serial } = site;
 
     const siteId = `${vendor}:${serial}`;
-    dispatchAction(ActionSetSiteId(siteId));
-    //ferch groups using site id & Client id
-    dispatchAction(
-      ActionFetchGroups({
-        clientId: payload.clientId,
+
+    if (vendor && serial) {
+      dispatchAction(ActionSetSiteId(siteId));
+      //ferch groups using site id & Client id
+      dispatchAction(
+        ActionFetchGroups({
+          clientId: payload.clientId,
+          siteId,
+        })
+      );
+
+      setPayload((prevState) => ({
+        ...prevState,
         siteId,
-      })
-    );
-    setPayload((prevState) => ({
-      ...prevState,
-      siteId,
-    }));
+      }));
+    } else {
+      setPayload((prevState) => ({
+        ...prevState,
+        siteId: false,
+      }));
+    }
   };
 
   //select site id
@@ -196,19 +205,17 @@ export const SelectBoxes = ({ navigation }) => {
               onSelect={(site) => {
                 handleSiteSelect(site);
               }}
-              buttonTextAfterSelection={({ vendor, serial }) => {
+              buttonTextAfterSelection={({ name, vendor, serial }) => {
                 return (
                   <>
-                    <Text>{`${vendor}:${serial}`}</Text>
+                    <Text>{name}</Text>
                   </>
                 );
               }}
               rowTextForSelection={({ name, vendor, serial }) => {
                 return (
                   <>
-                    <Text style={{ fontSize: 16, width: "100%" }}>
-                      {name} {`${vendor}:${serial}`}
-                    </Text>
+                    <Text style={{ fontSize: 16, width: "100%" }}>{name}</Text>
                   </>
                 );
               }}

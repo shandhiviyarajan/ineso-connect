@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   removeToken,
   setClientToken,
+  setToken,
 } from "../../../core/interceptors/interceptors";
 import {
   LogoutAction,
@@ -34,6 +35,7 @@ function Profile() {
       dispatch(ActionFetchClientSuccess(null));
       dispatch(ActionFetchDevicesSuccess(null));
       dispatch(ActionUpdatePayload(null));
+      setToken(null);
       setClientToken(null);
       dispatch(LogoutAction());
     });

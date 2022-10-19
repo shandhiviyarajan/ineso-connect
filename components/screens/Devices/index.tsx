@@ -64,7 +64,7 @@ const Devices = () => {
         deviceId: `${vendor}:${serial}`,
       })
     );
-    navigation.navigate("All device");
+    navigation.navigate("All devices");
   };
 
   //handle search
