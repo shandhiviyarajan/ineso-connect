@@ -36,6 +36,7 @@ function QRScanner({ type, handleReadQR }) {
             />
           </View>
         }
+        reactivateTimeout={2000}
         cameraType={type}
         showMarker={true}
         containerStyle={styles.containerStyle}
@@ -44,7 +45,7 @@ function QRScanner({ type, handleReadQR }) {
           width: Dimensions.get("window").height / 2.5,
           height: "auto",
         }}
-        reactivate={false}
+        reactivate={true}
         onRead={handleReadQR}
         flashMode={RNCamera.Constants.FlashMode.auto}
       />

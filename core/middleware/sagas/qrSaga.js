@@ -46,13 +46,13 @@ export function* watchQRSearchDevice() {
                 yield put({
                     type: QR_TYPES.SEARCH_DEVICE_SUCCESS, payload: response.data.data
                         && response.data.data.length > 0
-                        && response.data.data.filter(d => d !== null).length > 0 ? response.data.data : []
+                        && response.data.data.filter(d => d !== null).length > 0 ? response.data.data : null
                 });
 
                 yield put({
                     type: DEVICE_TYPES.GET_DEVICE_SUCCESS, payload: response.data.data
                         && response.data.data.length > 0
-                        && response.data.data.filter(d => d !== null).length > 0 ? response.data.data : []
+                        && response.data.data.filter(d => d !== null).length > 0 ? response.data.data : null
                 });
             } else {
                 yield put({ type: QR_TYPES.SEARCH_DEVICE_FAIL, payload: null });

@@ -7,6 +7,7 @@ import ChangeState from "../../components/screens/Notifications/ChangeState";
 import BottomTabController from "../../components/molecules/BottomTab";
 import SettingsScreen from "../../components/screens/Settings";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
+import QRSearchSuccess from "../../components/screens/QRScan/Success";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -30,6 +31,13 @@ export const ProfileStackNavigation = () => {
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
       <ProfileStack.Screen name="All devices" component={Device} />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />
+      <ProfileStack.Screen
+        name="QRActivation"
+        component={QRSearchSuccess}
+        options={{
+          title: "Activate  device",
+        }}
+      />
     </ProfileStack.Navigator>
   );
 };

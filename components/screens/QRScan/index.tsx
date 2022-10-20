@@ -13,11 +13,15 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { ActionActivateDevice } from "../../../core/redux/actions/qrActions";
+import {
+  ActionActivateDevice,
+  ActionSearchDeviceSuccess,
+} from "../../../core/redux/actions/qrActions";
 import { aesDecrypt } from "../../../core/utils/Backend";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
+import { apiSearchDevices } from "../../../core/API/apiQR";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
@@ -34,42 +38,37 @@ function QRActivate() {
   const dispatchAction = useDispatch();
 
   const handleReadQR = (e) => {
-    if (e.type === "QR_CODE" && !isLoading) {
+    setQRCode(null);
+
+    if (e && e.data && !isLoading) {
       setLoading(true);
     }
     let qr = e.data ? e.data.split("&id=")[1] : null;
     if (qr) {
       setQRCode(aesDecrypt(qr));
-    }
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
 
-  React.useEffect(() => {
-    if (qr_code) {
-      dispatchAction(
-        ActionActivateDevice({
-          clientId,
-          qr_code,
+      apiSearchDevices({
+        clientId,
+        qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd",
+      })
+        .then((response) => {
+          setLoading(false);
+          if (response && response.data.data[0]) {
+            navigation.navigate("QRActivation", {
+              device: response.data.data[0],
+            });
+          } else {
+            setFeedBackModal(true);
+          }
         })
-      );
+        .catch((error) => {
+          setFeedBackModal(true);
+        });
     }
-  }, [qr_code]);
-
-  useFocusEffect(React.useCallback(() => {}, []));
+  };
 
   const [feedback, setFeedBackModal] = React.useState(false);
   const [success, setSuccessModal] = React.useState(false);
-  React.useEffect(() => {
-    if (activate.errors) {
-      setFeedBackModal(true);
-    }
-
-    if (activate.data) {
-      setSuccessModal(true);
-    }
-  }, [activate]);
 
   return (
     <>
@@ -232,8 +231,8 @@ const styles = StyleSheet.create({
   },
   bottomContainerText: {
     color: "#000",
-    paddingTop: 24,
-    fontSize: 24,
+    paddingTop: 16,
+    fontSize: 16,
     fontWeight: "500",
     textAlign: "center",
     width: 240,
