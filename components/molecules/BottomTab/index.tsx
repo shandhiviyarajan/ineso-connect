@@ -46,14 +46,26 @@ function BottomTabController() {
                 marginBottom: Platform.OS === "ios" ? -28 : 0,
               }}
             >
-              <Image
-                style={{
-                  tintColor: focused ? SystemColors.primary : "#888",
-                  width: 20,
-                  height: 20,
-                }}
-                source={require("../../../assets/images/home-icon.png")}
-              />
+              {!focused && (
+                <Image
+                  style={{
+                    tintColor: focused ? SystemColors.primary : "#888",
+                    width: 20,
+                    height: 20,
+                  }}
+                  source={require("../../../assets/images/home-icon.png")}
+                />
+              )}
+              {focused && (
+                <Image
+                  style={{
+                    tintColor: SystemColors.primary,
+                    width: 20,
+                    height: 20,
+                  }}
+                  source={require("../../../assets/images/home-icon-fill.png")}
+                />
+              )}
             </View>
           ),
         }}
@@ -108,10 +120,19 @@ function BottomTabController() {
                 marginBottom: Platform.OS === "ios" ? -28 : 0,
               }}
             >
-              <Image
-                style={{ tintColor: focused ? SystemColors.primary : "#888" }}
-                source={require("../../../assets/images/settings-icon.png")}
-              />
+              {!focused && (
+                <Image
+                  style={{ tintColor: SystemColors.primary }}
+                  source={require("../../../assets/images/settings-icon.png")}
+                />
+              )}
+
+              {focused && (
+                <Image
+                  style={{ tintColor: SystemColors.primary }}
+                  source={require("../../../assets/images/settings-icon-fill.png")}
+                />
+              )}
             </View>
           ),
         }}
