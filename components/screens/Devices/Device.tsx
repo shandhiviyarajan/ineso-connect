@@ -206,7 +206,7 @@ export const Device = ({ navigation }) => {
                 width: 56,
                 height: 56,
                 marginRight: 12,
-                tintColor: SystemColors.primary,
+                tintColor: "#333",
               }}
             ></Image>
             <View>

@@ -8,28 +8,21 @@ import { QR_TYPES } from "../../redux/actions/qrActions";
 export function* watchActivateDevice() {
     while (true) {
         const { payload } = yield take(QR_TYPES.ACTIVATE_DEVICE);
-        const response = yield call(apiSearchDevices, payload);
 
-        if (response && response.status === 200 && response.data.data && response.data.data[0]) {
-            try {
-                let deviceId = `${response && response.data.data[0].vendor}:${response && response.data.data[0].serial}`;
-                const activeResponse = yield call(apiActiveDevice, {
-                    clientId: payload.clientId,
-                    deviceId,
-                });
 
-                if (activeResponse && activeResponse.status === 200) {
-                    Message("success", "Device successfully activeted", "");
-                    yield put({ type: QR_TYPES.ACTIVATE_DEVICE_SUCCESS, payload: deviceId });
-                }
-            } catch (error) {
-                Message("error", error.response.data.message, " ");
-                yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: error });
+        try {
+            const response = yield call(apiActiveDevice, payload);
+
+            console.log(response);
+            if (response && response.status === 200) {
+                Message("success", "Device successfully activeted", "");
+                yield put({ type: QR_TYPES.ACTIVATE_DEVICE_SUCCESS, payload: deviceId });
             }
-        } else {
-            yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: "Device not found" });
-            Message("error", "Device not found", "")
+        } catch (error) {
+            Message("error", "Device activation failed", "Device might already activated");
+            yield put({ type: QR_TYPES.ACTIVATE_DEVICE_FAIL, payload: error.response.data });
         }
+
     }
 };
 

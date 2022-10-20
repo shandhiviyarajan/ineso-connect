@@ -28,7 +28,7 @@ const qrReducer = (state = initialState, action) => {
       return {
         ...state,
         activate: {
-          isLoading: false,
+          isLoading: true,
           data: false,
           errors: false,
         },

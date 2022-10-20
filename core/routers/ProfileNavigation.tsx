@@ -9,6 +9,7 @@ import SettingsScreen from "../../components/screens/Settings";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import QRSearchSuccess from "../../components/screens/QRScan/Success";
 import DeviceNotFound from "../../components/screens/QRScan/DeviceNotFound";
+import { HeaderBackButton } from "@react-navigation/elements";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -26,11 +27,22 @@ export const ProfileStackNavigation = () => {
         name="Device Maps"
         component={DeviceGoogleMaps}
         options={{
-          title: "All devices",
+          title: "All devices maps",
         }}
       />
       <ProfileStack.Screen name="Change Status" component={ChangeState} />
-      <ProfileStack.Screen name="All devices" component={Device} />
+      <ProfileStack.Screen
+        name="All devices"
+        component={Device}
+        options={({ navigation }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              onPress={() => navigation.navigate("Dashboard")}
+            />
+          ),
+        })}
+      />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />
       <ProfileStack.Screen
         name="QRActivation"
