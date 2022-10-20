@@ -8,6 +8,7 @@ import BottomTabController from "../../components/molecules/BottomTab";
 import SettingsScreen from "../../components/screens/Settings";
 import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import QRSearchSuccess from "../../components/screens/QRScan/Success";
+import DeviceNotFound from "../../components/screens/QRScan/DeviceNotFound";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -36,6 +37,14 @@ export const ProfileStackNavigation = () => {
         component={QRSearchSuccess}
         options={{
           title: "Activate  device",
+        }}
+      />
+
+      <ProfileStack.Screen
+        name="DeviceNotFound"
+        component={DeviceNotFound}
+        options={{
+          headerShown: false,
         }}
       />
     </ProfileStack.Navigator>

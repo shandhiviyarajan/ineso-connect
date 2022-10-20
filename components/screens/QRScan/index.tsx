@@ -38,18 +38,15 @@ function QRActivate() {
   const dispatchAction = useDispatch();
 
   const handleReadQR = (e) => {
-    setQRCode(null);
-
     if (e && e.data && !isLoading) {
       setLoading(true);
     }
     let qr = e.data ? e.data.split("&id=")[1] : null;
     if (qr) {
       setQRCode(aesDecrypt(qr));
-
       apiSearchDevices({
         clientId,
-        qr_code: "ineso:d3b48dd3-7b4b-4f19-be88-197aa170eadd",
+        qr_code: aesDecrypt(qr),
       })
         .then((response) => {
           setLoading(false);
@@ -58,108 +55,23 @@ function QRActivate() {
               device: response.data.data[0],
             });
           } else {
-            setFeedBackModal(true);
+            navigation.navigate("DeviceNotFound");
           }
         })
         .catch((error) => {
-          setFeedBackModal(true);
+          Message(
+            "error",
+            "QR Code search failed",
+            "QR search request failed "
+          );
+          navigation.navigate("DeviceNotFound");
         });
     }
   };
 
   const [feedback, setFeedBackModal] = React.useState(false);
-  const [success, setSuccessModal] = React.useState(false);
-
   return (
     <>
-      <Modal visible={feedback} transparent={false} animationType="fade">
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "600",
-              fontSize: 24,
-            }}
-          >
-            Device Not found
-          </Text>
-          <TouchableHighlight
-            style={{
-              backgroundColor: "#000",
-              width: 160,
-              paddingVertical: 12,
-              marginVertical: 12,
-            }}
-            onPress={() => {
-              navigation.navigate("Devices");
-              setFeedBackModal(false);
-            }}
-          >
-            <View>
-              <Text
-                style={{
-                  color: "#fff",
-                  fontSize: 16,
-                  fontWeight: "600",
-                  textAlign: "center",
-                }}
-              >
-                Close
-              </Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-      </Modal>
-
-      <Modal visible={success} transparent={false} animationType="fade">
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "600",
-              color: "green",
-              fontSize: 24,
-            }}
-          >
-            Device Activated !
-          </Text>
-          <TouchableHighlight
-            style={{
-              backgroundColor: "#000",
-              width: 160,
-              paddingVertical: 12,
-              marginVertical: 12,
-            }}
-            onPress={() => {
-              navigation.navigate("All devices");
-              setSuccessModal(false);
-            }}
-          >
-            <View>
-              <Text
-                style={{
-                  color: "#fff",
-                  fontSize: 16,
-                  fontWeight: "600",
-                  textAlign: "center",
-                }}
-              >
-                Close
-              </Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-      </Modal>
       <View
         style={{
           flex: 1,
