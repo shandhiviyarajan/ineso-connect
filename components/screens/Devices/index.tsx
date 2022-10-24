@@ -368,7 +368,7 @@ const Devices = () => {
           </View>
         </TouchableHighlight>
       </View>
-      {!QR_CODE && (
+      {QR_CODE && (
         <View
           style={{
             marginTop: 6,

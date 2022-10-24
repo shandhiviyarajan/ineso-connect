@@ -7,8 +7,12 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { apiActiveDevice } from "../../../core/API/apiQR";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
-import { ActionActivateDevice } from "../../../core/redux/actions/qrActions";
+import {
+  ActionActivateDevice,
+  ActionActivateDeviceSuccess,
+} from "../../../core/redux/actions/qrActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
 
@@ -27,12 +31,13 @@ function QRSearchSuccess({ route, navigation }) {
   };
 
   const handleActivateDevice = () => {
-    dispatchAction(
-      ActionActivateDevice({
-        clientId,
-        deviceId: `${device.vendor}:${device.serial}`,
-      })
-    );
+    apiActiveDevice({
+      clientId,
+      deviceId: `${device.vendor}:${device.serial}`,
+    }).then((response) => {
+      dispatchAction(ActionActivateDeviceSuccess(response));
+      navigation.navigate("All devices");
+    });
   };
   React.useEffect(() => {
     if (device) {

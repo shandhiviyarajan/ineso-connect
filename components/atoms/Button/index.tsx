@@ -20,7 +20,6 @@ export const Button = (props) => {
   return (
     <TouchableHighlight
       style={{
-        flex: 1,
         width: "100%",
         alignItems: "center",
         justifyContent: "center",

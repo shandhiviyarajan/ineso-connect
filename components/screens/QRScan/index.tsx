@@ -22,6 +22,7 @@ import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
 import { apiSearchDevices } from "../../../core/API/apiQR";
+import { Button } from "../../atoms/Button";
 function QRActivate() {
   const navigation = useNavigation();
   const [type, setCamType] = React.useState("back");
@@ -87,11 +88,8 @@ function QRActivate() {
               <Text style={styles.bottomContainerText}>
                 Please select a Client & Start Scanning the QR Code
               </Text>
-              <TouchableHighlight>
-                <View>
-                  <Text>View Devices</Text>
-                </View>
-              </TouchableHighlight>
+
+              <Button>View Devices</Button>
             </>
           )}
           {isLoading && client && (
@@ -140,6 +138,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     color: "#000",
     marginBottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   bottomContainerText: {
     color: "#000",
