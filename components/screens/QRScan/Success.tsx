@@ -15,6 +15,7 @@ import {
 } from "../../../core/redux/actions/qrActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
+import { Message } from "../../molecules/Toast";
 
 function QRSearchSuccess({ route, navigation }) {
   const { device } = route.params;
@@ -36,6 +37,11 @@ function QRSearchSuccess({ route, navigation }) {
       deviceId: `${device.vendor}:${device.serial}`,
     }).then((response) => {
       dispatchAction(ActionActivateDeviceSuccess(response));
+      Message(
+        "success",
+        "Device Activated",
+        "QR Code device activation is success"
+      );
       navigation.navigate("All devices");
     });
   };
