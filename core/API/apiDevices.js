@@ -1,5 +1,3 @@
-
-import { Alert } from "react-native";
 import { httpInstance } from "../interceptors/interceptors";
 
 export const DEVICES = {
@@ -9,7 +7,8 @@ export const DEVICES = {
     GET_GROUP_CATEGORIES: (clientId, siteId, groupId) => `/clients/${clientId}/sites/${siteId}/groups/${groupId}/devices/categories`,
     GET_DEVICE_MEASUREMENT: (clientId, deviceId) => `/clients/${clientId}/devices/${deviceId}/measurement`,
     GET_SITE_DEVICES: (clientId, siteId) => `/clients/${clientId}/sites/${siteId}/devices`,
-    GET_GROUP_DEVICES: (clientId, siteId, groupId) => `/clients/${clientId}/sites/${siteId}/groups/${groupId}/devices`
+    GET_GROUP_DEVICES: (clientId, siteId, groupId) => `/clients/${clientId}/sites/${siteId}/groups/${groupId}/devices`,
+    UPDATE_COODINATES: (clientId, gluonId) => `/clients/${clientId}/gluons/${gluonId}/metadata`,
 };
 
 
@@ -123,3 +122,18 @@ export const apiFetchGroupDevices = async ({ clientId, siteId, groupId }) => {
 };
 
 
+export const apiUpdateGPSCoodinates = async ({ clientId, gluonId, payload }) => {
+    ///
+
+    return await new Promise(async (resolve, reject) => {
+        httpRequest = await httpInstance();
+        console.log(httpRequest);
+        httpRequest.put(DEVICES.UPDATE_COODINATES(clientId, gluonId), JSON.stringify(payload))
+            .then((response) => {
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
