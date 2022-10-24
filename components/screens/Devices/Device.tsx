@@ -32,7 +32,7 @@ export const Device = ({ navigation }) => {
     );
   }
 
-  function DeviceInfo({ title, value, index }) {
+  function DeviceInfo({ title, value }) {
     return (
       <View
         style={{
@@ -44,7 +44,6 @@ export const Device = ({ navigation }) => {
           alignItems: "center",
           borderBottomWidth: 0.5,
           borderBottomColor: "#d8d8d8",
-          backgroundColor: index % 2 === 0 ? "#f1f1f0" : "#fff",
         }}
       >
         <View
@@ -213,12 +212,12 @@ export const Device = ({ navigation }) => {
               <Text
                 style={{ fontSize: 20, fontWeight: "600", marginBottom: 8 }}
               >
-                {activeDevice.metadata.model}
+                {activeDevice.metadata.name}
               </Text>
               <Text
                 style={{ fontSize: 16, fontWeight: "400", marginBottom: 8 }}
               >
-                {activeDevice.metadata.name}
+                {activeDevice.metadata.model}
               </Text>
               {activeDevice.online_status && <Online />}
               {!activeDevice.online_status && <OffLine />}
@@ -233,6 +232,7 @@ export const Device = ({ navigation }) => {
           <ScrollView
             contentContainerStyle={{
               padding: 12,
+              backgroundColor: "#F2F5F9",
             }}
           >
             <View style={styles.card}>
@@ -286,22 +286,11 @@ export const Device = ({ navigation }) => {
               </Text>
             </View>
             <View style={styles.card_measure}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "500",
-                  marginBottom: 12,
-                  paddingLeft: 24,
-                }}
-              >
-                Measurement
-              </Text>
               {measures &&
                 measures.map((measure, i) => (
                   <DeviceInfo
                     title={measure[0]}
                     value={measure[1]}
-                    index={i}
                     key={"measure" + i}
                   />
                 ))}

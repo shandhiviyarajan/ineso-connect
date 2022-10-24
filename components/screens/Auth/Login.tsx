@@ -37,7 +37,7 @@ export const Login = () => {
   const handleInput = (name: string, value: string) => {
     setPayload((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value.trim(),
     }));
   };
 

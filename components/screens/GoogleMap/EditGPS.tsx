@@ -12,6 +12,7 @@ function EditGPS({ route, navigation }) {
 
   const [newLocation, setNewCoordinates] = React.useState(null);
 
+  const [isSaving, setSaving] = React.useState(false);
   const dispatchAction = useDispatch();
 
   const handleSaveGPS = () => {
@@ -22,6 +23,7 @@ function EditGPS({ route, navigation }) {
       activeDevice.serial
     );
     if (newLocation) {
+      setSaving(true);
       apiUpdateGPSCoodinates({
         clientId,
         gluonId: `${activeDevice.vendor}:${activeDevice.serial}`,
@@ -40,11 +42,16 @@ function EditGPS({ route, navigation }) {
               deviceId: `${activeDevice.vendor}:${activeDevice.serial}`,
             })
           );
-          navigation.navigate("All devices");
+          setTimeout(() => {
+            navigation.navigate("All devices");
+          }, 1000);
         })
         .catch((error) => {
           Message("error", "Coodinates update failed", "");
           console.log(error);
+        })
+        .finally(() => {
+          setSaving(false);
         });
     } else {
       Message(
@@ -94,8 +101,9 @@ function EditGPS({ route, navigation }) {
           </MapView>
         )}
       </View>
-      <Button secondary onPress={handleSaveGPS}>
-        Save GPS coordinates
+      <Button secondary onPress={handleSaveGPS} isLoading={isSaving}>
+        {isSaving && <>Please wait...</>}
+        {!isSaving && <>Save GPS coordinates</>}
       </Button>
     </View>
   );
