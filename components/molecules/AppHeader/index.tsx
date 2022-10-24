@@ -93,7 +93,7 @@ export const AppCustomHeader = (props) => {
           }}
         ></View>
 
-        <View>
+        {/* <View>
           <TouchableOpacity
             onPress={handleMapNav}
             style={{
@@ -114,7 +114,7 @@ export const AppCustomHeader = (props) => {
               }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View
           style={{
             marginRight: 24,

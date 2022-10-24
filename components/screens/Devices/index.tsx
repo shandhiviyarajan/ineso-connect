@@ -368,7 +368,7 @@ const Devices = () => {
           </View>
         </TouchableHighlight>
       </View>
-      {QR_CODE && (
+      {!QR_CODE && (
         <View
           style={{
             marginTop: 6,
@@ -393,13 +393,12 @@ const Devices = () => {
             <Text
               style={{
                 fontWeight: "600",
-                fontSize: 16,
+                fontSize: 14,
                 color: SystemColors.primary,
               }}
             >
               Searched QR Code
             </Text>
-            <Text> - {QR_CODE}</Text>
           </View>
 
           <TouchableHighlight
@@ -425,7 +424,7 @@ const Devices = () => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ color: "#666" }}>Clear</Text>
+              <Text style={{ color: "#666", fontWeight: "500" }}>Clear</Text>
               <Image
                 source={require("../../../assets/images/close-icon.png")}
                 style={{

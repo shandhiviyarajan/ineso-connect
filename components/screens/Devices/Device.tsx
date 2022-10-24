@@ -350,7 +350,14 @@ export const Device = ({ navigation }) => {
               </Text>
               <CommissionList>Date: June 13, 2022</CommissionList>
               <CommissionList></CommissionList>
-              <Button secondary>Declare an Incident</Button>
+              <Button
+                secondary
+                onPress={() => {
+                  navigation.navigate("IncidentReporting");
+                }}
+              >
+                Declare an Incident
+              </Button>
             </View>
 
             {activeDevice.metadata.gpsLocation && (
@@ -397,7 +404,16 @@ export const Device = ({ navigation }) => {
                     />
                   </MapView>
 
-                  <Button secondary>Edit GPS coordinates</Button>
+                  <Button
+                    secondary
+                    onPress={() => {
+                      navigation.navigate("EditGPS", {
+                        activeDevice,
+                      });
+                    }}
+                  >
+                    Edit GPS coordinates
+                  </Button>
                 </View>
               </>
             )}

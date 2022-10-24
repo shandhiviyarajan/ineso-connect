@@ -10,6 +10,8 @@ import DeviceGoogleMaps from "../../components/screens/GoogleMap";
 import QRSearchSuccess from "../../components/screens/QRScan/Success";
 import DeviceNotFound from "../../components/screens/QRScan/DeviceNotFound";
 import { HeaderBackButton } from "@react-navigation/elements";
+import EditGPS from "../../components/screens/GoogleMap/EditGPS";
+import IncidentReporting from "../../components/screens/Incident";
 export const ProfileStackNavigation = () => {
   const ProfileStack = createNativeStackNavigator();
   return (
@@ -57,6 +59,21 @@ export const ProfileStackNavigation = () => {
         component={DeviceNotFound}
         options={{
           headerShown: false,
+        }}
+      />
+
+      <ProfileStack.Screen
+        name="EditGPS"
+        component={EditGPS}
+        options={{
+          title: "Edit GPS Location",
+        }}
+      />
+      <ProfileStack.Screen
+        name="IncidentReporting"
+        component={IncidentReporting}
+        options={{
+          title: "Declare Incidents",
         }}
       />
     </ProfileStack.Navigator>

@@ -48,7 +48,7 @@ const DeviceGoogleMaps = () => {
     return (
       <Marker image={image} coordinate={location}>
         <Callout>
-          <Text>BiG BiG Callout</Text>
+          <Text> Callout</Text>
         </Callout>
       </Marker>
     );

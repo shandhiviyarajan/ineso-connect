@@ -106,8 +106,8 @@ function BottomTabController() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Map"
+      {/* <Tab.Screen
+        name="Settings"
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -131,6 +131,38 @@ function BottomTabController() {
                 <Image
                   style={{ tintColor: SystemColors.primary }}
                   source={require("../../../assets/images/settings-icon-fill.png")}
+                />
+              )}
+            </View>
+          ),
+        }}
+      /> */}
+
+      <Tab.Screen
+        name="Map"
+        component={DeviceGoogleMaps}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                width: 56,
+                height: 56,
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: Platform.OS === "ios" ? -28 : 0,
+              }}
+            >
+              {!focused && (
+                <Image
+                  style={{ tintColor: SystemColors.primary }}
+                  source={require("../../../assets/images/map-marker.png")}
+                />
+              )}
+
+              {focused && (
+                <Image
+                  style={{ tintColor: SystemColors.primary }}
+                  source={require("../../../assets/images/map-marker.png")}
                 />
               )}
             </View>
