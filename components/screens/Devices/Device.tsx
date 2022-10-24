@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native-paper";
 
 import { useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
-import { toCapitalize } from "../../../core/utils/Capitalize";
+import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
 import { LinkButton } from "../../atoms/LinkButton";
@@ -56,8 +56,9 @@ export const Device = ({ navigation }) => {
         >
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: "500",
+              color: "#5E5E5E",
             }}
           >
             {toCapitalize(title)}
@@ -66,6 +67,8 @@ export const Device = ({ navigation }) => {
         <Text
           style={{
             fontSize: 20,
+            color: "#5E5E5E",
+            fontWeight: "400",
           }}
         >
           {isNaN(value) ? value : parseFloat(value).toFixed(2)}
@@ -217,7 +220,7 @@ export const Device = ({ navigation }) => {
               <Text
                 style={{ fontSize: 16, fontWeight: "400", marginBottom: 8 }}
               >
-                {activeDevice.metadata.model}
+                {toCapitalize(removeUnderscore(activeDevice.type))}
               </Text>
               {activeDevice.online_status && <Online />}
               {!activeDevice.online_status && <OffLine />}
@@ -236,54 +239,104 @@ export const Device = ({ navigation }) => {
             }}
           >
             <View style={styles.card}>
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginBottom: 6,
                 }}
               >
-                Category : {activeDevice.category}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontSize: 16,
+                    marginBottom: 6,
+                  }}
+                >
+                  Category : &nbsp;
+                </Text>
+                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
+                  {activeDevice.category}
+                </Text>
+              </View>
+
+              <View
                 style={{
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginBottom: 6,
                 }}
               >
-                Type : {activeDevice.type}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#000",
+                  }}
+                >
+                  Model : &nbsp;
+                </Text>
+                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
+                  {activeDevice.metadata.model}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginBottom: 6,
                 }}
               >
-                Line: {activeDevice.line}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#000",
+                  }}
+                >
+                  Line: &nbsp;
+                </Text>
+
+                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
+                  {toCapitalize(removeUnderscore(activeDevice.line))}
+                </Text>
+              </View>
+
+              <View
                 style={{
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginBottom: 6,
                 }}
               >
-                Brand : {activeDevice.brand}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#000",
+                  }}
+                >
+                  Vendor: &nbsp;
+                </Text>
+                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
+                  {activeDevice.vendor}
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontSize: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginBottom: 6,
                 }}
               >
-                Vendor: {activeDevice.vendor}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  marginBottom: 6,
-                }}
-              >
-                Serial number: {activeDevice.serial}
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#000",
+                  }}
+                >
+                  Serial number: &nbsp;
+                </Text>
+                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
+                  {activeDevice.serial}
+                </Text>
+              </View>
             </View>
             <View style={styles.card_measure}>
               {measures &&
@@ -297,11 +350,11 @@ export const Device = ({ navigation }) => {
 
               <Text
                 style={{
-                  padding: 12,
+                  padding: 14,
                   color: "#888",
                 }}
               >
-                Last measurement -
+                Last measurement: &nbsp;
                 {moment(activeDevice.lastMeasurement.time).format("hh:mm:a")}
               </Text>
             </View>

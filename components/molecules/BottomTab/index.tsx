@@ -155,7 +155,7 @@ function BottomTabController() {
               {!focused && (
                 <Image
                   style={{ tintColor: SystemColors.primary }}
-                  source={require("../../../assets/images/map-marker.png")}
+                  source={require("../../../assets/images/map-marker-line.png")}
                 />
               )}
 
