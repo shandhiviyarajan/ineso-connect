@@ -1,12 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import MapView, { Callout, MapCallout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useSelector } from "react-redux";
 
 import image from "../../../assets/images/map-marker.png";
 import GenerateImage from "../../../core/utils/GenerateImage";
-import { AppCustomHeader } from "../../molecules/AppHeader";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 const DeviceGoogleMaps = () => {
   const devices = useSelector((state) => state.device.devices);
@@ -20,29 +25,6 @@ const DeviceGoogleMaps = () => {
       longitudeDelta: 0.0421,
     };
   }, [devices]);
-
-  const coordinates = [];
-
-  coordinates.push({
-    key: 0,
-    location: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-    },
-  });
-
-  for (let i = 1; i < 20; i++) {
-    const location = {
-      longitude:
-        coordinates[i - 1].location.longitude +
-        Math.random() * (i % 2 === 0 ? -1 : 1),
-      latitude:
-        coordinates[i - 1].location.latitude +
-        Math.random() * (i % 2 === 0 ? -1 : 1),
-    };
-
-    coordinates.push({ key: i, location });
-  }
 
   function renderMarker({ location }) {
     return (
@@ -100,14 +82,10 @@ const DeviceGoogleMaps = () => {
             devices.data.map((device, i) => (
               <Marker
                 key={"map-marker" + i}
-                description={device.metadata.model}
+                description={device.metadata.name}
                 coordinate={{
-                  longitude:
-                    device.metadata.gpsLocation.longitude +
-                    Math.random() * (i % 2 === 0 ? -0.001 : 0.001),
-                  latitude:
-                    device.metadata.gpsLocation.latitude +
-                    Math.random() * (i % 2 === 0 ? -0.001 : 0.001),
+                  longitude: device.metadata.gpsLocation.longitude,
+                  latitude: device.metadata.gpsLocation.latitude,
                 }}
               >
                 <View
