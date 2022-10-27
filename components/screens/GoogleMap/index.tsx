@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Callout, MapCallout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useSelector } from "react-redux";
 
