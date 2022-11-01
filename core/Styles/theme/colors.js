@@ -10,5 +10,6 @@ export let SystemColors = {
     "primary": primaryColor,
     "success": "#27E77C",
     "danger": "#CC3D35",
-    "primary_light": "#FFF5F2"
+    "primary_light": "#FFF5F2",
+    "warning": "#fb8c00",
 };

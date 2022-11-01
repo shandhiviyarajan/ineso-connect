@@ -155,10 +155,16 @@ const Devices = () => {
             height: 16,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.danger,
+            backgroundColor: SystemColors.warning,
           }}
         ></View>
-        <Text>Offline</Text>
+        <Text
+          style={{
+            color: SystemColors.warning,
+          }}
+        >
+          Offline
+        </Text>
       </View>
     );
   }
@@ -238,7 +244,7 @@ const Devices = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {device.metadata.model}
+                  {device.metadata.name}
                 </Text>
               </View>
               <View>
@@ -248,7 +254,7 @@ const Devices = () => {
                     marginBottom: 5,
                   }}
                 >
-                  {device.metadata.name}
+                  {device.metadata.model}
                 </Text>
               </View>
               <View

@@ -29,7 +29,7 @@ export const Device = ({ navigation }) => {
     );
   }
 
-  function DeviceInfo({ title, value }) {
+  function DeviceInfo({ title, value, unit }) {
     return (
       <View
         style={{
@@ -68,7 +68,15 @@ export const Device = ({ navigation }) => {
             fontWeight: "400",
           }}
         >
-          {isNaN(value) ? value : parseFloat(value).toFixed(2)}
+          {isNaN(value)
+            ? value
+            : value && value.toString().split(".")[1] > 0
+            ? parseFloat(value).toFixed(1)
+            : parseFloat(value)}
+        </Text>
+        <Text style={{ fontSize: 20, color: "#a5a5a5", fontWeight: "400" }}>
+          &nbsp;
+          {unit}
         </Text>
       </View>
     );
@@ -117,10 +125,10 @@ export const Device = ({ navigation }) => {
             height: 16,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.danger,
+            backgroundColor: SystemColors.warning,
           }}
         ></View>
-        <Text>Offline</Text>
+        <Text style={{ color: SystemColors.warning }}>Offline</Text>
       </View>
     );
   }
@@ -128,18 +136,17 @@ export const Device = ({ navigation }) => {
   React.useEffect(() => {
     if (activeDevice) {
       let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
+      console.log(deviceMeasurements);
       let filterdMeasures = measurementKeys.filter((mk) =>
         deviceMeasurements.some((dm) => dm[0] === mk.key)
       );
-
       let newMeasure = filterdMeasures.map((fm) => ({
         key: fm.key,
         name: fm.name,
+        unit: fm.unit,
         icon: "test",
         value: deviceMeasurements.filter((dm) => dm[0] === fm.key)[0][1],
       }));
-
-      console.log(newMeasure);
       setMeasures(newMeasure);
     }
   }, [activeDevice]);
@@ -168,8 +175,8 @@ export const Device = ({ navigation }) => {
             <Image
               source={GenerateImage(activeDevice.metadata.model)}
               style={{
-                width: 56,
-                height: 56,
+                width: 64,
+                height: 64,
                 marginRight: 12,
                 tintColor: "#333",
               }}
@@ -300,6 +307,28 @@ export const Device = ({ navigation }) => {
                   {activeDevice.serial}
                 </Text>
               </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 6,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "#000",
+                  }}
+                >
+                  Last measurement:
+                </Text>
+                <Text style={{ fontSize: 14, color: "#5E5E5E" }}>
+                  &nbsp;
+                  {moment(activeDevice.lastMeasurement.time).format(
+                    "MM/DD/YYYY hh:mm:ss A"
+                  )}
+                </Text>
+              </View>
             </View>
             <View style={styles.card_measure}>
               {measures &&
@@ -309,20 +338,11 @@ export const Device = ({ navigation }) => {
                       <DeviceInfo
                         title={measure.name}
                         value={measure.value}
+                        unit={measure.unit ? measure.unit : ""}
                         key={"measure" + i}
                       />
                     )
                 )}
-
-              <Text
-                style={{
-                  padding: 14,
-                  color: "#888",
-                }}
-              >
-                Last measurement: &nbsp;
-                {moment(activeDevice.lastMeasurement.time).format("hh:mm:a")}
-              </Text>
             </View>
 
             <View style={styles.card}>
@@ -426,25 +446,14 @@ export const Device = ({ navigation }) => {
               </>
             )}
             <CommissionList></CommissionList>
-            <View style={styles.card}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "500",
-                  marginBottom: 12,
-                }}
-              >
-                Groups
-              </Text>
-              <Text></Text>
-            </View>
-            <View
+
+            {/* <View
               style={{
                 paddingBottom: 24,
               }}
             >
               <Button primary>Remove Device</Button>
-            </View>
+            </View> */}
           </ScrollView>
         </>
       )}
