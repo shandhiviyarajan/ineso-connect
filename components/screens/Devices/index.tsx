@@ -238,7 +238,7 @@ const Devices = () => {
               >
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 16,
                     marginBottom: 5,
                     marginRight: 12,
                     fontWeight: "500",

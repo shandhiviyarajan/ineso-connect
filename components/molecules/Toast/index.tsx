@@ -45,8 +45,8 @@ const toastStyle = {
   },
   success: {
     ...base,
-    borderBottomColor: "#076C3E",
-    backgroundColor: "#14804F",
+    borderBottomColor: "#97561D",
+    backgroundColor: "#B54E29",
   },
   text1: {
     fontSize: 18,
