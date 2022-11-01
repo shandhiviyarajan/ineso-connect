@@ -27,7 +27,6 @@ import {
 import { SelectBoxes } from "./SelectBoxes";
 import { useNavigation } from "@react-navigation/native";
 import { Message } from "../../molecules/Toast";
-import { MeAction } from "../../../core/redux/actions/authActions";
 const Devices = () => {
   const dispatchAction = useDispatch();
 
@@ -101,6 +100,7 @@ const Devices = () => {
 
   React.useEffect(() => {
     if (devices.data) {
+      console.log(devices);
       setCurrentDevices(devices && devices.data);
     }
   }, [devices]);

@@ -3,17 +3,14 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import MapView, { MarkerAnimated } from "react-native-maps";
 import { ActivityIndicator } from "react-native-paper";
-
 import { useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
-import { LinkButton } from "../../atoms/LinkButton";
-
+import { measurementKeys } from "../../../core/constants";
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
-  const groups = useSelector((state) => state.group.groups);
   const isLoading = useSelector((state) => state.device.device.isLoading);
   const [measures, setMeasures] = React.useState([]);
   function CommissionList({ children }) {
@@ -128,56 +125,22 @@ export const Device = ({ navigation }) => {
     );
   }
 
-  const measurementKeys = [
-    "Internal_Temperature",
-    "Restarted",
-    "Sensor_Firmware_Version",
-    "Sensor_Humidity",
-    "Sensor_Temperature",
-    "humidity",
-    "temperature",
-    "exposure",
-    "pm1",
-    "pm2_5",
-    "pm10",
-    "pm0_3",
-    "pm0_5",
-    "acousticPressure",
-    "frequentation",
-    "occupancy",
-    "battery",
-    "tilt",
-    "irrigation",
-    "occupancy",
-    "activity",
-    "respiration",
-    "heartbeat",
-    "falldown",
-    "rssi",
-    "uv",
-    "co2",
-    "voc",
-    "iaqi",
-    "viralRisk",
-    "power",
-    "valve",
-    "tamper",
-    "overload",
-    "underrange",
-    "vBat",
-    "pressure",
-    "occupancy",
-    "maximumNoise",
-    "iaqi",
-    "averageNoise",
-  ];
-
   React.useEffect(() => {
     if (activeDevice) {
-      let filterdMeasures = Object.entries(activeDevice.lastMeasurement).filter(
-        (m) => measurementKeys.includes(m[0]) && m[1] !== null && m[1]
+      let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
+      let filterdMeasures = measurementKeys.filter((mk) =>
+        deviceMeasurements.some((dm) => dm[0] === mk.key)
       );
-      setMeasures(filterdMeasures);
+
+      let newMeasure = filterdMeasures.map((fm) => ({
+        key: fm.key,
+        name: fm.name,
+        icon: "test",
+        value: deviceMeasurements.filter((dm) => dm[0] === fm.key)[0][1],
+      }));
+
+      console.log(newMeasure);
+      setMeasures(newMeasure);
     }
   }, [activeDevice]);
 
@@ -340,13 +303,16 @@ export const Device = ({ navigation }) => {
             </View>
             <View style={styles.card_measure}>
               {measures &&
-                measures.map((measure, i) => (
-                  <DeviceInfo
-                    title={measure[0]}
-                    value={measure[1]}
-                    key={"measure" + i}
-                  />
-                ))}
+                measures.map(
+                  (measure, i) =>
+                    measure.value !== null && (
+                      <DeviceInfo
+                        title={measure.name}
+                        value={measure.value}
+                        key={"measure" + i}
+                      />
+                    )
+                )}
 
               <Text
                 style={{
