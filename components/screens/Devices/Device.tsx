@@ -136,7 +136,7 @@ export const Device = ({ navigation }) => {
   React.useEffect(() => {
     if (activeDevice) {
       let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
-      console.log(deviceMeasurements);
+      console.log(activeDevice);
       let filterdMeasures = measurementKeys.filter((mk) =>
         deviceMeasurements.some((dm) => dm[0] === mk.key)
       );
@@ -353,20 +353,20 @@ export const Device = ({ navigation }) => {
                   marginBottom: 12,
                 }}
               >
-                Commissioning
+                Maintenance History
               </Text>
               {activeDevice &&
                 activeDevice.metadata &&
                 activeDevice.metadata.lifecycle.map((cycle, i) => (
                   <CommissionList key={"cycle" + i}>
-                    {cycle.state.toUpperCase()} -
+                    {cycle.state} -
                     {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")} -
                     {cycle.desc}
                   </CommissionList>
                 ))}
             </View>
 
-            <View style={styles.card}>
+            {/* <View style={styles.card}>
               <Text
                 style={{
                   fontSize: 24,
@@ -386,7 +386,7 @@ export const Device = ({ navigation }) => {
               >
                 Declare an Incident
               </Button>
-            </View>
+            </View> */}
 
             {activeDevice.metadata.gpsLocation && (
               <>
