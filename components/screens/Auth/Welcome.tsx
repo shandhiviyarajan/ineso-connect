@@ -181,15 +181,6 @@ export const Welcome = ({ navigation }) => {
               </Text>
             </View>
           </TouchableHighlight>
-          <Text
-            style={{
-              color: "#d8d8d8",
-              paddingVertical: 12,
-              textAlign: "center",
-            }}
-          >
-            Version 3.0
-          </Text>
         </View>
       </ImageBackground>
     </ScrollView>

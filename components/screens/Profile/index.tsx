@@ -9,6 +9,7 @@ import {
 } from "../../../core/interceptors/interceptors";
 import {
   LogoutAction,
+  LogoutSuccessAction,
   MeAction,
 } from "../../../core/redux/actions/authActions";
 import {
@@ -27,17 +28,23 @@ function Profile() {
   }, []);
   const isLoading = useSelector((state) => state.auth.me.isLoading);
   const me = useSelector((state) => state.auth.me.data);
-
+  const clients = useSelector((state) => state.client.clients);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(ActionFetchClientsSuccess(null));
+    dispatch(ActionFetchClientSuccess(null));
+    dispatch(ActionFetchDevicesSuccess(null));
+    dispatch(ActionUpdatePayload(null));
+
     removeToken().then(() => {
-      dispatch(ActionFetchClientsSuccess(null));
-      dispatch(ActionFetchClientSuccess(null));
-      dispatch(ActionFetchDevicesSuccess(null));
-      dispatch(ActionUpdatePayload(null));
+      console.log("logout");
+
       setToken(null);
       setClientToken(null);
-      dispatch(LogoutAction());
+      dispatch(LogoutSuccessAction(null));
+
+      console.log(isAuthenticated, clients);
     });
   };
 

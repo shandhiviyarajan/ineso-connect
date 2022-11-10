@@ -15,7 +15,6 @@ export const apiFetchSites = async ({ clientId }) => {
                 resolve(response)
             })
             .catch((error) => {
-
                 reject(error);
             });
     });

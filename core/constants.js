@@ -135,4 +135,5 @@ export const measurementKeys = [
     { value: "", icon: "", key: "pressure", name: "Pressure" },
     { value: "", icon: "", key: "maximumNoise", name: "Maximum Noise", unit: "dB" },
     { value: "", icon: "", key: "averageNoise", name: "Noise", unit: "dB" },
+    { value: "", icon: "", key: "air_treatment", name: "Air treatment", unit: "%" }
 ];

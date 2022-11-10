@@ -66,7 +66,11 @@ axiosRequest.interceptors.response.use(
 );
 
 export const setToken = async (value: any) => {
-  await AsyncStorage.setItem("@access_token", value);
+  if (value) {
+    await AsyncStorage.setItem("@access_token", value);
+  } else {
+    await AsyncStorage.removeItem("@access_token");
+  }
 };
 
 export const removeToken = async () => {

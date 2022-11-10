@@ -14,6 +14,7 @@ export const Button = (props) => {
   React.useEffect(() => {
     SystemColors.primary =
       appConfig && appConfig.color ? appConfig.color : "#c44518";
+    console.log(appConfig);
   }, [appConfig]);
 
   const { underlayColor } = props;

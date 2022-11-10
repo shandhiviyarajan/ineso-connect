@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginAction } from "../../../core/redux/actions/authActions";
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   KeyboardAvoidingView,
   Platform,
   Text,
   TextInput,
+  TouchableHighlight,
   View,
 } from "react-native";
 import validator from "validator";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { Button } from "../../atoms/Button";
 import { HeaderStatusBar } from "../../atoms/StatusBar";
 import { Message } from "../../molecules/Toast";
 import { SystemColors } from "../../../core/Styles/theme/colors";
@@ -199,11 +200,51 @@ export const Login = () => {
                 height: 48,
                 width: "100%",
                 marginVertical: 24,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Button onPress={() => handleLogin()} isLoading={isLoading}>
-                LOG IN
-              </Button>
+              <TouchableHighlight
+                onPress={() => handleLogin()}
+                activeOpacity={0.5}
+                underlayColor="#fff"
+                style={{
+                  width: "90%",
+                }}
+              >
+                <View
+                  style={{
+                    paddingHorizontal: 24,
+                    paddingVertical: 12,
+                    height: 48,
+                    borderRadius: 0,
+                    width: "100%",
+                    borderWidth: 1,
+                    borderColor:
+                      appConfig && appConfig.color
+                        ? appConfig.color
+                        : SystemColors.primary,
+                    backgroundColor:
+                      appConfig && appConfig.color
+                        ? appConfig.color
+                        : SystemColors.primary,
+                  }}
+                >
+                  {isLoading && <ActivityIndicator color="#fff" />}
+                  {!isLoading && (
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "500",
+                        fontSize: 18,
+                        color: "#fff",
+                      }}
+                    >
+                      LOGIN
+                    </Text>
+                  )}
+                </View>
+              </TouchableHighlight>
             </View>
           </KeyboardAvoidingView>
         </View>

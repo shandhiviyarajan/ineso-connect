@@ -42,14 +42,16 @@ export const SelectBoxes = ({ navigation }) => {
   });
 
   //get user info on load
-  useEffect(async () => {
-    if (await isTokenExpired()) {
-      dispatchAction(LogoutAction());
-    } else {
-      setClientToken(isAuthenticated);
-      dispatchAction(ActionFetchClients());
-      dispatchAction(MeAction());
-    }
+  useEffect(() => {
+    (async () => {
+      if (await isTokenExpired()) {
+        dispatchAction(LogoutAction());
+      } else {
+        setClientToken(isAuthenticated);
+        dispatchAction(ActionFetchClients());
+        dispatchAction(MeAction());
+      }
+    })();
   }, []);
 
   const filterDevices = () => {
@@ -255,27 +257,6 @@ export const SelectBoxes = ({ navigation }) => {
             />
           </View>
         </View>
-        {/* 
-        <View style={ContentStyle.card}>
-          {devices.isLoading && <ActivityIndicator />}
-          <Text
-            style={{
-              fontSize: 24,
-              marginBottom: 12,
-              textAlign: "center",
-              fontWeight: "500",
-            }}
-          >
-            {devices.data && devices.data.length} Devices found
-          </Text>
-          <Button
-            primary
-            onPress={() => filterDevices()}
-            disabled={!(devices.data && devices.data.length)}
-          >
-            Show Devices
-          </Button>
-        </View> */}
       </View>
     </>
   );

@@ -17,6 +17,7 @@ export const CLIENT_TYPES = {
 };
 //Fetch client actions
 export const ActionFetchClients = () => {
+    console.log("fetching cients...");
     return {
         type: CLIENT_TYPES.GET_CLIENTS
     };

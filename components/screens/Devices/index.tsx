@@ -45,6 +45,8 @@ const Devices = () => {
 
   const QR_CODE = useSelector((state) => state.qr.QR_CODE);
 
+  const clients = useSelector((state) => state.client.clients);
+
   const [currentDevices, setCurrentDevices] = React.useState([]);
   //open scanner modal
   const openQRScannerSearch = () => {
@@ -100,7 +102,6 @@ const Devices = () => {
 
   React.useEffect(() => {
     if (devices.data) {
-      console.log(devices);
       setCurrentDevices(devices && devices.data);
     }
   }, [devices]);
@@ -116,6 +117,7 @@ const Devices = () => {
       );
     }
   }, [QR_CODE]);
+
   function Online() {
     return (
       <View
@@ -487,6 +489,10 @@ const Devices = () => {
         <Collapsible collapsed={filter}>
           <SelectBoxes navigation={navigation} />
         </Collapsible>
+
+        <View>
+          <Text>{JSON.stringify(clients)}</Text>
+        </View>
 
         <View
           style={{
