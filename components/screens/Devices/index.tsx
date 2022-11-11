@@ -467,7 +467,7 @@ const Devices = () => {
             <View
               style={{
                 paddingHorizontal: 12,
-                paddingTop: 6,
+                paddingTop: 12,
                 backgroundColor: "transparent",
                 borderRadius: 0,
                 marginBottom: 0,
@@ -490,9 +490,9 @@ const Devices = () => {
           <SelectBoxes navigation={navigation} />
         </Collapsible>
 
-        <View>
+        {/* <View>
           <Text>{JSON.stringify(clients)}</Text>
-        </View>
+        </View> */}
 
         <View
           style={{

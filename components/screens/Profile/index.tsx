@@ -38,8 +38,6 @@ function Profile() {
     dispatch(ActionUpdatePayload(null));
 
     removeToken().then(() => {
-      console.log("logout");
-
       setToken(null);
       setClientToken(null);
       dispatch(LogoutSuccessAction(null));

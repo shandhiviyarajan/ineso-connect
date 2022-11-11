@@ -27,9 +27,14 @@ export const AppCustomHeader = (props) => {
   const handleMapNav = () => {
     props.navigation.navigate("Device Maps");
   };
-
   const dispatch = useDispatch();
 
+  const getName = () => {
+    if (me) {
+      let name = me.first_name.charAt(0) + me.last_name.charAt(0);
+      return name.toUpperCase();
+    }
+  };
   React.useEffect(() => {
     dispatch(MeAction());
   }, []);
@@ -176,15 +181,25 @@ export const AppCustomHeader = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={() => handleProfileNav()}>
-            <Image
-              source={require("../../../assets/images/profile_icon.png")}
+          <TouchableOpacity
+            onPress={() => handleProfileNav()}
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 44,
+              backgroundColor: SystemColors.primary,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
               style={{
-                tintColor: SystemColors.primary,
-                width: 24,
-                height: 24,
+                color: "#fff",
+                fontSize: 18,
               }}
-            />
+            >
+              {getName()}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
