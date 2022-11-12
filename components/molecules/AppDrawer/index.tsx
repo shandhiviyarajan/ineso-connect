@@ -1,21 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import {
-  View,
-  Text,
-  Alert,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  LogoutAction,
-  MeAction,
-} from "../../../core/redux/actions/authActions";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { DrawerActions, useNavigation } from "@react-navigation/core";
-import { SystemColors } from "../../../core/Styles/theme/colors";
 
 //app drawer
 export const AppDrawer = (props) => {

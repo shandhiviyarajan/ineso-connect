@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Alert,
   Image,
   ScrollView,
   Text,
@@ -17,7 +16,7 @@ import {
   ActionFetchDevices,
 } from "../../../core/redux/actions/deviceActions";
 import GenerateImage from "../../../core/utils/GenerateImage";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import Collapsible from "react-native-collapsible";
 import QRSearch from "../QRScan/QRSearch";
 import {
@@ -522,7 +521,7 @@ const Devices = () => {
                 alignItems: "center",
               }}
             >
-              <ActivityIndicator color={SystemColors.primary} />
+              <ActivityIndicator />
             </View>
           )}
 

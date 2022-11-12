@@ -188,6 +188,14 @@ export const Device = ({ navigation }) => {
     }
   }, [activeDevice]);
 
+  //fetch devices every 120 seconds (2 min)
+  // dispatchAction(
+  //   ActionFetchDevice({
+  //     clientId,
+  //     deviceId: `${vendor}:${serial}`,
+  //   })
+  // );
+
   return (
     <>
       <View
