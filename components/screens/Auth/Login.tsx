@@ -68,7 +68,7 @@ export const Login = () => {
     }
   };
 
-  const [type, setType] = React.useState(false);
+  const [type, setType] = React.useState(true);
   const toggleType = () => {
     setType(!type);
   };
@@ -227,7 +227,7 @@ export const Login = () => {
                 autoCompleteType="password"
                 placeholder="Password"
                 placeholderTextColor="rgba(0,0,0,.25)"
-                secureTextEntry={type ? true : false}
+                secureTextEntry={type}
                 clearButtonMode="always"
                 autoCapitalize="none"
                 style={{

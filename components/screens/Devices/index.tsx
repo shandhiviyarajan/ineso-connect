@@ -44,7 +44,7 @@ const Devices = () => {
 
   const QR_CODE = useSelector((state) => state.qr.QR_CODE);
 
-  const [currentDevices, setCurrentDevices] = React.useState([]);
+  const [currentDevices, setCurrentDevices] = React.useState(null);
   //open scanner modal
   const openQRScannerSearch = () => {
     if (!clientId) {
@@ -525,24 +525,25 @@ const Devices = () => {
             </View>
           )}
 
-          {devices.isLoading && currentDevices && currentDevices.length === 0 && (
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
+          {devices.isLoading ||
+            (currentDevices === null && (
+              <View
                 style={{
-                  fontWeight: "700",
-                  fontSize: 16,
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                Fetching devices...
-              </Text>
-            </View>
-          )}
+                <Text
+                  style={{
+                    fontWeight: "700",
+                    fontSize: 16,
+                  }}
+                >
+                  Fetching devices...
+                </Text>
+              </View>
+            ))}
 
           {!devices.isLoading && currentDevices && currentDevices.length === 0 && (
             <View
