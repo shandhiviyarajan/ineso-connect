@@ -526,7 +526,26 @@ const Devices = () => {
             </View>
           )}
 
-          {currentDevices && currentDevices.length === 0 && (
+          {devices.isLoading && currentDevices && currentDevices.length === 0 && (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "700",
+                  fontSize: 16,
+                }}
+              >
+                Fetching devices...
+              </Text>
+            </View>
+          )}
+
+          {!devices.isLoading && currentDevices && currentDevices.length === 0 && (
             <View
               style={{
                 flex: 1,
