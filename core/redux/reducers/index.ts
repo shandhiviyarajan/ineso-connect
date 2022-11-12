@@ -7,7 +7,11 @@ import deviceReducer from "./deviceReducer";
 import groupReducer from "./groupReducer";
 import alertReducer from "./alertReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  persistCombineReducers,
+} from "redux-persist";
 import metaReducer from "./metaReducer";
 import qrReducer from "./qrReducer";
 const persistConfig = {

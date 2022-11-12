@@ -1,5 +1,11 @@
 import React from "react";
-import { Image, Text, TouchableHighlight, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,7 +27,8 @@ import {
   ActionFetchDeviceSuccess,
 } from "../../../core/redux/actions/deviceActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
-
+import { persistor } from "../../../core/store";
+import SelectBox from "../../atoms/SelectBox";
 function Profile() {
   React.useEffect(() => {
     dispatch(MeAction());
@@ -31,7 +38,10 @@ function Profile() {
   const clients = useSelector((state) => state.client.clients);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+
+  const [activeLang, setActiveLang] = React.useState("en");
   const handleLogout = () => {
+    persistor.purge();
     dispatch(ActionFetchClientsSuccess(null));
     dispatch(ActionFetchClientSuccess(null));
     dispatch(ActionFetchDevicesSuccess(null));
@@ -41,10 +51,10 @@ function Profile() {
       setToken(null);
       setClientToken(null);
       dispatch(LogoutSuccessAction(null));
-
-      console.log(isAuthenticated, clients);
     });
   };
+
+  const changeLanguage = (lang) => {};
 
   function ProfileText({ children }) {
     return (
@@ -136,15 +146,40 @@ function Profile() {
           <View
             style={{
               flex: 0.5,
-              alignItems: "flex-end",
-              justifyContent: "flex-end",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
+            <View
+              style={{
+                paddingHorizontal: 24,
+                paddingBottom: 24,
+              }}
+            >
+              <SelectBox
+                placeholder="Language"
+                defaultValue={activeLang}
+                onSelect={(lang) => {
+                  changeLanguage(lang);
+                }}
+                buttonTextAfterSelection={(lang) => {
+                  return lang;
+                }}
+                rowTextForSelection={(lang) => {
+                  return lang;
+                }}
+                data={["English", "Friench"]}
+              />
+            </View>
             <TouchableHighlight underlayColor="#fff" onPress={handleLogout}>
               <View
                 style={{
-                  padding: 24,
+                  paddingHorizontal: 24,
+                  paddingVertical: 12,
                   marginBottom: 24,
+                  borderWidth: 1,
+                  justifyContent: "center",
+                  display: "flex",
                 }}
               >
                 <Text

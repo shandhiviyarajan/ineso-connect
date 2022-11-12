@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, Platform, StyleSheet, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import { SystemColors } from "../../../core/Styles/theme/colors";
 function SelectBox(props) {
   return (
     <>

@@ -102,7 +102,10 @@ const Devices = () => {
 
   React.useEffect(() => {
     if (devices.data) {
-      setCurrentDevices(devices && devices.data);
+      setCurrentDevices(
+        devices &&
+          devices.data.sort((a, b) => a.online_status - b.online_status)
+      );
     }
   }, [devices]);
 
@@ -136,7 +139,16 @@ const Devices = () => {
             borderRadius: 100,
             backgroundColor: SystemColors.success,
           }}
-        ></View>
+        >
+          <Image
+            source={require("../../../assets/images/online-icon.png")}
+            style={{
+              width: 16,
+              height: 16,
+              tintColor: "#fff",
+            }}
+          />
+        </View>
         <Text>Online</Text>
       </View>
     );
@@ -170,7 +182,6 @@ const Devices = () => {
       </View>
     );
   }
-
   function ActiveDevice() {
     return (
       <View
@@ -420,7 +431,6 @@ const Devices = () => {
               borderRadius: 44,
               borderWidth: 0,
               height: 32,
-
               paddingHorizontal: 12,
               backgroundColor: "#f1f1f1",
             }}
@@ -489,10 +499,6 @@ const Devices = () => {
         <Collapsible collapsed={filter}>
           <SelectBoxes navigation={navigation} />
         </Collapsible>
-
-        {/* <View>
-          <Text>{JSON.stringify(clients)}</Text>
-        </View> */}
 
         <View
           style={{
