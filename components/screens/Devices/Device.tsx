@@ -29,13 +29,14 @@ export const Device = ({ navigation }) => {
     );
   }
 
-  function DeviceInfo({ title, value, unit }) {
+  function DeviceInfo({ title, value, unit, icon }) {
     return (
       <View
         style={{
           flex: 1,
           paddingVertical: 12,
-          paddingHorizontal: 24,
+          paddingRight: 24,
+          paddingLeft: 12,
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
@@ -51,6 +52,30 @@ export const Device = ({ navigation }) => {
             alignItems: "center",
           }}
         >
+          {icon ? (
+            <Image
+              source={icon}
+              style={{
+                resizeMode: "contain",
+                height: 24,
+                width: 24,
+                tintColor: "#666",
+                marginRight: 6,
+              }}
+            />
+          ) : (
+            <Image
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: "#000",
+                marginRight: 4,
+              }}
+              source={GenerateImage(
+                activeDevice && activeDevice.metadata?.model
+              )}
+            />
+          )}
           <Text
             style={{
               fontSize: 17,
@@ -99,7 +124,17 @@ export const Device = ({ navigation }) => {
             borderRadius: 100,
             backgroundColor: SystemColors.success,
           }}
-        ></View>
+        >
+          <Image
+            source={require("../../../assets/images/online-icon.png")}
+            style={{
+              width: 16,
+              height: 16,
+              tintColor: "#fff",
+            }}
+          />
+        </View>
+
         <Text
           style={{
             fontWeight: "500",
@@ -136,7 +171,6 @@ export const Device = ({ navigation }) => {
   React.useEffect(() => {
     if (activeDevice) {
       let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
-      console.log(activeDevice);
       let filterdMeasures = measurementKeys.filter((mk) =>
         deviceMeasurements.some((dm) => dm[0] === mk.key)
       );
@@ -144,10 +178,13 @@ export const Device = ({ navigation }) => {
         key: fm.key,
         name: fm.name,
         unit: fm.unit,
-        icon: "test",
+        icon: fm.icon,
         value: deviceMeasurements.filter((dm) => dm[0] === fm.key)[0][1],
       }));
       setMeasures(newMeasure);
+      // require(GenerateImage(
+      // activeDevice && activeDevice.metadata?.model
+      // )),
     }
   }, [activeDevice]);
 
@@ -336,6 +373,7 @@ export const Device = ({ navigation }) => {
                   (measure, i) =>
                     measure.value !== null && (
                       <DeviceInfo
+                        icon={measure.icon}
                         title={measure.name}
                         value={measure.value}
                         unit={measure.unit ? measure.unit : ""}

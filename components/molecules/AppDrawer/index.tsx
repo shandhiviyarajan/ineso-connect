@@ -81,15 +81,6 @@ export const AppDrawer = (props) => {
                 paddingVertical: 12,
               }}
             >
-              {isLoading ? (
-                <ActivityIndicator />
-              ) : (
-                <Image
-                  source={require("../../../assets/images/drawer_logout_icon.png")}
-                  style={{ marginRight: 12, tintColor: "#000" }}
-                />
-              )}
-
               <Text style={DrawerStyles.DrawerItemStyles}>Logout</Text>
             </View>
           </TouchableOpacity>

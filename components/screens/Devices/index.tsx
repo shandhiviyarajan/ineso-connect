@@ -45,8 +45,6 @@ const Devices = () => {
 
   const QR_CODE = useSelector((state) => state.qr.QR_CODE);
 
-  const clients = useSelector((state) => state.client.clients);
-
   const [currentDevices, setCurrentDevices] = React.useState([]);
   //open scanner modal
   const openQRScannerSearch = () => {
@@ -149,7 +147,7 @@ const Devices = () => {
             }}
           />
         </View>
-        <Text>Online</Text>
+        <Text style={{ fontWeight: "500" }}>Online</Text>
       </View>
     );
   }

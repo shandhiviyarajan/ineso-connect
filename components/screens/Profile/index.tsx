@@ -156,7 +156,7 @@ function Profile() {
                 paddingBottom: 24,
               }}
             >
-              <SelectBox
+              {/* <SelectBox
                 placeholder="Language"
                 defaultValue={activeLang}
                 onSelect={(lang) => {
@@ -169,7 +169,7 @@ function Profile() {
                   return lang;
                 }}
                 data={["English", "Friench"]}
-              />
+              /> */}
             </View>
             <TouchableHighlight underlayColor="#fff" onPress={handleLogout}>
               <View
