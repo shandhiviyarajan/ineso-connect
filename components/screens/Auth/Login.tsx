@@ -67,6 +67,11 @@ export const Login = () => {
       dispatch(LoginAction(payload));
     }
   };
+
+  const [type, setType] = React.useState(false);
+  const toggleType = () => {
+    setType(!type);
+  };
   return (
     <>
       <HeaderStatusBar barStyle="dark-content" backgroundColor="transparent" />
@@ -171,29 +176,76 @@ export const Login = () => {
                 backgroundColor: "#fff",
               }}
             />
-            <TextInput
-              onChangeText={(password) => handleInput("password", password)}
-              autoCompleteType="password"
-              placeholder="Password"
-              placeholderTextColor="rgba(0,0,0,.25)"
-              secureTextEntry={true}
-              clearButtonMode="always"
-              autoCapitalize="none"
+            <View
               style={{
-                height: 48,
-                fontSize: 18,
-                color: "#000",
-                textAlign: "left",
-                paddingVertical: 0,
-                borderWidth: 0.5,
-                borderColor: SystemColors.primary,
-                marginVertical: 12,
-                paddingHorizontal: 16,
-                width: "90%",
-                fontWeight: "400",
-                backgroundColor: "#fff",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
               }}
-            />
+            >
+              <TouchableHighlight
+                onPress={toggleType}
+                activeOpacity={0.5}
+                underlayColor="#fff"
+                style={{
+                  width: 44,
+                  height: 44,
+                  position: "absolute",
+                  zIndex: 100,
+                  right: 24,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <View>
+                  {type && (
+                    <Image
+                      style={{
+                        width: 24,
+                        resizeMode: "contain",
+                      }}
+                      source={require("../../../assets/images/eye-closed.png")}
+                    />
+                  )}
+
+                  {!type && (
+                    <Image
+                      style={{
+                        width: 24,
+                        resizeMode: "contain",
+                      }}
+                      source={require("../../../assets/images/eye-open.png")}
+                    />
+                  )}
+                </View>
+              </TouchableHighlight>
+
+              <TextInput
+                onChangeText={(password) => handleInput("password", password)}
+                autoCompleteType="password"
+                placeholder="Password"
+                placeholderTextColor="rgba(0,0,0,.25)"
+                secureTextEntry={type ? true : false}
+                clearButtonMode="always"
+                autoCapitalize="none"
+                style={{
+                  height: 48,
+                  fontSize: 18,
+                  color: "#000",
+                  textAlign: "left",
+                  paddingVertical: 0,
+                  borderWidth: 0.5,
+                  borderColor: SystemColors.primary,
+                  marginVertical: 12,
+                  paddingHorizontal: 16,
+                  width: "90%",
+                  fontWeight: "400",
+                  backgroundColor: "#fff",
+                }}
+              />
+            </View>
 
             <View
               style={{
