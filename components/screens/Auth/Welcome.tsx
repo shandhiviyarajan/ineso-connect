@@ -181,6 +181,14 @@ export const Welcome = ({ navigation }) => {
               </Text>
             </View>
           </TouchableHighlight>
+          <Text
+            style={{
+              color: "#d8d8d8",
+              paddingTop: 12,
+            }}
+          >
+            Version 0.0.5
+          </Text>
         </View>
       </ImageBackground>
     </ScrollView>
