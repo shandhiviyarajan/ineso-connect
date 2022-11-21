@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import moment from "moment";
+import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
 import {
   ActionFetchDevice,
   ActionFetchDevices,
@@ -99,10 +100,15 @@ const Devices = () => {
 
   React.useEffect(() => {
     if (devices.data) {
-      setCurrentDevices(
+      let sort_by_time =
         devices &&
-          devices.data.sort((a, b) => a.online_status - b.online_status)
-      );
+        devices.data.sort((a, b) => b.lastStatusDate - a.lastStatusDate);
+
+      let sort_by_online =
+        devices &&
+        devices.data.sort((a, b) => b.online_status - a.online_status);
+
+      setCurrentDevices(sort_by_online);
     }
   }, [devices]);
 
@@ -188,7 +194,7 @@ const Devices = () => {
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: "green", textAlign: "center" }}>Active</Text>
+        <Text style={{ color: "green", textAlign: "center" }}>In use</Text>
       </View>
     );
   }
@@ -264,7 +270,7 @@ const Devices = () => {
                     marginBottom: 5,
                   }}
                 >
-                  {device.metadata.model}
+                  {toCapitalize(removeUnderscore(device.type))}
                 </Text>
               </View>
               <View
@@ -306,6 +312,9 @@ const Devices = () => {
     <>
       <QRSearch open={open} setQRModal={setQRModal} />
       <AppCustomHeader navigation={navigation} />
+      <View>
+        <Text>{JSON.stringify(payload_ids)}</Text>
+      </View>
       <View
         style={{
           paddingHorizontal: 12,

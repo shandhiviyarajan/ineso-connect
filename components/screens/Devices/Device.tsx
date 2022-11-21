@@ -405,9 +405,31 @@ export const Device = ({ navigation }) => {
                 activeDevice.metadata &&
                 activeDevice.metadata.lifecycle.map((cycle, i) => (
                   <CommissionList key={"cycle" + i}>
-                    {cycle.state} -
-                    {moment(cycle.state.date).format("ddd MM yyyy - hh:mm:a")} -
-                    {cycle.desc}
+                    <View
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "600",
+                          width: "100%",
+                          display: "flex",
+                        }}
+                      >
+                        {cycle.state}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text>
+                        {moment(cycle.state.date).format(
+                          "ddd MM yyyy - hh:mm:a"
+                        )}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text>{cycle.desc}</Text>
+                    </View>
                   </CommissionList>
                 ))}
             </View>

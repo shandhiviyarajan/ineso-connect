@@ -89,7 +89,6 @@ export const SelectBoxes = ({ navigation }) => {
   //select site id
   const handleSiteSelect = (site: any) => {
     const { vendor, serial } = site;
-
     const siteId = `${vendor}:${serial}`;
 
     if (vendor && serial) {
@@ -110,6 +109,7 @@ export const SelectBoxes = ({ navigation }) => {
       setPayload((prevState) => ({
         ...prevState,
         siteId: false,
+        groupId: false,
       }));
     }
   };
@@ -124,26 +124,6 @@ export const SelectBoxes = ({ navigation }) => {
       groupId,
     }));
   };
-
-  React.useEffect(() => {
-    dispatchAction(ActionUpdatePayload(payload));
-    dispatchAction(ActionFetchDevices(payload));
-  }, [payload]);
-
-  //fetch all alerts
-  React.useEffect(() => {
-    if (client) {
-      dispatchAction(
-        ActionFetchAlert({
-          clientId,
-          glounId: `${client.vendor}:${client.serial}`,
-        })
-      );
-    }
-  }, [client]);
-
-  const [defaultClient, setDefaultClient] = React.useState(null);
-
   React.useEffect(() => {
     if (clients.data) {
       dispatchAction(ActionSetClientId(clients.data[0].id));
@@ -172,6 +152,33 @@ export const SelectBoxes = ({ navigation }) => {
       }));
     }
   }, [clients]);
+  React.useEffect(() => {
+    if (groups.data) {
+      setPayload((prevState) => ({
+        ...prevState,
+        groupId: `${groups.data[0].vendor}:${groups.data[0].serial}`,
+      }));
+    }
+  }, [groups]);
+
+  React.useEffect(() => {
+    dispatchAction(ActionUpdatePayload(payload));
+    dispatchAction(ActionFetchDevices(payload));
+  }, [payload]);
+
+  //fetch all alerts
+  React.useEffect(() => {
+    if (client) {
+      dispatchAction(
+        ActionFetchAlert({
+          clientId,
+          glounId: `${client.vendor}:${client.serial}`,
+        })
+      );
+    }
+  }, [client]);
+
+  const [defaultClient, setDefaultClient] = React.useState(null);
 
   return (
     <>
@@ -203,7 +210,7 @@ export const SelectBoxes = ({ navigation }) => {
               disabled={
                 sites.data && sites.data ? sites.data.length === 0 : true
               }
-              placeholder="SITES"
+              placeholder="All sites"
               onSelect={(site) => {
                 handleSiteSelect(site);
               }}
@@ -241,7 +248,7 @@ export const SelectBoxes = ({ navigation }) => {
               disabled={
                 groups.data && groups.data ? groups.data.length === 0 : true
               }
-              placeholder="GROUPS"
+              placeholder="All groups"
               onSelect={(group) => handleGroupSelect(group)}
               buttonTextAfterSelection={({ name }) => {
                 return (
