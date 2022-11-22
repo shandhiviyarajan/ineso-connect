@@ -1,7 +1,6 @@
 import { httpClient, setToken, httpInstance } from "../interceptors/interceptors";
 import { Message } from "../../components/molecules/Toast";
 import { setClientToken } from "../interceptors/interceptors";
-import { Alert } from "react-native";
 
 export const ApiAuth = {
   LOGIN: `/auth/login`,
@@ -15,6 +14,7 @@ export const apiLogin = async (payload: any) => {
   return await httpClient()
     .post(ApiAuth.LOGIN, payload)
     .then((response) => {
+      console.log(response);
       if (response.status === 200) {
         setClientToken(response && response.data && response.data.data.access_token);
         setToken(response && response.data && response.data.data.access_token);
@@ -50,6 +50,7 @@ export const me = async () => {
       return response;
     })
     .catch((error) => {
+      console.log(error);
       return error;
     });
 };

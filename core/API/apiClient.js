@@ -1,12 +1,9 @@
-import { Message } from "../../components/molecules/Toast";
-import { httpInstance, httpRequest, httpUpload } from "../interceptors/interceptors";
+import { httpInstance } from "../interceptors/interceptors";
 
 export const CLIENTS = {
     GET_CLIENTS: `/auth/me/clients`,
     GET_CLIENT: (clientId) => `/clients/${clientId}`,
     GET_INESO_CONFIG: (clientId) => `/clients/${clientId}/ineso-config`,
-
-
 };
 
 //fetch all clients
@@ -18,6 +15,7 @@ export const apiFetchClients = async () => {
                 resolve(response);
             })
             .catch((error) => {
+                console.log(error);
                 reject(error);
             });
     });
@@ -31,6 +29,7 @@ export const apiFetchClient = async ({ clientId }) => {
                 resolve(response);
             })
             .catch((error) => {
+                console.log(error);
                 reject(error);
             });
     });

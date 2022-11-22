@@ -28,18 +28,15 @@ import {
 } from "../../../core/redux/actions/deviceActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
 import { persistor } from "../../../core/store";
-import SelectBox from "../../atoms/SelectBox";
 function Profile() {
   React.useEffect(() => {
     dispatch(MeAction());
   }, []);
   const isLoading = useSelector((state) => state.auth.me.isLoading);
   const me = useSelector((state) => state.auth.me.data);
-  const clients = useSelector((state) => state.client.clients);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const dispatch = useDispatch();
 
-  const [activeLang, setActiveLang] = React.useState("en");
   const handleLogout = () => {
     persistor.purge();
     dispatch(ActionFetchClientsSuccess(null));
@@ -53,8 +50,6 @@ function Profile() {
       dispatch(LogoutSuccessAction(null));
     });
   };
-
-  const changeLanguage = (lang) => {};
 
   function ProfileText({ children }) {
     return (

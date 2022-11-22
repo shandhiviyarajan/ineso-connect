@@ -43,8 +43,8 @@ export const SelectBoxes = ({ navigation }) => {
 
   //get user info on load
   useEffect(() => {
+    console.log(isAuthenticated);
     (async () => {
-      console.log(isAuthenticated);
       setClientToken(isAuthenticated);
       dispatchAction(ActionFetchClients());
       dispatchAction(MeAction());

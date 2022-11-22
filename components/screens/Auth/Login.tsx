@@ -21,7 +21,7 @@ import { SystemColors } from "../../../core/Styles/theme/colors";
 
 export const Login = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
-
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const screenHeight = Dimensions.get("screen").height;
 
   const appConfig = useSelector((state) => state.auth.appConfig);
@@ -138,7 +138,7 @@ export const Login = () => {
                   marginBottom: 12,
                 }}
               >
-                Welcome
+                Welcome - {isAuthenticated}
               </Text>
               <Text
                 style={{

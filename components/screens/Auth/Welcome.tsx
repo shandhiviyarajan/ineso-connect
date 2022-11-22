@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
+import { getToken } from "../../../core/interceptors/interceptors";
 import { ActionSetConfig } from "../../../core/redux/actions/authActions";
 
 import { SystemColors } from "../../../core/Styles/theme/colors";
@@ -20,8 +21,6 @@ export const Welcome = ({ navigation }) => {
   const navigateTo = (screen) => {
     navigation.navigate(screen);
   };
-
-  const me = useSelector((state) => state.auth.me.data);
 
   const appConfig = useSelector((state) => state.auth.appConfig);
 
@@ -39,6 +38,7 @@ export const Welcome = ({ navigation }) => {
     SystemColors.primary =
       appConfig && appConfig.color ? appConfig.color : "#c44518";
   }, [appConfig]);
+
   return (
     <ScrollView
       alwaysBounceVertical={false}
@@ -187,7 +187,7 @@ export const Welcome = ({ navigation }) => {
               paddingTop: 12,
             }}
           >
-            Version 0.0.5
+            Version 0.0.6
           </Text>
         </View>
       </ImageBackground>

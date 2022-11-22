@@ -167,14 +167,14 @@ const GenerateImage = model => {
         case 'LEVANTE_SSL_868':
             return require('../../catalog/LEVANTE_SSL_868/picture.png');
 
-        case 'SVL_DN15DA_868_BSP_S':
-            return require('../../catalog/SVL_DN15DA_868_BSP_S/picture.png');
+        case 'SVL-DN15DA-868-BSP-S':
+            return require('../../catalog/SVL-DN15DA-868-BSP-S/picture.png');
 
-        case 'SSL_868':
-            return require('../../catalog/SSL_868/picture.png');
+        case 'SSL-868':
+            return require('../../catalog/SSL-868/picture.png');
 
-        case 'VSR10_WR':
-            return require('../../catalog/VSR10_WR/picture.png');
+        case 'VSR10-WR':
+            return require('../../catalog/VSR10-WR/picture.png');
 
         case 'WD600_UMB':
             return require('../../catalog/WD600_UMB/picture.png');

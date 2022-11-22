@@ -14,8 +14,6 @@ let axiosRequest = axios.create({
   timeout: TIME_OUT,
 });
 
-let refreshCall = true;
-
 let authRequest = axios.create({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
@@ -38,8 +36,6 @@ authRequest.interceptors.response.use(
     return Promise.resolve(response);
   },
   (error) => {
-    //const originalRequest = error.config;
-    //handle refresh token here
     return Promise.reject(error);
   }
 );
@@ -55,6 +51,7 @@ export const setToken = async (value: any) => {
 export const removeToken = async () => {
   await AsyncStorage.removeItem("@access_token");
 };
+
 export const getToken = async () => {
   return await AsyncStorage.getItem("@access_token");
 };
@@ -96,8 +93,6 @@ export const setClientToken = (token: string | boolean | null) => {
       return config;
     },
     (error) => {
-      let code = error.response.status;
-      handleErrors(code, error);
       return Promise.reject(error);
     }
   );
@@ -126,24 +121,25 @@ export const httpInstance = async () => {
     async (error) => {
       const originalConfig = error.config;
 
-      if (error.response.status && !retry) {
-        retry = true;
-
+      if (error.response.status === 401 && !retry) {
         try {
           const res = await axiosRequest.get("/auth/refresh");
-
+          retry = true;
           const refreshToken = res.data.data.access_token;
           setToken(refreshToken);
           setClientToken(refreshToken);
-          console.log("newtoken", refreshToken);
+
+          originalConfig.headers["Authorization"] = `Bearer ${refreshToken}`;
           return axiosRequest(originalConfig);
         } catch (error) {
           return Promise.reject(error);
         }
-      }
+      } else {
+        retry = false;
+        return Promise.reject(error);
 
-      handleErrors(error.response.status, error);
-      return Promise.reject(error);
+        //   handleErrors(error.response.status, error);
+      }
     }
   );
 

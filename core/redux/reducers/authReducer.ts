@@ -49,6 +49,7 @@ const authReducer = (
         ...state,
         isLoading: false,
         error: null,
+        user: true,
         isAuthenticated:
           action.payload &&
           action.payload.data &&

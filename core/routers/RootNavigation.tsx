@@ -9,8 +9,7 @@ import { toastConfig } from "../../components/molecules/Toast";
 import Toast from "react-native-toast-message";
 import { ProfileStackNavigation } from "./ProfileNavigation";
 import { Welcome } from "../../components/screens/Auth/Welcome";
-import { getToken } from "../interceptors/interceptors";
-import { Alert } from "react-native";
+
 //navigation stack
 const AuthStack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
@@ -18,7 +17,7 @@ export const RootNavigator = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <NavigationContainer>
-      {isAuthenticated && isAuthenticated ? (
+      {isAuthenticated ? (
         <>
           <DrawerStack.Navigator
             screenOptions={{

@@ -9,24 +9,15 @@ import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
 import { measurementKeys } from "../../../core/constants";
+import { getToken } from "../../../core/interceptors/interceptors";
+import { RenameMaintenence } from "../../../core/utils/Maintenance";
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
   const isLoading = useSelector((state) => state.device.device.isLoading);
   const [measures, setMeasures] = React.useState([]);
+
   function CommissionList({ children }) {
-    return (
-      <View>
-        <Text
-          style={{
-            fontSize: 17,
-            paddingVertical: 4,
-            color: "#666",
-          }}
-        >
-          {children}
-        </Text>
-      </View>
-    );
+    return <View>{children}</View>;
   }
 
   function DeviceInfo({ title, value, unit, icon }) {
@@ -415,27 +406,48 @@ export const Device = ({ navigation }) => {
                     <View
                       style={{
                         width: "100%",
+                        display: "flex",
                       }}
                     >
                       <Text
                         style={{
-                          fontWeight: "600",
+                          fontWeight: "400",
                           width: "100%",
                           display: "flex",
+
+                          fontSize: 20,
+                          marginBottom: 6,
+                          marginTop: 0,
                         }}
                       >
-                        {cycle.state}
+                        {cycle.state &&
+                          cycle.state &&
+                          toCapitalize(
+                            RenameMaintenence(cycle.state && cycle.state)
+                          )}
                       </Text>
                     </View>
                     <View>
-                      <Text>
+                      <Text
+                        style={{
+                          marginBottom: 6,
+                          color: "#5E5E5E",
+                        }}
+                      >
                         {moment(cycle.state.date).format(
-                          "ddd MM yyyy - hh:mm:a"
+                          "D - MMMM - yyyy - hh:mm:a"
                         )}
                       </Text>
                     </View>
                     <View>
-                      <Text>{cycle.desc}</Text>
+                      <Text
+                        style={{
+                          marginBottom: 6,
+                          color: "#5E5E5E",
+                        }}
+                      >
+                        {cycle.desc}
+                      </Text>
                     </View>
                   </CommissionList>
                 ))}
