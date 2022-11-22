@@ -17,7 +17,7 @@ import qrReducer from "./qrReducer";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["isAuthenticated", "user"],
+  whitelist: ["user"],
 };
 
 const rootReducer = combineReducers({

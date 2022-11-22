@@ -43,51 +43,35 @@ const stats = {
 };
 
 export const measurementKeys = [
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM10_1_Weight", name: "Sensor PM10 1 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM10_2_5_Weight", name: "Sensor PM10 2 5 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM10_10_Weight", name: "Sensor PM10 10 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM60_1_Weight", name: "Sensor PM60 1 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM60_2_5_Weight", name: "Sensor PM60 2 5 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM60_10_Weight", name: "Sensor PM60 10 Weight" },
-    { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "Sensor_PM900_1_Weight", name: "Sensor PM900 1 Weight" },
+
     { value: "", icon: require("../assets/images/measure/light.png"), key: "luminosity", name: "Luminosity", unit: "Lux", },
-    {
-        value: "", icon: false,
-        icon: false,
-        key: "Sensor_PM900_2_5_Weight",
-        name: "Sensor PM900 2 5 Weight",
-    },
-    { value: "", icon: false, key: "Sensor_PM900_10_Weight", name: "Sensor PM900 10 Weight" },
-    {
-        value: "", icon: false,
-        icon: false,
-        key: "Sensor_PM_Measuring_Unit",
-        name: "Sensor PM Measuring Unit",
-    },
+
+
+
     {
         value: "", icon: require("../assets/images/measure/temperature.png"),
         key: "Internal_Temperature",
         name: "Internal temperature",
         unit: "°C",
     },
-    {
-        value: "", icon: false,
-        key: "Restarted",
-        name: "Restarted",
-    },
-    {
-        value: "", icon: false,
-        key: "Sensor_Firmware_Version",
-        name: "Sensor Firmware Version",
-    },
+    // {
+    //     value: "", icon: false,
+    //     key: "Restarted",
+    //     name: "Restarted",
+    // },
+    // {
+    //     value: "", icon: false,
+    //     key: "Sensor_Firmware_Version",
+    //     name: "Sensor firmware version",
+    // },
     {
         value: "", icon: false,
         key: "Comm_State",
         name: "Comm state",
     },
 
-    { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "Sensor_Humidity", name: "Sensor Humidity", unit: "%" },
-    { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Sensor_Temperature", name: "Sensor Temperature", unit: "°C" },
+    { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "Sensor_Humidity", name: "Sensor humidity", unit: "%" },
+    { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Sensor_Temperature", name: "Sensor temperature", unit: "°C" },
     { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "humidity", name: "Humidity", unit: "%" },
     { value: "", icon: require("../assets/images/measure/temperature.png"), key: "temperature", name: "Temperature", unit: "°C" },
     { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "exposure", name: "Exposure" },
@@ -119,8 +103,8 @@ export const measurementKeys = [
     { value: "", icon: false, key: "falldown", name: "Falldown" },
     { value: "", icon: false, key: "rssi", name: "Rssi" },
     { value: "", icon: false, key: "underrange", name: "Underrage" },
-    { value: "", icon: false, key: "vBat", name: "V Bat" },
-    { value: "", icon: require("../assets/images/measure/acoustic-pressure.png"), key: "acousticPressure", name: "Acoustic Pressure" },
+    { value: "", icon: require("../assets/images/measure/battery.png"), key: "vBat", name: "Battery voltage" },
+    { value: "", icon: require("../assets/images/measure/acoustic-pressure.png"), key: "acousticPressure", name: "Acoustic pressure" },
     { value: "", icon: require("../assets/images/measure/frequentation.png"), key: "frequentation", name: "Frequentation" },
     { value: "", icon: require("../assets/images/measure/battery.png"), key: "battery", name: "Battery", unit: "%", },
 
@@ -132,15 +116,15 @@ export const measurementKeys = [
     { value: "", icon: require("../assets/images/measure/uv.png"), key: "uv", name: "UV" },
     { value: "", icon: require("../assets/images/measure/co2.png"), key: "co2", name: "CO2", unit: "ppm" },
     { value: "", icon: require("../assets/images/measure/cov.png"), key: "voc", name: "COV", unit: "μg/m³" },
-    { value: "", icon: require("../assets/images/measure/iaqi.png"), key: "iaqi", name: "Air Quality Index", unit: "/5" },
-    { value: "", icon: require("../assets/images/measure/viralRisk.png"), key: "viralRisk", name: "Viral Risk" },
+    { value: "", icon: require("../assets/images/measure/iaqi.png"), key: "iaqi", name: "Air quality index", unit: "/5" },
+    { value: "", icon: require("../assets/images/measure/viralRisk.png"), key: "viralRisk", name: "Viral risk" },
     // { value: "", icon: require("../assets/images/measure/power.png"), key: "power", name: "Power" },
     { value: "", icon: require("../assets/images/measure/valve.png"), key: "valve", name: "Switch output" },
     // { value: "", icon: false, key: "tamper", name: "Tamper" },
     { value: "", icon: require("../assets/images/measure/overload.png"), key: "overload", name: "Overload" },
 
     { value: "", icon: require("../assets/images/measure/pressure.png"), key: "pressure", name: "Pressure" },
-    { value: "", icon: require("../assets/images/measure/sound.png"), key: "maximumNoise", name: "Maximum Noise", unit: "dB" },
+    { value: "", icon: require("../assets/images/measure/sound.png"), key: "maximumNoise", name: "Maximum noise", unit: "dB" },
     { value: "", icon: require("../assets/images/measure/noise.png"), key: "averageNoise", name: "Noise", unit: "dB" },
     { value: "", icon: require("../assets/images/measure/hvac.png"), key: "air_treatment", name: "Air treatment", unit: "%" }
 ];

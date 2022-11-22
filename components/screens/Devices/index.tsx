@@ -140,7 +140,6 @@ const Devices = () => {
             height: 20,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.success,
           }}
         >
           <Image
@@ -152,7 +151,7 @@ const Devices = () => {
             }}
           />
         </View>
-        <Text style={{ fontWeight: "500" }}>Online</Text>
+        <Text style={{ fontWeight: "400" }}>Online</Text>
       </View>
     );
   }
@@ -172,7 +171,6 @@ const Devices = () => {
             height: 20,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.success,
           }}
         >
           <Image

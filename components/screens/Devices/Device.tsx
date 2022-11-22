@@ -118,26 +118,25 @@ export const Device = ({ navigation }) => {
       >
         <View
           style={{
-            width: 16,
-            height: 16,
+            width: 20,
+            height: 20,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.success,
           }}
         >
           <Image
-            source={require("../../../assets/images/online-icon.png")}
+            source={require("../../../assets/images/measure/connected.png")}
             style={{
-              width: 16,
-              height: 16,
-              tintColor: "#fff",
+              width: 20,
+              height: 20,
+              tintColor: SystemColors.success,
             }}
           />
         </View>
 
         <Text
           style={{
-            fontWeight: "500",
+            fontWeight: "400",
           }}
         >
           Online
@@ -156,13 +155,21 @@ export const Device = ({ navigation }) => {
       >
         <View
           style={{
-            width: 16,
-            height: 16,
+            width: 20,
+            height: 20,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.warning,
           }}
-        ></View>
+        >
+          <Image
+            style={{
+              tintColor: SystemColors.warning,
+              width: 18,
+              height: 18,
+            }}
+            source={require("../../../assets/images/measure/offline.png")}
+          />
+        </View>
         <Text style={{ color: SystemColors.warning }}>Offline</Text>
       </View>
     );
