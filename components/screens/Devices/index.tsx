@@ -136,19 +136,19 @@ const Devices = () => {
       >
         <View
           style={{
-            width: 16,
-            height: 16,
+            width: 20,
+            height: 20,
             marginRight: 6,
             borderRadius: 100,
             backgroundColor: SystemColors.success,
           }}
         >
           <Image
-            source={require("../../../assets/images/online-icon.png")}
+            source={require("../../../assets/images/measure/connected.png")}
             style={{
-              width: 16,
-              height: 16,
-              tintColor: "#fff",
+              width: 20,
+              height: 20,
+              tintColor: SystemColors.success,
             }}
           />
         </View>
@@ -168,13 +168,23 @@ const Devices = () => {
       >
         <View
           style={{
-            width: 16,
-            height: 16,
+            width: 20,
+            height: 20,
             marginRight: 6,
             borderRadius: 100,
-            backgroundColor: SystemColors.warning,
+            backgroundColor: SystemColors.success,
           }}
-        ></View>
+        >
+          <Image
+            style={{
+              tintColor: SystemColors.warning,
+              width: 18,
+              height: 18,
+            }}
+            source={require("../../../assets/images/measure/offline.png")}
+          />
+        </View>
+
         <Text
           style={{
             color: SystemColors.warning,
@@ -312,9 +322,6 @@ const Devices = () => {
     <>
       <QRSearch open={open} setQRModal={setQRModal} />
       <AppCustomHeader navigation={navigation} />
-      <View>
-        <Text>{JSON.stringify(payload_ids)}</Text>
-      </View>
       <View
         style={{
           paddingHorizontal: 12,

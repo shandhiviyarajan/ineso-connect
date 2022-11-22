@@ -3,8 +3,9 @@ import axios from "axios";
 import { Alert, LogBox } from "react-native";
 import { Message } from "../../components/molecules/Toast";
 import jwt_decode from "jwt-decode";
+import { setAuthToken } from "./indentity";
 //set default api url
-//let BASE_URL = "https://connect-staging.inesocompany.com/api";
+// BASE_URL = "https://connect-staging.inesocompany.com/api";
 let BASE_URL = "https://connect.inesocompany.com/api";
 let TIME_OUT = 50000;
 let ACCESS_TOKEN: any = false;
@@ -33,28 +34,6 @@ authRequest.interceptors.request.use(
 );
 //configure  response interceptors
 authRequest.interceptors.response.use(
-  (response) => {
-    return Promise.resolve(response);
-  },
-  (error) => {
-    //const originalRequest = error.config;
-    //handle refresh token here
-    return Promise.reject(error);
-  }
-);
-axiosRequest.interceptors.request.use(
-  (config) => {
-    config.headers.baseURL = BASE_URL;
-    config.headers.timeout = TIME_OUT;
-    config.headers["Content-Type"] = "application/json";
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-//configure  response interceptors
-axiosRequest.interceptors.response.use(
   (response) => {
     return Promise.resolve(response);
   },
@@ -93,6 +72,10 @@ export const isTokenExpired = async () => {
 //handleErros
 const handleErrors = (code, error) => {
   switch (code) {
+    case 401:
+      Message("error", error.response.data.message, error.message);
+      break;
+
     case 403:
       Message("error", error.response.data.message, error.message);
       break;
@@ -102,16 +85,11 @@ const handleErrors = (code, error) => {
       break;
   }
 };
-//create axios instance
-const APIKit = axiosRequest;
-
-const APIUpload = axiosRequest;
-
 //set client authorization token here
 export const setClientToken = (token: string | boolean | null) => {
   ACCESS_TOKEN = token;
 
-  APIKit.interceptors.request.use(
+  axiosRequest.interceptors.request.use(
     (config) => {
       config.headers["Content-Type"] = "application/json";
       config.headers.common["Authorization"] = `Bearer ${token}`;
@@ -123,24 +101,11 @@ export const setClientToken = (token: string | boolean | null) => {
       return Promise.reject(error);
     }
   );
-
-  APIUpload.interceptors.request.use(
-    (config) => {
-      config.headers["Content-Type"] = "multipart/form-data";
-      config.headers.common["Authorization"] = `Bearer ${token}`;
-      return config;
-    },
-    (error) => {
-      let code = error.response.status;
-      handleErrors(code, error);
-      return Promise.reject(error);
-    }
-  );
 };
 
+let retry = false;
 export const httpInstance = async () => {
   ACCESS_TOKEN = await getToken();
-  //not expired
   axiosRequest.interceptors.request.use(
     (config) => {
       config.headers.baseURL = BASE_URL;
@@ -158,8 +123,25 @@ export const httpInstance = async () => {
     (response) => {
       return Promise.resolve(response);
     },
-    (error) => {
-      //handle refresh token here
+    async (error) => {
+      const originalConfig = error.config;
+
+      if (error.response.status && !retry) {
+        retry = true;
+
+        try {
+          const res = await axiosRequest.get("/auth/refresh");
+
+          const refreshToken = res.data.data.access_token;
+          setToken(refreshToken);
+          setClientToken(refreshToken);
+          console.log("newtoken", refreshToken);
+          return axiosRequest(originalConfig);
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      }
+
       handleErrors(error.response.status, error);
       return Promise.reject(error);
     }
@@ -167,7 +149,6 @@ export const httpInstance = async () => {
 
   return axiosRequest;
 };
-export const httpUpload = APIUpload;
 
 //create http client method
 export const httpClient = () => {

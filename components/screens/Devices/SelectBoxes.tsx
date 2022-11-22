@@ -44,13 +44,10 @@ export const SelectBoxes = ({ navigation }) => {
   //get user info on load
   useEffect(() => {
     (async () => {
-      if (await isTokenExpired()) {
-        dispatchAction(LogoutAction());
-      } else {
-        setClientToken(isAuthenticated);
-        dispatchAction(ActionFetchClients());
-        dispatchAction(MeAction());
-      }
+      console.log(isAuthenticated);
+      setClientToken(isAuthenticated);
+      dispatchAction(ActionFetchClients());
+      dispatchAction(MeAction());
     })();
   }, []);
 
