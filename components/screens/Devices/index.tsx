@@ -151,7 +151,6 @@ const Devices = () => {
             }}
           />
         </View>
-        <Text style={{ fontWeight: "400" }}>Online</Text>
       </View>
     );
   }
@@ -182,14 +181,6 @@ const Devices = () => {
             source={require("../../../assets/images/measure/offline.png")}
           />
         </View>
-
-        <Text
-          style={{
-            color: SystemColors.warning,
-          }}
-        >
-          Offline
-        </Text>
       </View>
     );
   }
@@ -324,6 +315,7 @@ const Devices = () => {
         style={{
           paddingHorizontal: 12,
           position: "relative",
+          backgroundColor: "#F2F5F9",
         }}
       >
         <View
@@ -402,7 +394,7 @@ const Devices = () => {
         <View
           style={{
             marginTop: 6,
-            backgroundColor: "#fff",
+            backgroundColor: "#F2F5F9",
             borderRadius: 12,
             paddingHorizontal: 12,
             paddingVertical: 6,
@@ -443,7 +435,7 @@ const Devices = () => {
               borderWidth: 0,
               height: 32,
               paddingHorizontal: 12,
-              backgroundColor: "#f1f1f1",
+              backgroundColor: "#F2F5F9",
             }}
           >
             <View
@@ -478,6 +470,7 @@ const Devices = () => {
             flexDirection: "row",
             justifyContent: "flex-end",
             paddingHorizontal: 0,
+            backgroundColor: "#F2F5F9",
           }}
         >
           <TouchableHighlight
@@ -489,7 +482,7 @@ const Devices = () => {
               style={{
                 paddingHorizontal: 12,
                 paddingTop: 12,
-                backgroundColor: "transparent",
+
                 borderRadius: 0,
                 marginBottom: 0,
               }}
@@ -515,6 +508,7 @@ const Devices = () => {
           style={{
             flex: 1,
             justifyContent: "center",
+            backgroundColor: "#F2F5F9",
           }}
         >
           {devices.isLoading && (

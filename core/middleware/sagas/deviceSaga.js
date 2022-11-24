@@ -28,4 +28,16 @@ export function* watchFechDevice() {
 }
 
 
+export function* watchSYNCDevice() {
+    while (true) {
+        const { payload } = yield take(DEVICE_TYPES.SYNC_DEVICE);
+        try {
+            const response = yield call(apiFetchDevice, payload);
+            yield put({ type: DEVICE_TYPES.SYNC_DEVICE_SUCCESS, payload: response.data.data });
+        } catch (error) {
+            yield put({ type: DEVICE_TYPES.GET_DEVICE_FAIL, payload: error });
+        }
+    }
+}
+
 //apiFetchDevice

@@ -127,7 +127,7 @@ export const apiUpdateGPSCoodinates = async ({ clientId, gluonId, payload }) => 
 
     return await new Promise(async (resolve, reject) => {
         httpRequest = await httpInstance();
-        console.log(httpRequest);
+
         httpRequest.put(DEVICES.UPDATE_COODINATES(clientId, gluonId), JSON.stringify(payload))
             .then((response) => {
                 resolve(response);

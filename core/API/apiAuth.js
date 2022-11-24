@@ -1,4 +1,4 @@
-import { httpClient, setToken, httpInstance } from "../interceptors/interceptors";
+import { httpClient, setToken, httpInstance, getToken } from "../interceptors/interceptors";
 import { Message } from "../../components/molecules/Toast";
 import { setClientToken } from "../interceptors/interceptors";
 
@@ -14,10 +14,9 @@ export const apiLogin = async (payload: any) => {
   return await httpClient()
     .post(ApiAuth.LOGIN, payload)
     .then((response) => {
-      console.log(response);
       if (response.status === 200) {
-        setClientToken(response && response.data && response.data.data.access_token);
         setToken(response && response.data && response.data.data.access_token);
+        setClientToken(response && response.data && response.data.data.access_token);
         Message("success", "Login Successful !", "Welcome to Connect");
         return response;
       }
@@ -50,7 +49,6 @@ export const me = async () => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
       return error;
     });
 };

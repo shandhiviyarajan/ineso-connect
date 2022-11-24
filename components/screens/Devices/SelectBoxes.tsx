@@ -2,14 +2,6 @@ import React, { useEffect } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  LogoutAction,
-  MeAction,
-} from "../../../core/redux/actions/authActions";
-import {
-  isTokenExpired,
-  setClientToken,
-} from "../../../core/interceptors/interceptors";
-import {
   ActionFetchClient,
   ActionFetchClients,
   ActionSetClientId,
@@ -22,9 +14,17 @@ import { ActionFetchGroups } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
+import {
+  getToken,
+  setClientToken,
+  setToken,
+} from "../../../core/interceptors/interceptors";
+import { MeAction } from "../../../core/redux/actions/authActions";
+import { SystemColors } from "../../../core/Styles/theme/colors";
 export const SelectBoxes = ({ navigation }) => {
   //auth status
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const me = useSelector((state) => state.auth.me.data);
   //dispatcher
   const dispatchAction = useDispatch();
 
@@ -41,13 +41,12 @@ export const SelectBoxes = ({ navigation }) => {
     groupId: false,
   });
 
-  //get user info on load
   useEffect(() => {
-    console.log(isAuthenticated);
     (async () => {
-      setClientToken(isAuthenticated);
-      dispatchAction(ActionFetchClients());
+      console.log(SystemColors);
+      setToken(isAuthenticated);
       dispatchAction(MeAction());
+      dispatchAction(ActionFetchClients());
     })();
   }, []);
 
@@ -182,7 +181,7 @@ export const SelectBoxes = ({ navigation }) => {
       <View
         style={{
           alignItems: "center",
-          backgroundColor: "transparent",
+          backgroundColor: "#F2F5F9",
         }}
       >
         <View style={ContentStyle.card}>

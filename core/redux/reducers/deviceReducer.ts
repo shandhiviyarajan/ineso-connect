@@ -83,6 +83,26 @@ const deviceReducer = (state = initialState, action) => {
         },
       };
 
+    case DEVICE_TYPES.SYNC_DEVICE:
+      return {
+        ...state,
+        device: {
+          isLoading: false,
+          data: null,
+          errors: false,
+        },
+      };
+
+    case DEVICE_TYPES.SYNC_DEVICE_SUCCESS:
+      return {
+        ...state,
+        device: {
+          isLoading: false,
+          data: action.payload,
+          errors: false,
+        },
+      };
+
     case DEVICE_TYPES.GET_DEVICE:
       return {
         ...state,

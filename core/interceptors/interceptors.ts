@@ -1,9 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { Alert, LogBox } from "react-native";
 import { Message } from "../../components/molecules/Toast";
 import jwt_decode from "jwt-decode";
-import { setAuthToken } from "./indentity";
 //set default api url
 // BASE_URL = "https://connect-staging.inesocompany.com/api";
 let BASE_URL = "https://connect.inesocompany.com/api";
@@ -85,17 +83,6 @@ const handleErrors = (code, error) => {
 //set client authorization token here
 export const setClientToken = (token: string | boolean | null) => {
   ACCESS_TOKEN = token;
-
-  axiosRequest.interceptors.request.use(
-    (config) => {
-      config.headers["Content-Type"] = "application/json";
-      config.headers.common["Authorization"] = `Bearer ${token}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
 };
 
 let retry = false;

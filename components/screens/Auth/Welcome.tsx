@@ -8,11 +8,9 @@ import {
   TouchableHighlight,
   ImageBackground,
   Dimensions,
-  Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { getToken } from "../../../core/interceptors/interceptors";
 import { ActionSetConfig } from "../../../core/redux/actions/authActions";
 
 import { SystemColors } from "../../../core/Styles/theme/colors";

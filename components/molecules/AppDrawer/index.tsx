@@ -6,7 +6,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 //app drawer
 export const AppDrawer = (props) => {
-  const isLoading = useSelector((state) => state.auth.isLoading);
   const me = useSelector((state) => state.auth.me.data);
   return (
     <>

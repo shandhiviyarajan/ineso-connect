@@ -5,7 +5,6 @@ import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { MeAction } from "../../../core/redux/actions/authActions";
 
 export const AppCustomHeader = (props) => {
   const navigation = useNavigation();
@@ -27,7 +26,6 @@ export const AppCustomHeader = (props) => {
   const handleMapNav = () => {
     props.navigation.navigate("Device Maps");
   };
-  const dispatch = useDispatch();
 
   const getName = () => {
     if (me) {
@@ -35,10 +33,6 @@ export const AppCustomHeader = (props) => {
       return name.toUpperCase();
     }
   };
-  React.useEffect(() => {
-    dispatch(MeAction());
-  }, []);
-
   return (
     <>
       <View
@@ -52,6 +46,7 @@ export const AppCustomHeader = (props) => {
           flexDirection: "row",
           alignSelf: "center",
           justifyContent: "space-between",
+          backgroundColor: "#F2F5F9",
           elevation: 0,
         }}
       >

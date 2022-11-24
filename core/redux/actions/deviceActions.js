@@ -10,6 +10,9 @@ export const DEVICE_TYPES = {
     GET_DEVICE_SUCCESS: "GET_DEVICE_SUCCESS",
     GET_DEVICE_FAIL: "GET_DEVICE_FAIL",
 
+    SYNC_DEVICE: "SYNC_DEVICE",
+    SYNC_DEVICE_SUCCESS: "SYNC_DEVICE_SUCCESS",
+
     GET_SEARCH: "GET_SEARCH"
 };
 //Fetch sites actions
@@ -34,6 +37,12 @@ export const ActionFetchDevicesFail = (payload) => {
     };
 };
 
+export const ActionSyncDevice = (payload) => {
+    return {
+        type: DEVICE_TYPES.SYNC_DEVICE,
+        payload,
+    };
+};
 
 export const ActionFetchDevice = (payload) => {
     return {

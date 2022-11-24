@@ -15,6 +15,7 @@ export function* watchAuthUser() {
       const response = yield call(apiLogin, payload);
 
       if (response.status === 200 && response.data.data.access_token) {
+
         const responseProfile = yield call(me, {});
 
         yield put({ type: AUTH_TYPES.ME_SUCCESS, payload: responseProfile.data.data });

@@ -19,7 +19,7 @@ function BottomTabController() {
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: "#f1f1f1",
+          backgroundColor: "#F2F5F9",
           height: 56,
           borderRadius: 0,
           borderWidth: 0,

@@ -26,6 +26,7 @@ function* rootSaga() {
     //devivce saga
     deviceSaga.watchFechDevices(),
     deviceSaga.watchFechDevice(),
+    deviceSaga.watchSYNCDevice(),
     //alerts
     alertSaga.watchFetchAlerts(),
   ]);

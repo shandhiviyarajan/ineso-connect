@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Dimensions,
   Image,
   Text,
@@ -14,24 +15,17 @@ import {
   setToken,
 } from "../../../core/interceptors/interceptors";
 import {
-  LogoutAction,
+  LoginSuccessAction,
   LogoutSuccessAction,
-  MeAction,
 } from "../../../core/redux/actions/authActions";
 import {
   ActionFetchClientsSuccess,
   ActionFetchClientSuccess,
 } from "../../../core/redux/actions/clientsActions";
-import {
-  ActionFetchDevicesSuccess,
-  ActionFetchDeviceSuccess,
-} from "../../../core/redux/actions/deviceActions";
+import { ActionFetchDevicesSuccess } from "../../../core/redux/actions/deviceActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
 import { persistor } from "../../../core/store";
 function Profile() {
-  React.useEffect(() => {
-    dispatch(MeAction());
-  }, []);
   const isLoading = useSelector((state) => state.auth.me.isLoading);
   const me = useSelector((state) => state.auth.me.data);
 
@@ -39,16 +33,18 @@ function Profile() {
 
   const handleLogout = () => {
     persistor.purge();
-    dispatch(ActionFetchClientsSuccess(null));
-    dispatch(ActionFetchClientSuccess(null));
-    dispatch(ActionFetchDevicesSuccess(null));
-    dispatch(ActionUpdatePayload(null));
+    (async () => {
+      dispatch(LoginSuccessAction(null));
+      dispatch(ActionFetchClientsSuccess(null));
+      dispatch(ActionFetchClientSuccess(null));
+      dispatch(ActionFetchDevicesSuccess(null));
+      dispatch(ActionUpdatePayload(null));
 
-    removeToken().then(() => {
-      setToken(null);
+      await removeToken();
+      await setToken(null);
       setClientToken(null);
       dispatch(LogoutSuccessAction(null));
-    });
+    })();
   };
 
   function ProfileText({ children }) {

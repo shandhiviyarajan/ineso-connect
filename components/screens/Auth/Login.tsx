@@ -33,7 +33,6 @@ export const Login = () => {
     password: "",
   });
 
-  const me = useSelector((state) => state.auth.me.data);
   //handle form input changes
   const handleInput = (name: string, value: string) => {
     setPayload((prevState) => ({
@@ -64,6 +63,7 @@ export const Login = () => {
   //handle login
   const handleLogin = () => {
     if (validateForm()) {
+      console.log(payload);
       dispatch(LoginAction(payload));
     }
   };

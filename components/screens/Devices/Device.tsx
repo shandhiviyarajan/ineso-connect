@@ -3,19 +3,22 @@ import React from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import MapView, { MarkerAnimated } from "react-native-maps";
 import { ActivityIndicator } from "react-native-paper";
-import { useSelector } from "react-redux";
-import { SystemColors } from "../../../core/Styles/theme/colors";
-import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
-import GenerateImage from "../../../core/utils/GenerateImage";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../atoms/Button";
 import { measurementKeys } from "../../../core/constants";
-import { getToken } from "../../../core/interceptors/interceptors";
 import { RenameMaintenence } from "../../../core/utils/Maintenance";
+import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
+import GenerateImage from "../../../core/utils/GenerateImage";
+import { SystemColors } from "../../../core/Styles/theme/colors";
+import { ActionSyncDevice } from "../../../core/redux/actions/deviceActions";
+import { generateModel, vendorName } from "../../../core/utils/generateModel";
+
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
   const isLoading = useSelector((state) => state.device.device.isLoading);
   const [measures, setMeasures] = React.useState([]);
-
+  const clientId = useSelector((state) => state.client.clientId);
+  const dispatchAction = useDispatch();
   function CommissionList({ children }) {
     return <View>{children}</View>;
   }
@@ -63,13 +66,15 @@ export const Device = ({ navigation }) => {
                 marginRight: 4,
               }}
               source={GenerateImage(
-                activeDevice && activeDevice.metadata?.model
+                activeDevice &&
+                  activeDevice.metadata.model &&
+                  activeDevice.metadata.model
               )}
             />
           )}
           <Text
             style={{
-              fontSize: 17,
+              fontSize: 16,
               fontWeight: "500",
               color: "#5E5E5E",
             }}
@@ -124,14 +129,7 @@ export const Device = ({ navigation }) => {
             }}
           />
         </View>
-
-        <Text
-          style={{
-            fontWeight: "400",
-          }}
-        >
-          Online
-        </Text>
+        <Text>Online</Text>
       </View>
     );
   }
@@ -161,11 +159,11 @@ export const Device = ({ navigation }) => {
             source={require("../../../assets/images/measure/offline.png")}
           />
         </View>
-        <Text style={{ color: SystemColors.warning }}>Offline</Text>
+        <Text>Offline</Text>
       </View>
     );
   }
-
+  let timer = null;
   React.useEffect(() => {
     if (activeDevice) {
       let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
@@ -180,20 +178,21 @@ export const Device = ({ navigation }) => {
         value: deviceMeasurements.filter((dm) => dm[0] === fm.key)[0][1],
       }));
       setMeasures(newMeasure);
-      // require(GenerateImage(
-      // activeDevice && activeDevice.metadata?.model
-      // )),
+      timer = setTimeout(() => {
+        activeDevice &&
+          dispatchAction(
+            ActionSyncDevice({
+              clientId,
+              deviceId: `${activeDevice.vendor}:${activeDevice.serial}`,
+            })
+          );
+      }, 180 * 1000);
     }
+    return () => {
+      clearTimeout(timer);
+    };
   }, [activeDevice]);
-
-  //fetch devices every 120 seconds (2 min)
-  // dispatchAction(
-  //   ActionFetchDevice({
-  //     clientId,
-  //     deviceId: `${vendor}:${serial}`,
-  //   })
-  // );
-
+  // fetch devices every 120 seconds (2 min)
   return (
     <>
       <View
@@ -213,6 +212,7 @@ export const Device = ({ navigation }) => {
               paddingTop: 16,
               paddingBottom: 8,
               flexDirection: "row",
+              backgroundColor: "#F2F5F9",
             }}
           >
             <Image
@@ -221,12 +221,12 @@ export const Device = ({ navigation }) => {
                 width: 64,
                 height: 64,
                 marginRight: 12,
-                tintColor: "#333",
+                tintColor: SystemColors.primary,
               }}
             ></Image>
             <View>
               <Text
-                style={{ fontSize: 20, fontWeight: "600", marginBottom: 8 }}
+                style={{ fontSize: 18, fontWeight: "600", marginBottom: 8 }}
               >
                 {activeDevice.metadata.name}
               </Text>
@@ -262,33 +262,14 @@ export const Device = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 16,
-                    marginBottom: 6,
-                  }}
-                >
-                  Category : &nbsp;
-                </Text>
-                <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
-                  {activeDevice.category}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 6,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
                     color: "#000",
                   }}
                 >
                   Model : &nbsp;
                 </Text>
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
-                  {activeDevice.metadata.model}
+                  {activeDevice.metadata.model &&
+                    generateModel(activeDevice.metadata.model)}
                 </Text>
               </View>
               <View
@@ -328,7 +309,7 @@ export const Device = ({ navigation }) => {
                   Vendor: &nbsp;
                 </Text>
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
-                  {activeDevice.vendor}
+                  {vendorName(activeDevice.vendor)}
                 </Text>
               </View>
               <View
@@ -368,7 +349,7 @@ export const Device = ({ navigation }) => {
                 <Text style={{ fontSize: 14, color: "#5E5E5E" }}>
                   &nbsp;
                   {moment(activeDevice.lastMeasurement.time).format(
-                    "MM/DD/YYYY hh:mm:ss A"
+                    "DD-MMM-YYYY hh:mm:ss A"
                   )}
                 </Text>
               </View>
