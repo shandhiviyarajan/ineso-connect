@@ -166,7 +166,11 @@ export const Device = ({ navigation }) => {
   let timer = null;
   React.useEffect(() => {
     if (activeDevice) {
-      let deviceMeasurements = Object.entries(activeDevice.lastMeasurement);
+      let deviceMeasurements = Object.entries(
+        activeDevice && activeDevice.lastMeasurement
+          ? activeDevice.lastMeasurement
+          : {}
+      );
       let filterdMeasures = measurementKeys.filter((mk) =>
         deviceMeasurements.some((dm) => dm[0] === mk.key)
       );
@@ -222,6 +226,7 @@ export const Device = ({ navigation }) => {
                 height: 64,
                 marginRight: 12,
                 tintColor: SystemColors.primary,
+                resizeMode: "contain",
               }}
             ></Image>
             <View>
@@ -309,7 +314,7 @@ export const Device = ({ navigation }) => {
                   Vendor: &nbsp;
                 </Text>
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
-                  {vendorName(activeDevice.vendor)}
+                  {activeDevice.vendor && vendorName(activeDevice.vendor)}
                 </Text>
               </View>
               <View
@@ -348,9 +353,11 @@ export const Device = ({ navigation }) => {
                 </Text>
                 <Text style={{ fontSize: 14, color: "#5E5E5E" }}>
                   &nbsp;
-                  {moment(activeDevice.lastMeasurement.time).format(
-                    "DD-MMM-YYYY hh:mm:ss A"
-                  )}
+                  {activeDevice.lastMeasurement &&
+                    activeDevice.lastMeasurement.time &&
+                    moment(activeDevice.lastMeasurement.time).format(
+                      "DD-MMM-YYYY hh:mm:ss A"
+                    )}
                 </Text>
               </View>
             </View>

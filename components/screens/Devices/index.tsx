@@ -72,7 +72,7 @@ const Devices = () => {
       devices &&
       devices.data &&
       devices.data.filter((device: any) =>
-        device.metadata.model.includes(value)
+        device.metadata.name.includes(value)
       );
     if (value.length > 0) {
       setCurrentDevices(filtered);
@@ -241,7 +241,8 @@ const Devices = () => {
                   height: 48,
                   width: 48,
                   borderRadius: 8,
-                  tintColor: "#333",
+                  tintColor: SystemColors.primary,
+                  resizeMode: "contain",
                 }}
               />
             </View>

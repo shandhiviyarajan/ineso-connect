@@ -180,6 +180,8 @@ const GenerateImage = model => {
             return require('../../catalog/WD600_UMB/picture.png');
         case 'WD700_UMB':
             return require('../../catalog/WD700_UMB/picture.png');
+        case 'PLACEPOD_S':
+            return require('../../catalog/PLACEPOD_S/picture.png');
         default:
 
             return require('../../catalog/ineso/device_placeholder.png');

@@ -64,11 +64,11 @@ export const measurementKeys = [
     //     key: "Sensor_Firmware_Version",
     //     name: "Sensor firmware version",
     // },
-    {
-        value: "", icon: false,
-        key: "Comm_State",
-        name: "Comm state",
-    },
+    // {
+    //     value: "", icon: false,
+    //     key: "Comm_State",
+    //     name: "Comm state",
+    // },
 
     { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "Sensor_Humidity", name: "Humidity", unit: "%" },
     { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Sensor_Temperature", name: "Temperature", unit: "°C" },
