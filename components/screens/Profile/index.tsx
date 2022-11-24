@@ -97,18 +97,19 @@ function Profile() {
                     me.distributor.logo,
                 }}
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 200,
+                  height: 200,
                   borderRadius: 24,
                   marginBottom: 24,
+                  resizeMode: "contain",
                 }}
               />
             ) : (
               <Image
                 source={require("../../../assets/images/InesoMobileAppIcon.png")}
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 200,
+                  height: 200,
                   borderRadius: 24,
                   marginBottom: 24,
                 }}
