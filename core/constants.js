@@ -127,7 +127,7 @@ export const measurementKeys = [
     { value: "", icon: require("../assets/images/measure/iaqi.png"), key: "iaqi", name: "Air quality index", unit: "/5" },
     { value: "", icon: require("../assets/images/measure/viralRisk.png"), key: "viralRisk", name: "Viral risk" },
     // { value: "", icon: require("../assets/images/measure/power.png"), key: "power", name: "Power" },
-    { value: "", icon: require("../assets/images/measure/valve.png"), key: "valve", name: "Switch output" },
+    { value: "", icon: require("../assets/images/measure/switch-output.png"), key: "valve", name: "Switch output" },
     // { value: "", icon: false, key: "tamper", name: "Tamper" },
     // { value: "", icon: require("../assets/images/measure/overload.png"), key: "overload", name: "Overload" },
 

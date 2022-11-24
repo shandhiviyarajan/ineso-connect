@@ -103,6 +103,18 @@ export const Login = () => {
                   width: "50%",
                   height: "50%",
                   maxHeight: 200,
+                  resizeMode: "contain",
+                }}
+              />
+            )}
+            {appConfig && appConfig.logo && !appConfig.isPNG && (
+              <Image
+                source={{ uri: appConfig.logo }}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  maxHeight: 200,
+                  resizeMode: "contain",
                 }}
               />
             )}
@@ -113,6 +125,7 @@ export const Login = () => {
                   width: "50%",
                   height: "50%",
                   maxHeight: 200,
+                  resizeMode: "contain",
                 }}
                 source={require("../../../assets/images/InesoLogoBanner.png")}
               />

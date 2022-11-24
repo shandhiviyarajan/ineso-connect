@@ -64,7 +64,7 @@ export const Welcome = ({ navigation }) => {
       >
         <View
           style={{
-            backgroundColor: "#000",
+            backgroundColor: SystemColors.primary,
             opacity: 0.25,
             top: 0,
             right: 0,
@@ -86,6 +86,7 @@ export const Welcome = ({ navigation }) => {
                 width: "50%",
                 height: "50%",
                 maxHeight: 200,
+                resizeMode: "contain",
               }}
               source={{
                 uri: appConfig.logo,
@@ -185,7 +186,7 @@ export const Welcome = ({ navigation }) => {
               paddingTop: 12,
             }}
           >
-            Version 0.0.6
+            Version 0.0.7
           </Text>
         </View>
       </ImageBackground>
