@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  ImageBackground,
   KeyboardAvoidingView,
   Platform,
   Text,
@@ -86,7 +87,12 @@ export const Login = () => {
           }}
         >
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#F2F5F9",
+            }}
           >
             {appConfig &&
               appConfig.logo &&
@@ -104,6 +110,7 @@ export const Login = () => {
                   height: "50%",
                   maxHeight: 200,
                   resizeMode: "contain",
+                  zIndex: 100,
                 }}
               />
             )}
@@ -115,6 +122,7 @@ export const Login = () => {
                   height: "50%",
                   maxHeight: 200,
                   resizeMode: "contain",
+                  zIndex: 100,
                 }}
               />
             )}
@@ -126,6 +134,7 @@ export const Login = () => {
                   height: "50%",
                   maxHeight: 200,
                   resizeMode: "contain",
+                  zIndex: 100,
                 }}
                 source={require("../../../assets/images/InesoLogoBanner.png")}
               />
@@ -134,7 +143,7 @@ export const Login = () => {
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "padding"}
             style={{
-              flex: 1.5,
+              flex: 1.25,
               justifyContent: "center",
               alignItems: "center",
               height: "100%",
@@ -151,7 +160,7 @@ export const Login = () => {
                   marginBottom: 12,
                 }}
               >
-                Welcome - {isAuthenticated}
+                Welcome
               </Text>
               <Text
                 style={{
