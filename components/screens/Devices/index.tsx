@@ -193,7 +193,7 @@ const Devices = () => {
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: "green", textAlign: "center" }}>In use</Text>
+        <Text style={{ color: "green", textAlign: "center" }}></Text>
       </View>
     );
   }
