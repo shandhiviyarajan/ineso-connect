@@ -1,4 +1,5 @@
 const models = [
+    { key: "INESR-S01-02-868", name_en: "Light Switch Radar Box" },
     { key: "INESL-S04-02-868", name_en: "Light Switch Box" },
     {
         key: "INEDL-R01-01-868", name_en: "Light Switch Box DALI Dev"
@@ -36,7 +37,9 @@ const models = [
     { key: "BB10_L00_TAG_W", name_en: "ETag X" },
     { key: "BB12_001_CWF_W", name_en: "Brick" },
     { key: "BB10_LBV_CLP_W", name_en: "Safe X clip" },
-    { key: "levante_SSL_868", name_en: "Levante switch" },
+    { key: "LEVANTE_SSL_868", name_en: "Air Sanitizer Switch" },
+    { key: "PLACEPOD_S", name_en: "Parking Ground Sensor" },
+    { key: "PMO_D725A", name_en: "Outdoor Air Quality Sensor PM Pro" }
 ]
 const vendors = [
     { key: "ineso", name_en: "Ineso" },
@@ -51,6 +54,13 @@ const vendors = [
     { key: "jcft", name_en: "Ineso" },
     { key: "blueup", name_en: "Ineso" },
     { key: "strega", name_en: "Ineso" },
+    {
+        key: "airicom", name_en: "Ineso",
+    },
+    {
+        key: "nexelec", name_en: "Ineso",
+    },
+    { key: "nippongases", name_en: "Ineso" }
 ]
 export const generateModel = (value) => {
     let m = models.filter(model => model.key === value);
@@ -61,5 +71,5 @@ export const generateModel = (value) => {
 export const vendorName = (key) => {
     let v = vendors.filter(vendor => vendor.key === key);
 
-    return v.length > 0 ? v[0].name_en : ""
+    return v.length > 0 ? v[0].name_en : "Ineso"
 }

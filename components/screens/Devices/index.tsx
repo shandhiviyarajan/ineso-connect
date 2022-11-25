@@ -27,6 +27,7 @@ import {
 import { SelectBoxes } from "./SelectBoxes";
 import { useNavigation } from "@react-navigation/native";
 import { Message } from "../../molecules/Toast";
+import { generateModel } from "../../../core/utils/generateModel";
 const Devices = () => {
   const dispatchAction = useDispatch();
 
@@ -270,7 +271,11 @@ const Devices = () => {
                     marginBottom: 5,
                   }}
                 >
-                  {toCapitalize(removeUnderscore(device.type))}
+                  {
+                    generateModel(device.metadata.model)
+
+                    // toCapitalize(removeUnderscore(device.type))
+                  }
                 </Text>
               </View>
               <View

@@ -131,7 +131,7 @@ export const measurementKeys = [
     // { value: "", icon: false, key: "tamper", name: "Tamper" },
     // { value: "", icon: require("../assets/images/measure/overload.png"), key: "overload", name: "Overload" },
 
-    { value: "", icon: require("../assets/images/measure/pressure.png"), key: "pressure", name: "Pressure" },
+    { value: "", icon: require("../assets/images/measure/pressure.png"), key: "pressure", name: "Pressure", unit: "hPa" },
     { value: "", icon: require("../assets/images/measure/sound.png"), key: "maximumNoise", name: "Maximum noise", unit: "dB" },
     { value: "", icon: require("../assets/images/measure/noise.png"), key: "averageNoise", name: "Noise", unit: "dB" },
     { value: "", icon: require("../assets/images/measure/hvac.png"), key: "air_treatment", name: "Air treatment", unit: "%" }
