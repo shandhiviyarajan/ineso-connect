@@ -464,8 +464,7 @@ export const Device = ({ navigation }) => {
                           >
                             <View
                               style={{
-                                width: "100%",
-                                display: "flex",
+                                flex: 4,
                               }}
                             >
                               <Text
@@ -554,6 +553,9 @@ export const Device = ({ navigation }) => {
                 <View style={styles.card}>
                   <TouchableHighlight
                     underlayColor="#fff"
+                    style={{
+                      padding: 0,
+                    }}
                     onPress={() => {
                       navigation.navigate("EditGPS", {
                         activeDevice,
@@ -572,7 +574,6 @@ export const Device = ({ navigation }) => {
                           flex: 4,
                           fontSize: 16,
                           fontWeight: "400",
-
                           paddingRight: 12,
                         }}
                       >
@@ -582,9 +583,8 @@ export const Device = ({ navigation }) => {
                         source={require("../../../assets/images/lastlocation.png")}
                         style={{
                           resizeMode: "contain",
-                          flex: 1,
-                          width: 100,
-                          height: 100,
+                          width: 72,
+                          height: 72,
                           tintColor: SystemColors.primary,
                         }}
                       />
