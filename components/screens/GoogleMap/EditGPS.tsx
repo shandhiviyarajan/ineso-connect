@@ -67,10 +67,60 @@ function EditGPS({ route, navigation }) {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#F2F5F9",
       }}
     >
       <View
         style={{
+          flex: newLocation ? 0.9 : 0.5,
+          paddingTop: 24,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: "600",
+          }}
+        >
+          Drag the marker to change the location
+        </Text>
+        {newLocation && (
+          <View
+            style={{
+              flexDirection: "row",
+              paddingVertical: 12,
+            }}
+          >
+            <Text
+              style={{
+                flex: 1,
+                fontSize: 14,
+                padding: 6,
+                borderWidth: 1,
+                borderColor: "#d8d8d8",
+                textAlign: "center",
+              }}
+            >
+              {parseFloat(newLocation && newLocation.latitude).toFixed(4)}
+            </Text>
+            <Text
+              style={{
+                flex: 1,
+                fontSize: 14,
+                padding: 6,
+                borderWidth: 1,
+                borderColor: "#d8d8d8",
+                textAlign: "center",
+              }}
+            >
+              {parseFloat(newLocation && newLocation.longitude).toFixed(4)}
+            </Text>
+          </View>
+        )}
+      </View>
+      <View
+        style={{
+          flex: 5,
           width: Dimensions.get("screen").width,
         }}
       >
@@ -86,7 +136,7 @@ function EditGPS({ route, navigation }) {
               longitudeDelta: 0.003,
             }}
             style={{
-              height: Dimensions.get("screen").height / 1.35,
+              height: "100%",
               marginBottom: 24,
             }}
           >
@@ -101,10 +151,17 @@ function EditGPS({ route, navigation }) {
           </MapView>
         )}
       </View>
-      <Button secondary onPress={handleSaveGPS} isLoading={isSaving}>
-        {isSaving && <>Please wait...</>}
-        {!isSaving && <>Save GPS coordinates</>}
-      </Button>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: 24,
+        }}
+      >
+        <Button secondary onPress={handleSaveGPS} isLoading={isSaving}>
+          {isSaving && <>Please wait...</>}
+          {!isSaving && <>Save GPS coordinates</>}
+        </Button>
+      </View>
     </View>
   );
 }

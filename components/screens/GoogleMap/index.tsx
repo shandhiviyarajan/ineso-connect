@@ -1,24 +1,74 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import MapView, { Callout, MapCallout, Marker } from "react-native-maps";
 import { Image } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UrlTile } from "react-native-maps";
 
 import image from "../../../assets/images/map-marker.png";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { SystemColors } from "../../../core/Styles/theme/colors";
+import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 const DeviceGoogleMaps = () => {
   const devices = useSelector((state) => state.device.devices);
+  const clientId = useSelector((state) => state.client.clientId);
+  const delta = {
+    latitudeDelta: 1,
+    longitudeDelta: 1,
+  };
+  const dispatchAction = useDispatch();
+  const [initialRegion, setRegion] = React.useState({
+    latitude: 45.781941,
+    longitude: 4.748706,
+    latitudeDelta: delta.latitudeDelta,
+    longitudeDelta: delta.longitudeDelta,
+  });
 
-  let initialRegion = {};
   React.useEffect(() => {
-    initialRegion = {
-      latitude: 45.781941,
-      longitude: 4.748706,
-      latitudeDelta: 5,
-      longitudeDelta: 5,
-    };
+    dispatchAction(
+      ActionFetchDevices({
+        clientId: clientId,
+        siteId: false,
+        groupId: false,
+      })
+    );
+  }, [dispatchAction]);
+
+  React.useEffect(() => {
+    if (devices) {
+      centerMap();
+    }
   }, [devices]);
+
+  const centerMap = () => {
+    console.log("center");
+    setRegion({
+      latitude:
+        devices &&
+        devices.data &&
+        devices.data[0] &&
+        devices.data[0].metadata &&
+        devices.data[0].metadata.gpsLocation.latitude
+          ? devices.data[0].metadata.gpsLocation.latitude
+          : 45.781941,
+      longitude:
+        devices &&
+        devices.data &&
+        devices.data[0] &&
+        devices.data[0].metadata &&
+        devices.data[0].metadata.gpsLocation.longitude
+          ? devices.data[0].metadata.gpsLocation.longitude
+          : 4.748706,
+      latitudeDelta: delta.latitudeDelta,
+      longitudeDelta: delta.longitudeDelta,
+    });
+  };
 
   function renderMarker({ location }) {
     return (
@@ -50,53 +100,41 @@ const DeviceGoogleMaps = () => {
         <>
           <View
             style={{
-              flex: 0.25,
+              flex: 1,
+              paddingTop: 64,
             }}
           >
+            <TouchableHighlight onPress={centerMap}>
+              <View>
+                <Text>Center</Text>
+              </View>
+            </TouchableHighlight>
             {devices &&
               devices.data &&
               devices.data.map((d) => (
                 <Text
                   style={{
-                    padding: 24,
+                    paddingTop: 24,
                   }}
                 >
-                  {d.metadata.gpsLocation.longitude +
+                  {d.metadata.name}+ " - " +
+                  {d.metadata.gpsLocation.latitude +
                     " - " +
-                    d.metadata.gpsLocation.latitude}
+                    d.metadata.gpsLocation.longitude}
                 </Text>
               ))}
           </View>
           <View
             style={{
-              flex: 1,
+              flex: 4,
               // ...StyleSheet.absoluteFillObject,
             }}
           >
             <MapView
-              showsUserLocation={true}
+              showsUserLocation={false}
               customMapStyle={[]}
               zoomEnabled={true}
-              initialRegion={{
-                latitude:
-                  devices &&
-                  devices.data &&
-                  devices.data[0] &&
-                  devices.data[0].metadata &&
-                  devices.data[0].metadata.gpsLocation.latitude
-                    ? devices.data[0].metadata.gpsLocation.latitude
-                    : 45.781941,
-                longitude:
-                  devices &&
-                  devices.data &&
-                  devices.data[0] &&
-                  devices.data[0].metadata &&
-                  devices.data[0].metadata.gpsLocation.longitude
-                    ? devices.data[0].metadata.gpsLocation.longitude
-                    : 4.748706,
-                latitudeDelta: 5,
-                longitudeDelta: 5,
-              }}
+              initialRegion={initialRegion}
               style={{
                 ...StyleSheet.absoluteFillObject,
               }}
@@ -105,11 +143,11 @@ const DeviceGoogleMaps = () => {
                 devices.data &&
                 devices.data.map((device, i) => (
                   <Marker
-                    key={"map-marker" + i}
+                    key={device._id}
                     description={device.metadata.name}
                     coordinate={{
-                      longitude: device.metadata.gpsLocation.longitude,
                       latitude: device.metadata.gpsLocation.latitude,
+                      longitude: device.metadata.gpsLocation.longitude,
                     }}
                   >
                     <View

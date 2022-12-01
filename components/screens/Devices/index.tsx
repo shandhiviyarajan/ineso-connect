@@ -591,7 +591,7 @@ const Devices = () => {
             >
               {currentDevices.map((device, index) => (
                 <DeviceCard
-                  key={"device" + index}
+                  key={device._id}
                   device={device}
                   onPress={() => handleDeviceClick(device)}
                 />
