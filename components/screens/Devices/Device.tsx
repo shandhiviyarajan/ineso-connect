@@ -30,6 +30,14 @@ export const Device = ({ navigation }) => {
     return <View>{children}</View>;
   }
 
+  const getWarrantyYear = (date) => {
+    let d = new Date(date);
+
+    let new_d = d.setMonth(d.getMonth() + 24); //set 2 years warranty
+
+    return moment(new_d).diff(Date.now(), "years", true);
+  };
+
   function DeviceInfo({ title, value, unit, icon }) {
     return (
       <View
@@ -449,7 +457,8 @@ export const Device = ({ navigation }) => {
                                 backgroundColor: SystemColors.primary,
                                 height: 24,
                                 borderRadius: 6,
-                                width: "90%",
+                                width:
+                                  (getWarrantyYear(cycle.date) / 2) * 100 + "%",
                                 position: "absolute",
                                 left: 0,
                                 top: 0,
@@ -461,12 +470,13 @@ export const Device = ({ navigation }) => {
                                 style={{
                                   color: "#fff",
                                   fontWeight: "bold",
+                                  width: "100%",
+                                  textAlign: "center",
                                 }}
                               >
-                                {cycle.state.date}
-                                {moment(cycle.state.date).format(
-                                  "D - MMM - yyyy"
-                                )}
+                                {parseFloat(
+                                  getWarrantyYear(cycle.date)
+                                ).toFixed(2)}
                               </Text>
                             </View>
                           </View>
@@ -540,9 +550,7 @@ export const Device = ({ navigation }) => {
                                 }}
                               >
                                 Date :{" "}
-                                {moment(cycle.state.date).format(
-                                  "D - MMM - yyyy"
-                                )}
+                                {moment(cycle.date).format("D - MMM - yyyy")}
                               </Text>
                             </View>
                             <Image
@@ -561,7 +569,74 @@ export const Device = ({ navigation }) => {
                   )}
               </View>
             </>
+            <>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "500",
+                  marginBottom: 12,
+                }}
+              >
+                Maintenance History
+              </Text>
+              <View style={styles.card}>
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.lifecycle.map((cycle, i) => (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                        key={"cycle" + i}
+                      >
+                        <View
+                          style={{
+                            flex: 4,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontWeight: "400",
+                              width: "100%",
+                              display: "flex",
 
+                              fontSize: 16,
+                              marginBottom: 6,
+                              marginTop: 0,
+                            }}
+                          >
+                            Current State :{" "}
+                            {cycle.state &&
+                              cycle.state &&
+                              toCapitalize(
+                                RenameMaintenence(cycle.state && cycle.state)
+                              )}
+                          </Text>
+                          <Text
+                            style={{
+                              marginBottom: 6,
+                              color: "#5E5E5E",
+                              fontSize: 16,
+                            }}
+                          >
+                            Date : {moment(cycle.date).format("D - MMM - yyyy")}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+              </View>
+            </>
             {/* <View style={styles.card}>
               <Text
                 style={{
