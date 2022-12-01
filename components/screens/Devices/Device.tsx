@@ -428,6 +428,51 @@ export const Device = ({ navigation }) => {
                     Running
                   </Text>
                 </View>
+
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.lifecycle.map(
+                    (cycle, i) =>
+                      cycle.state === "blank" && (
+                        <View>
+                          <View
+                            style={{
+                              backgroundColor: "#eee",
+                              height: 24,
+                              borderRadius: 6,
+                              width: "100%",
+                              position: "relative",
+                            }}
+                          >
+                            <View
+                              style={{
+                                backgroundColor: SystemColors.primary,
+                                height: 24,
+                                borderRadius: 6,
+                                width: "90%",
+                                position: "absolute",
+                                left: 0,
+                                top: 0,
+                                paddingTop: 2,
+                                paddingLeft: 6,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: "#fff",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {cycle.state.date}
+                                {moment(cycle.state.date).format(
+                                  "D - MMM - yyyy"
+                                )}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      )
+                  )}
               </View>
             </>
             <>
