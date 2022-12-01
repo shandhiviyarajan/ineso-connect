@@ -30,11 +30,12 @@ export const Device = ({ navigation }) => {
     return <View>{children}</View>;
   }
 
+  const [useedDays, setUsedDays] = React.useState(0);
+
   const getWarrantyYear = (date) => {
     let d = new Date(date);
 
     let new_d = d.setMonth(d.getMonth() + 24); //set 2 years warranty
-
     return moment(new_d).diff(Date.now(), "years", true);
   };
 
@@ -391,57 +392,58 @@ export const Device = ({ navigation }) => {
                     )
                 )}
             </View>
-            <>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "500",
-                  marginBottom: 12,
-                }}
-              >
-                Warranty
-              </Text>
-              <View style={styles.card}>
-                <Text
-                  style={{
-                    paddingVertical: 8,
-                    fontSize: 16,
-                    fontWeight: "400",
-                  }}
-                >
-                  Operating time: 4 Days
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                  }}
-                >
-                  <Text
-                    style={{
-                      paddingVertical: 8,
-                      fontSize: 16,
-                      fontWeight: "400",
-                    }}
-                  >
-                    Warranty status :{" "}
-                  </Text>
-                  <Text
-                    style={{
-                      paddingVertical: 8,
-                      fontSize: 18,
-                      fontWeight: "400",
-                      color: SystemColors.success,
-                    }}
-                  >
-                    Running
-                  </Text>
-                </View>
+            {activeDevice &&
+              activeDevice.metadata &&
+              activeDevice.metadata.lifecycle.map(
+                (cycle, i) =>
+                  cycle.state === "blank" && (
+                    <>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "500",
+                          marginBottom: 12,
+                        }}
+                      >
+                        Warranty
+                      </Text>
+                      <View style={styles.card}>
+                        <Text
+                          style={{
+                            paddingVertical: 8,
+                            fontSize: 16,
+                            fontWeight: "400",
+                          }}
+                        >
+                          Operating time:
+                          {-moment(cycle.date).diff(Date.now(), "days")}
+                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              paddingVertical: 8,
+                              fontSize: 16,
+                              fontWeight: "400",
+                            }}
+                          >
+                            Warranty status :{" "}
+                          </Text>
+                          <Text
+                            style={{
+                              paddingVertical: 8,
+                              fontSize: 18,
+                              fontWeight: "400",
+                              color: SystemColors.success,
+                            }}
+                          >
+                            Running
+                          </Text>
+                        </View>
 
-                {activeDevice &&
-                  activeDevice.metadata &&
-                  activeDevice.metadata.lifecycle.map(
-                    (cycle, i) =>
-                      cycle.state === "blank" && (
                         <View>
                           <View
                             style={{
@@ -481,10 +483,10 @@ export const Device = ({ navigation }) => {
                             </View>
                           </View>
                         </View>
-                      )
-                  )}
-              </View>
-            </>
+                      </View>
+                    </>
+                  )
+              )}
             <>
               <Text
                 style={{

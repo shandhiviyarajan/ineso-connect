@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Platform,
   ScrollView,
   StyleSheet,
@@ -35,6 +36,10 @@ const DeviceGoogleMaps = () => {
     latitudeDelta: delta.latitudeDelta,
     longitudeDelta: delta.longitudeDelta,
   });
+
+  const moveToDevice = (device) => {
+    console.log(device);
+  };
 
   React.useEffect(() => {
     dispatchAction(
@@ -160,6 +165,9 @@ const DeviceGoogleMaps = () => {
                 devices.data &&
                 devices.data.map((device, i) => (
                   <Marker
+                    onPress={() => {
+                      moveToDevice(device);
+                    }}
                     key={device._id}
                     description={device.metadata.name}
                     coordinate={{
