@@ -386,7 +386,7 @@ const Devices = () => {
         >
           <View>
             <Image
-              source={require("../../../assets/images/qr-icon.png")}
+              source={require("../../../assets/images/qr.png")}
               style={{
                 tintColor: "#666",
                 width: 16,

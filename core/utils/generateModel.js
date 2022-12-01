@@ -26,7 +26,7 @@ const models = [
     { key: "TA120", name_en: "Sonometer Pro", },
     { key: "SAMPOLS", name_en: "Sonometer" },
     { key: "SEN-041", name_en: "Indoor Air Quality Sensor Standard" },
-    { key: "SENSE", name_en: "Indoor Air Quality Sensor Pro" },
+    { key: "SENSE", name_en: "SENSE" },
     { key: "Atmo", name_en: "Water Valve" },
     { key: "SVL-DN15DA-868-BSP-S", name_en: "Industrial Power Switch 16A" },
     { key: "SSL-868", name_en: "Weather Station" },
@@ -46,14 +46,10 @@ const vendors = [
     { key: "cesva", name_en: "Ineso" },
     { key: "orbiwise", name_en: "Ineso" },
     { key: "domnexx", name_en: "Ineso" },
-    { key: "nexelec", name_en: "Ineso" },
-    { key: "nexelec", name_en: "Ineso" },
-    { key: "strega", name_en: "Ineso" },
     { key: "strega", name_en: "Ineso" },
     { key: "lufft", name_en: "Ineso" },
     { key: "jcft", name_en: "Ineso" },
     { key: "blueup", name_en: "Ineso" },
-    { key: "strega", name_en: "Ineso" },
     {
         key: "airicom", name_en: "Ineso",
     },
@@ -70,6 +66,7 @@ export const generateModel = (value) => {
 
 export const vendorName = (key) => {
     let v = vendors.filter(vendor => vendor.key === key);
+    console.log(v);
 
     return v.length > 0 ? v[0].name_en : "Ineso"
 }

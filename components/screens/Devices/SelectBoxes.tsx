@@ -14,17 +14,12 @@ import { ActionFetchGroups } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
-import {
-  getToken,
-  setClientToken,
-  setToken,
-} from "../../../core/interceptors/interceptors";
+import { setToken } from "../../../core/interceptors/interceptors";
 import { MeAction } from "../../../core/redux/actions/authActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 export const SelectBoxes = ({ navigation }) => {
   //auth status
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const me = useSelector((state) => state.auth.me.data);
   //dispatcher
   const dispatchAction = useDispatch();
 
@@ -43,7 +38,6 @@ export const SelectBoxes = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      console.log(SystemColors);
       setToken(isAuthenticated);
       dispatchAction(MeAction());
       dispatchAction(ActionFetchClients());
@@ -160,6 +154,7 @@ export const SelectBoxes = ({ navigation }) => {
   React.useEffect(() => {
     dispatchAction(ActionUpdatePayload(payload));
     dispatchAction(ActionFetchDevices(payload));
+    console.log("payload", payload);
   }, [payload]);
 
   //fetch all alerts

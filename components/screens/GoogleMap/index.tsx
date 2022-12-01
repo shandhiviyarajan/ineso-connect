@@ -1,12 +1,18 @@
 import React from "react";
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from "react-native";
-import MapView, { Callout, MapCallout, Marker } from "react-native-maps";
+import MapView, {
+  Callout,
+  MapCallout,
+  Marker,
+  PROVIDER_GOOGLE,
+} from "react-native-maps";
 import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { UrlTile } from "react-native-maps";
@@ -24,8 +30,8 @@ const DeviceGoogleMaps = () => {
   };
   const dispatchAction = useDispatch();
   const [initialRegion, setRegion] = React.useState({
-    latitude: 45.781941,
-    longitude: 4.748706,
+    latitude: 45.4708,
+    longitude: 9.1911,
     latitudeDelta: delta.latitudeDelta,
     longitudeDelta: delta.longitudeDelta,
   });
@@ -41,13 +47,15 @@ const DeviceGoogleMaps = () => {
   }, [dispatchAction]);
 
   React.useEffect(() => {
-    if (devices) {
-      centerMap();
-    }
+    async () => {
+      if (devices) {
+        centerMap();
+      }
+    };
   }, [devices]);
 
-  const centerMap = () => {
-    console.log("center");
+  const centerMap = async (e) => {
+    console.log(e);
     setRegion({
       latitude:
         devices &&
@@ -56,7 +64,7 @@ const DeviceGoogleMaps = () => {
         devices.data[0].metadata &&
         devices.data[0].metadata.gpsLocation.latitude
           ? devices.data[0].metadata.gpsLocation.latitude
-          : 45.781941,
+          : 45.4708,
       longitude:
         devices &&
         devices.data &&
@@ -64,10 +72,12 @@ const DeviceGoogleMaps = () => {
         devices.data[0].metadata &&
         devices.data[0].metadata.gpsLocation.longitude
           ? devices.data[0].metadata.gpsLocation.longitude
-          : 4.748706,
+          : 9.1911,
       latitudeDelta: delta.latitudeDelta,
       longitudeDelta: delta.longitudeDelta,
     });
+
+    mapRef.current.animateToRegion({});
   };
 
   function renderMarker({ location }) {
@@ -79,6 +89,12 @@ const DeviceGoogleMaps = () => {
       </Marker>
     );
   }
+
+  function onMapReady(e) {
+    console.log(e);
+  }
+
+  let mapRef = React.useRef(null);
 
   return (
     <>
@@ -98,7 +114,7 @@ const DeviceGoogleMaps = () => {
         <Text>{JSON.stringify(devices.data && devices.data[0])}</Text>
       </View> */}
         <>
-          <View
+          {/* <View
             style={{
               flex: 1,
               paddingTop: 64,
@@ -111,19 +127,15 @@ const DeviceGoogleMaps = () => {
             </TouchableHighlight>
             {devices &&
               devices.data &&
-              devices.data.map((d) => (
-                <Text
-                  style={{
-                    paddingTop: 24,
-                  }}
-                >
-                  {d.metadata.name}+ " - " +
-                  {d.metadata.gpsLocation.latitude +
-                    " - " +
-                    d.metadata.gpsLocation.longitude}
+              devices.data.map((d, i) => (
+                <Text>
+                  {d && d.metadata && d.metadata.name}
+                  {devices.data[0].metadata.gpsLocation.latitude}
+                  {devices.data[0].metadata.gpsLocation.longitude +
+                    0.000000000001}
                 </Text>
               ))}
-          </View>
+          </View> */}
           <View
             style={{
               flex: 4,
@@ -131,6 +143,11 @@ const DeviceGoogleMaps = () => {
             }}
           >
             <MapView
+              ref={(map) => {
+                mapRef = map;
+                console.log(mapRef);
+              }}
+              onMapReady={onMapReady}
               showsUserLocation={false}
               customMapStyle={[]}
               zoomEnabled={true}

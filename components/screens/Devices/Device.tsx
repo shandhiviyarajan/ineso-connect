@@ -1,6 +1,13 @@
 import moment from "moment";
 import React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import MapView, { MarkerAnimated } from "react-native-maps";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -376,70 +383,134 @@ export const Device = ({ navigation }) => {
                     )
                 )}
             </View>
-
-            <View style={styles.card}>
+            <>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: "500",
                   marginBottom: 12,
                 }}
               >
-                Maintenance History
+                Warranty
               </Text>
-              {activeDevice &&
-                activeDevice.metadata &&
-                activeDevice.metadata.lifecycle.map((cycle, i) => (
-                  <CommissionList key={"cycle" + i}>
-                    <View
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontWeight: "400",
-                          width: "100%",
-                          display: "flex",
+              <View style={styles.card}>
+                <Text
+                  style={{
+                    paddingVertical: 8,
+                    fontSize: 18,
+                    fontWeight: "400",
+                  }}
+                >
+                  Operating time: 4 Days
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text
+                    style={{
+                      paddingVertical: 8,
+                      fontSize: 18,
+                      fontWeight: "400",
+                    }}
+                  >
+                    Warranty status :{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      paddingVertical: 8,
+                      fontSize: 18,
+                      fontWeight: "400",
+                      color: SystemColors.success,
+                    }}
+                  >
+                    Running
+                  </Text>
+                </View>
+              </View>
+            </>
+            <>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "500",
+                  marginBottom: 12,
+                }}
+              >
+                Commissioning
+              </Text>
+              <View style={styles.card}>
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.lifecycle.map(
+                    (cycle, i) =>
+                      cycle.state === "blank" && (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <CommissionList key={"cycle" + i}>
+                            <View
+                              style={{
+                                width: "100%",
+                                display: "flex",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontWeight: "400",
+                                  width: "100%",
+                                  display: "flex",
 
-                          fontSize: 20,
-                          marginBottom: 6,
-                          marginTop: 0,
-                        }}
-                      >
-                        {cycle.state &&
-                          cycle.state &&
-                          toCapitalize(
-                            RenameMaintenence(cycle.state && cycle.state)
-                          )}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          marginBottom: 6,
-                          color: "#5E5E5E",
-                        }}
-                      >
-                        {moment(cycle.state.date).format(
-                          "D - MMMM - yyyy - hh:mm:a"
-                        )}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          marginBottom: 6,
-                          color: "#5E5E5E",
-                        }}
-                      >
-                        {cycle.desc}
-                      </Text>
-                    </View>
-                  </CommissionList>
-                ))}
-            </View>
+                                  fontSize: 20,
+                                  marginBottom: 6,
+                                  marginTop: 0,
+                                }}
+                              >
+                                Current State :{" "}
+                                {cycle.state &&
+                                  cycle.state &&
+                                  toCapitalize(
+                                    RenameMaintenence(
+                                      cycle.state && cycle.state
+                                    )
+                                  )}
+                              </Text>
+                            </View>
+                            <View>
+                              <Text
+                                style={{
+                                  marginBottom: 6,
+                                  color: "#5E5E5E",
+                                  fontSize: 20,
+                                }}
+                              >
+                                Date :{" "}
+                                {moment(cycle.state.date).format(
+                                  "D - MMM - yyyy"
+                                )}
+                              </Text>
+                            </View>
+                          </CommissionList>
+                          <Image
+                            source={require("../../../assets/images/qr.png")}
+                            style={{
+                              resizeMode: "contain",
+                              flex: 1,
+                              width: 56,
+                              height: 56,
+                              tintColor: SystemColors.primary,
+                            }}
+                          />
+                        </View>
+                      )
+                  )}
+              </View>
+            </>
 
             {/* <View style={styles.card}>
               <Text
@@ -467,56 +538,52 @@ export const Device = ({ navigation }) => {
               <>
                 <Text
                   style={{
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: "500",
                     marginBottom: 12,
                   }}
                 >
                   Last location
                 </Text>
-                <View
-                  style={[
-                    styles.card,
-                    {
-                      padding: 0,
-                      overflow: "hidden",
-                      position: "relative",
-                      paddingBottom: 24,
-                    },
-                  ]}
-                >
-                  <MapView
-                    showsUserLocation={true}
-                    customMapStyle={[]}
-                    initialRegion={{
-                      latitude: activeDevice.metadata.gpsLocation.latitude,
-                      longitude: activeDevice.metadata.gpsLocation.longitude,
-                      latitudeDelta: 0.003,
-                      longitudeDelta: 0.003,
-                    }}
-                    style={{
-                      height: 160,
-                      marginBottom: 24,
-                    }}
-                  >
-                    <MarkerAnimated
-                      coordinate={{
-                        longitude: activeDevice.metadata.gpsLocation.longitude,
-                        latitude: activeDevice.metadata.gpsLocation.latitude,
-                      }}
-                    />
-                  </MapView>
-
-                  <Button
-                    secondary
+                <View style={styles.card}>
+                  <TouchableHighlight
+                    underlayColor="#fff"
                     onPress={() => {
                       navigation.navigate("EditGPS", {
                         activeDevice,
                       });
                     }}
                   >
-                    Edit GPS coordinates
-                  </Button>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          flex: 4,
+                          fontSize: 18,
+                          fontWeight: "400",
+
+                          paddingRight: 12,
+                        }}
+                      >
+                        Tap to edit GPS coordinates of the device
+                      </Text>
+                      <Image
+                        source={require("../../../assets/images/lastlocation.png")}
+                        style={{
+                          resizeMode: "contain",
+                          flex: 1,
+                          width: 100,
+                          height: 100,
+                          tintColor: SystemColors.primary,
+                        }}
+                      />
+                    </View>
+                  </TouchableHighlight>
                 </View>
               </>
             )}
