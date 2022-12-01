@@ -397,7 +397,7 @@ export const Device = ({ navigation }) => {
                 <Text
                   style={{
                     paddingVertical: 8,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: "400",
                   }}
                 >
@@ -411,7 +411,7 @@ export const Device = ({ navigation }) => {
                   <Text
                     style={{
                       paddingVertical: 8,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: "400",
                     }}
                   >
@@ -453,7 +453,15 @@ export const Device = ({ navigation }) => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <CommissionList key={"cycle" + i}>
+                          <View
+                            style={{
+                              flex: 1,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                            key={"cycle" + i}
+                          >
                             <View
                               style={{
                                 width: "100%",
@@ -466,7 +474,7 @@ export const Device = ({ navigation }) => {
                                   width: "100%",
                                   display: "flex",
 
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   marginBottom: 6,
                                   marginTop: 0,
                                 }}
@@ -480,13 +488,11 @@ export const Device = ({ navigation }) => {
                                     )
                                   )}
                               </Text>
-                            </View>
-                            <View>
                               <Text
                                 style={{
                                   marginBottom: 6,
                                   color: "#5E5E5E",
-                                  fontSize: 20,
+                                  fontSize: 16,
                                 }}
                               >
                                 Date :{" "}
@@ -495,17 +501,17 @@ export const Device = ({ navigation }) => {
                                 )}
                               </Text>
                             </View>
-                          </CommissionList>
-                          <Image
-                            source={require("../../../assets/images/qr.png")}
-                            style={{
-                              resizeMode: "contain",
-                              flex: 1,
-                              width: 56,
-                              height: 56,
-                              tintColor: SystemColors.primary,
-                            }}
-                          />
+                            <Image
+                              source={require("../../../assets/images/qr.png")}
+                              style={{
+                                resizeMode: "contain",
+                                flex: 1,
+                                width: 56,
+                                height: 56,
+                                tintColor: SystemColors.primary,
+                              }}
+                            />
+                          </View>
                         </View>
                       )
                   )}
@@ -564,7 +570,7 @@ export const Device = ({ navigation }) => {
                       <Text
                         style={{
                           flex: 4,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: "400",
 
                           paddingRight: 12,
