@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, Image, TextInput } from "react-native";
 import MapView, { MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { apiUpdateGPSCoodinates } from "../../../core/API/apiDevices";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
+import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
 import { Message } from "../../molecules/Toast";
 function EditGPS({ route, navigation }) {
@@ -61,6 +62,15 @@ function EditGPS({ route, navigation }) {
       );
     }
   };
+
+  React.useEffect(() => {
+    if (activeDevice) {
+      setNewCoordinates({
+        latitude: activeDevice.metadata.gpsLocation.latitude,
+        longitude: activeDevice.metadata.gpsLocation.longitude,
+      });
+    }
+  }, [activeDevice]);
   return (
     <View
       style={{
@@ -87,11 +97,12 @@ function EditGPS({ route, navigation }) {
         {newLocation && (
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: "column",
               paddingVertical: 12,
             }}
           >
-            <Text
+            <Text>Latitude </Text>
+            <TextInput
               style={{
                 flex: 1,
                 fontSize: 14,
@@ -100,10 +111,10 @@ function EditGPS({ route, navigation }) {
                 borderColor: "#d8d8d8",
                 textAlign: "center",
               }}
-            >
-              {parseFloat(newLocation && newLocation.latitude).toFixed(4)}
-            </Text>
-            <Text
+              value={parseFloat(newLocation && newLocation.latitude).toFixed(4)}
+            />
+            <Text>Longitude </Text>
+            <TextInput
               style={{
                 flex: 1,
                 fontSize: 14,
@@ -112,9 +123,10 @@ function EditGPS({ route, navigation }) {
                 borderColor: "#d8d8d8",
                 textAlign: "center",
               }}
-            >
-              {parseFloat(newLocation && newLocation.longitude).toFixed(4)}
-            </Text>
+              value={parseFloat(newLocation && newLocation.longitude).toFixed(
+                4
+              )}
+            />
           </View>
         )}
       </View>
@@ -148,19 +160,31 @@ function EditGPS({ route, navigation }) {
                 latitude: activeDevice.metadata.gpsLocation.latitude,
               }}
             />
+            <Image
+              source={GenerateImage(activeDevice.metadata.model)}
+              style={{ width: 32, height: 32, tintColor: "#fff" }}
+            />
           </MapView>
         )}
-      </View>
-      <View
-        style={{
-          flex: 1,
-          paddingTop: 24,
-        }}
-      >
-        <Button secondary onPress={handleSaveGPS} isLoading={isSaving}>
-          {isSaving && <>Please wait...</>}
-          {!isSaving && <>Save GPS coordinates</>}
-        </Button>
+        <View
+          style={{
+            position: "absolute",
+            flex: 1,
+            width: "100%",
+            bottom: 36,
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            underlayColor="transparent"
+            secondary
+            onPress={handleSaveGPS}
+            isLoading={isSaving}
+          >
+            {isSaving && <>Please wait...</>}
+            {!isSaving && <>Confirm device location</>}
+          </Button>
+        </View>
       </View>
     </View>
   );
