@@ -8,10 +8,9 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import MapView, { MarkerAnimated } from "react-native-maps";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../atoms/Button";
+
 import { measurementKeys } from "../../../core/constants";
 import { RenameMaintenence } from "../../../core/utils/Maintenance";
 import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
@@ -19,6 +18,7 @@ import GenerateImage from "../../../core/utils/GenerateImage";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { ActionSyncDevice } from "../../../core/redux/actions/deviceActions";
 import { generateModel, vendorName } from "../../../core/utils/generateModel";
+import LightDimming from "./components/LightDimming";
 
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
@@ -29,8 +29,6 @@ export const Device = ({ navigation }) => {
   function CommissionList({ children }) {
     return <View>{children}</View>;
   }
-
-  const [useedDays, setUsedDays] = React.useState(0);
 
   const getWarrantyYear = (date) => {
     let d = new Date(date);
@@ -273,6 +271,10 @@ export const Device = ({ navigation }) => {
             }}
           >
             <View style={styles.card}>
+              <LightDimming />
+            </View>
+
+            <View style={styles.card}>
               <View
                 style={{
                   flexDirection: "row",
@@ -377,6 +379,7 @@ export const Device = ({ navigation }) => {
                 </Text>
               </View>
             </View>
+
             <View style={styles.card_measure}>
               {measures &&
                 measures.map(
@@ -392,6 +395,90 @@ export const Device = ({ navigation }) => {
                     )
                 )}
             </View>
+            <>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "500",
+                  marginBottom: 12,
+                }}
+              >
+                Commissioning
+              </Text>
+              <View style={styles.card}>
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.lifecycle.map(
+                    (cycle, i) =>
+                      cycle.state === "blank" && (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <View
+                            style={{
+                              flex: 1,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                            key={"cycle" + i}
+                          >
+                            <View
+                              style={{
+                                flex: 4,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontWeight: "400",
+                                  width: "100%",
+                                  display: "flex",
+
+                                  fontSize: 16,
+                                  marginBottom: 6,
+                                  marginTop: 0,
+                                }}
+                              >
+                                Current State :{" "}
+                                {cycle.state &&
+                                  cycle.state &&
+                                  toCapitalize(
+                                    RenameMaintenence(
+                                      cycle.state && cycle.state
+                                    )
+                                  )}
+                              </Text>
+                              <Text
+                                style={{
+                                  marginBottom: 6,
+                                  color: "#5E5E5E",
+                                  fontSize: 16,
+                                }}
+                              >
+                                Date :{" "}
+                                {moment(cycle.date).format("D - MMM - yyyy")}
+                              </Text>
+                            </View>
+                            <Image
+                              source={require("../../../assets/images/qr.png")}
+                              style={{
+                                resizeMode: "contain",
+                                flex: 1,
+                                width: 56,
+                                height: 56,
+                                tintColor: SystemColors.primary,
+                              }}
+                            />
+                          </View>
+                        </View>
+                      )
+                  )}
+              </View>
+            </>
             {activeDevice &&
               activeDevice.metadata &&
               activeDevice.metadata.lifecycle.map(
@@ -487,90 +574,7 @@ export const Device = ({ navigation }) => {
                     </>
                   )
               )}
-            <>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "500",
-                  marginBottom: 12,
-                }}
-              >
-                Commissioning
-              </Text>
-              <View style={styles.card}>
-                {activeDevice &&
-                  activeDevice.metadata &&
-                  activeDevice.metadata.lifecycle.map(
-                    (cycle, i) =>
-                      cycle.state === "blank" && (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <View
-                            style={{
-                              flex: 1,
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                            }}
-                            key={"cycle" + i}
-                          >
-                            <View
-                              style={{
-                                flex: 4,
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  fontWeight: "400",
-                                  width: "100%",
-                                  display: "flex",
 
-                                  fontSize: 16,
-                                  marginBottom: 6,
-                                  marginTop: 0,
-                                }}
-                              >
-                                Current State :{" "}
-                                {cycle.state &&
-                                  cycle.state &&
-                                  toCapitalize(
-                                    RenameMaintenence(
-                                      cycle.state && cycle.state
-                                    )
-                                  )}
-                              </Text>
-                              <Text
-                                style={{
-                                  marginBottom: 6,
-                                  color: "#5E5E5E",
-                                  fontSize: 16,
-                                }}
-                              >
-                                Date :{" "}
-                                {moment(cycle.date).format("D - MMM - yyyy")}
-                              </Text>
-                            </View>
-                            <Image
-                              source={require("../../../assets/images/qr.png")}
-                              style={{
-                                resizeMode: "contain",
-                                flex: 1,
-                                width: 56,
-                                height: 56,
-                                tintColor: SystemColors.primary,
-                              }}
-                            />
-                          </View>
-                        </View>
-                      )
-                  )}
-              </View>
-            </>
             <>
               <Text
                 style={{

@@ -37,6 +37,7 @@ export const ProfileStackNavigation = () => {
         name="All devices"
         component={Device}
         options={({ navigation }) => ({
+          title: "All devices",
           headerLeft: (props) => (
             <HeaderBackButton
               {...props}

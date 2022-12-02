@@ -163,38 +163,41 @@ const DeviceGoogleMaps = () => {
             >
               {devices &&
                 devices.data &&
-                devices.data.map((device, i) => (
-                  <Marker
-                    onPress={() => {
-                      moveToDevice(device);
-                    }}
-                    key={device._id}
-                    description={device.metadata.name}
-                    coordinate={{
-                      latitude: device.metadata.gpsLocation.latitude,
-                      longitude: device.metadata.gpsLocation.longitude,
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: 52,
-                        height: 52,
-                        backgroundColor: SystemColors.primary,
-                        borderRadius: 44,
-                        elevation: 5,
-                        shadowOpacity: 0.15,
-                        shadowColor: "rgba(0,0,0,.5)",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Image
-                        source={GenerateImage(device.metadata.model)}
-                        style={{ width: 32, height: 32, tintColor: "#fff" }}
-                      />
-                    </View>
-                  </Marker>
-                ))}
+                devices.data.map(
+                  (device, i) =>
+                    device && (
+                      <Marker
+                        onPress={() => {
+                          moveToDevice(device);
+                        }}
+                        key={device._id}
+                        description={device.metadata.name}
+                        coordinate={{
+                          latitude: device.metadata.gpsLocation.latitude,
+                          longitude: device.metadata.gpsLocation.longitude,
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: 52,
+                            height: 52,
+                            backgroundColor: SystemColors.primary,
+                            borderRadius: 44,
+                            elevation: 5,
+                            shadowOpacity: 0.15,
+                            shadowColor: "rgba(0,0,0,.5)",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Image
+                            source={GenerateImage(device.metadata.model)}
+                            style={{ width: 32, height: 32, tintColor: "#fff" }}
+                          />
+                        </View>
+                      </Marker>
+                    )
+                )}
             </MapView>
           </View>
         </>

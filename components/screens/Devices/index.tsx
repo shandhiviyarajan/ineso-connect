@@ -203,7 +203,7 @@ const Devices = () => {
       <>
         <TouchableHighlight
           onPress={onPress}
-          underlayColor="none"
+          underlayColor="#fff"
           style={{
             height: 112,
           }}
@@ -247,7 +247,7 @@ const Devices = () => {
                 }}
               />
             </View>
-            <View>
+            <View style={{ flex: 1 }}>
               <View
                 style={{
                   flexDirection: "row",
@@ -261,7 +261,7 @@ const Devices = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {device.metadata.name}
+                  {device && device.metadata && device.metadata.name}
                 </Text>
               </View>
               <View>
@@ -271,11 +271,9 @@ const Devices = () => {
                     marginBottom: 5,
                   }}
                 >
-                  {
-                    generateModel(device.metadata.model)
-
-                    // toCapitalize(removeUnderscore(device.type))
-                  }
+                  {generateModel(
+                    device && device.metadata && device.metadata.model
+                  )}
                 </Text>
               </View>
               <View
@@ -283,30 +281,26 @@ const Devices = () => {
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  width: "50%",
+                  flex: 1,
                 }}
               >
                 {device.online_status && <Online />}
                 {!device.online_status && <OffLine />}
                 {device.metadata.active && <ActiveDevice />}
               </View>
-            </View>
-            <View
-              style={{
-                position: "absolute",
-                right: 12,
-                top: 12,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#888",
-                }}
-              >
-                {moment
-                  .duration(device.lastStatusDate - Date.now(), "")
-                  .humanize(true)}
-              </Text>
+
+              <View>
+                <Text
+                  style={{
+                    color: "#888",
+                    textAlign: "right",
+                  }}
+                >
+                  {moment
+                    .duration(device.lastStatusDate - Date.now(), "")
+                    .humanize(true)}
+                </Text>
+              </View>
             </View>
           </View>
         </TouchableHighlight>
@@ -589,13 +583,17 @@ const Devices = () => {
                 justifyContent: devices.isLoading ? "center" : "flex-start",
               }}
             >
-              {currentDevices.map((device, index) => (
-                <DeviceCard
-                  key={device._id}
-                  device={device}
-                  onPress={() => handleDeviceClick(device)}
-                />
-              ))}
+              {currentDevices &&
+                currentDevices.map(
+                  (device, index) =>
+                    device && (
+                      <DeviceCard
+                        key={device && device._id}
+                        device={device}
+                        onPress={() => handleDeviceClick(device)}
+                      />
+                    )
+                )}
             </ScrollView>
           )}
         </View>
