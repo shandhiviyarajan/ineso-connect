@@ -67,7 +67,7 @@ export const ProfileStackNavigation = () => {
         name="EditGPS"
         component={EditGPS}
         options={{
-          title: "Edit GPS Location",
+          title: "Edit Location",
         }}
       />
       <ProfileStack.Screen

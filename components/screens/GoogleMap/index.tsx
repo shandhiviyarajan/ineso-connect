@@ -119,7 +119,7 @@ const DeviceGoogleMaps = () => {
         <Text>{JSON.stringify(devices.data && devices.data[0])}</Text>
       </View> */}
         <>
-          {/* <View
+          <View
             style={{
               flex: 1,
               paddingTop: 64,
@@ -135,12 +135,11 @@ const DeviceGoogleMaps = () => {
               devices.data.map((d, i) => (
                 <Text>
                   {d && d.metadata && d.metadata.name}
-                  {devices.data[0].metadata.gpsLocation.latitude}
-                  {devices.data[0].metadata.gpsLocation.longitude +
-                    0.000000000001}
+                  {d && d.metadata && d.metadata.gpsLocation.latitude} + "- " +
+                  {d && d.metadata && d.metadata.gpsLocation.longitude}
                 </Text>
               ))}
-          </View> */}
+          </View>
           <View
             style={{
               flex: 4,

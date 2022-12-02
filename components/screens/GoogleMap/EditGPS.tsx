@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, Dimensions, Image, TextInput } from "react-native";
-import MapView, { MarkerAnimated } from "react-native-maps";
+import MapView, { Marker, MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { apiUpdateGPSCoodinates } from "../../../core/API/apiDevices";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
+import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Button } from "../../atoms/Button";
 import { Message } from "../../molecules/Toast";
@@ -11,7 +12,10 @@ function EditGPS({ route, navigation }) {
   const { activeDevice } = route.params;
   const clientId = useSelector((state) => state.client.clientId);
 
-  const [newLocation, setNewCoordinates] = React.useState(null);
+  const [newLocation, setNewCoordinates] = React.useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   const [isSaving, setSaving] = React.useState(false);
   const dispatchAction = useDispatch();
@@ -78,12 +82,14 @@ function EditGPS({ route, navigation }) {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F2F5F9",
+        width: "100%",
       }}
     >
       <View
         style={{
-          flex: newLocation ? 0.9 : 0.4,
+          flex: newLocation ? 1 : 0.4,
           paddingTop: 24,
+          borderWidth: 1,
         }}
       >
         <Text
@@ -98,35 +104,48 @@ function EditGPS({ route, navigation }) {
           <View
             style={{
               flexDirection: "column",
-              paddingVertical: 12,
             }}
           >
-            <Text>Latitude </Text>
-            <TextInput
+            <View
               style={{
-                flex: 1,
-                fontSize: 14,
-                padding: 6,
-                borderWidth: 1,
-                borderColor: "#d8d8d8",
-                textAlign: "center",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 12,
               }}
-              value={parseFloat(newLocation && newLocation.latitude).toFixed(4)}
-            />
-            <Text>Longitude </Text>
-            <TextInput
-              style={{
-                flex: 1,
-                fontSize: 14,
-                padding: 6,
-                borderWidth: 1,
-                borderColor: "#d8d8d8",
-                textAlign: "center",
-              }}
-              value={parseFloat(newLocation && newLocation.longitude).toFixed(
-                4
-              )}
-            />
+            >
+              <Text style={{ width: 72 }}>Latitude </Text>
+              <TextInput
+                style={{
+                  flex: 1,
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: "#d8d8d8",
+                  textAlign: "center",
+                  paddingVertical: 6,
+                  paddingHorizontal: 6,
+                }}
+                value={parseFloat(newLocation && newLocation.latitude).toFixed(
+                  4
+                )}
+              />
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ width: 72 }}>Longitude </Text>
+              <TextInput
+                style={{
+                  flex: 1,
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: "#d8d8d8",
+                  textAlign: "center",
+                  paddingVertical: 6,
+                  paddingHorizontal: 6,
+                }}
+                value={parseFloat(newLocation && newLocation.longitude).toFixed(
+                  4
+                )}
+              />
+            </View>
           </View>
         )}
       </View>
@@ -138,9 +157,10 @@ function EditGPS({ route, navigation }) {
       >
         {activeDevice && (
           <MapView
-            scrollEnabled={false}
-            showsUserLocation={true}
             customMapStyle={[]}
+            zoomEnabled={true}
+            scrollEnabled={false}
+            showsUserLocation={false}
             initialRegion={{
               latitude: activeDevice.metadata.gpsLocation.latitude,
               longitude: activeDevice.metadata.gpsLocation.longitude,
@@ -152,18 +172,30 @@ function EditGPS({ route, navigation }) {
               marginBottom: 24,
             }}
           >
-            <MarkerAnimated
+            <Marker
               draggable={true}
               onDragEnd={(e) => setNewCoordinates(e.nativeEvent.coordinate)}
               coordinate={{
-                longitude: activeDevice.metadata.gpsLocation.longitude,
-                latitude: activeDevice.metadata.gpsLocation.latitude,
+                latitude: newLocation && newLocation.latitude,
+                longitude: newLocation && newLocation.longitude,
               }}
-            />
-            <Image
-              source={GenerateImage(activeDevice.metadata.model)}
-              style={{ width: 32, height: 32, tintColor: "#fff" }}
-            />
+            >
+              <View
+                style={{
+                  backgroundColor: SystemColors.primary,
+                  width: 44,
+                  height: 44,
+                  borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={GenerateImage(activeDevice.metadata.model)}
+                  style={{ width: 32, height: 32, tintColor: "#fff" }}
+                />
+              </View>
+            </Marker>
           </MapView>
         )}
         <View

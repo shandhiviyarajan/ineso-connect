@@ -408,75 +408,77 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
-                  activeDevice.metadata.lifecycle.map(
-                    (cycle, i) =>
-                      cycle.state === "blank" && (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                  activeDevice.metadata.lifecycle
+                    .filter((c) => c.state === "blank")
+                    .map(
+                      (cycle, i) =>
+                        i === 0 && (
                           <View
                             style={{
-                              flex: 1,
                               flexDirection: "row",
                               alignItems: "center",
                               justifyContent: "space-between",
                             }}
-                            key={"cycle" + i}
                           >
                             <View
                               style={{
-                                flex: 4,
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  fontWeight: "400",
-                                  width: "100%",
-                                  display: "flex",
-
-                                  fontSize: 16,
-                                  marginBottom: 6,
-                                  marginTop: 0,
-                                }}
-                              >
-                                Current State :{" "}
-                                {cycle.state &&
-                                  cycle.state &&
-                                  toCapitalize(
-                                    RenameMaintenence(
-                                      cycle.state && cycle.state
-                                    )
-                                  )}
-                              </Text>
-                              <Text
-                                style={{
-                                  marginBottom: 6,
-                                  color: "#5E5E5E",
-                                  fontSize: 16,
-                                }}
-                              >
-                                Date :{" "}
-                                {moment(cycle.date).format("D - MMM - yyyy")}
-                              </Text>
-                            </View>
-                            <Image
-                              source={require("../../../assets/images/qr.png")}
-                              style={{
-                                resizeMode: "contain",
                                 flex: 1,
-                                width: 56,
-                                height: 56,
-                                tintColor: SystemColors.primary,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
                               }}
-                            />
+                              key={"cycle" + i}
+                            >
+                              <View
+                                style={{
+                                  flex: 4,
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontWeight: "400",
+                                    width: "100%",
+                                    display: "flex",
+
+                                    fontSize: 16,
+                                    marginBottom: 6,
+                                    marginTop: 0,
+                                  }}
+                                >
+                                  Current State :{" "}
+                                  {cycle.state &&
+                                    cycle.state &&
+                                    toCapitalize(
+                                      RenameMaintenence(
+                                        cycle.state && cycle.state
+                                      )
+                                    )}
+                                </Text>
+                                <Text
+                                  style={{
+                                    marginBottom: 6,
+                                    color: "#5E5E5E",
+                                    fontSize: 16,
+                                  }}
+                                >
+                                  Date :{" "}
+                                  {moment(cycle.date).format("D - MMM - yyyy")}
+                                </Text>
+                              </View>
+                              <Image
+                                source={require("../../../assets/images/qr.png")}
+                                style={{
+                                  resizeMode: "contain",
+                                  flex: 1,
+                                  width: 56,
+                                  height: 56,
+                                  tintColor: SystemColors.primary,
+                                }}
+                              />
+                            </View>
                           </View>
-                        </View>
-                      )
-                  )}
+                        )
+                    )}
               </View>
             </>
             {activeDevice &&
@@ -517,7 +519,7 @@ export const Device = ({ navigation }) => {
                               fontWeight: "400",
                             }}
                           >
-                            Warranty status :{" "}
+                            Warranty status :
                           </Text>
                           <Text
                             style={{
