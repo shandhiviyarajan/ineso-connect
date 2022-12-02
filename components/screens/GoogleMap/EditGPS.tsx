@@ -75,6 +75,15 @@ function EditGPS({ route, navigation }) {
       });
     }
   }, [activeDevice]);
+
+  const updateLocation = (e, name) => {
+    console.log(e);
+    setNewCoordinates((prevState) => ({
+      ...prevState,
+      [name]: e,
+    }));
+  };
+
   return (
     <View
       style={{
@@ -95,8 +104,9 @@ function EditGPS({ route, navigation }) {
       >
         <Text
           style={{
-            fontSize: 14,
-            fontWeight: "600",
+            fontSize: 16,
+            fontWeight: "500",
+            textAlign: "center",
           }}
         >
           Drag the marker to change the location
@@ -115,37 +125,37 @@ function EditGPS({ route, navigation }) {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ width: 72 }}>Latitude </Text>
+              <Text style={{ width: 75, fontWeight: "500" }}>Latitude </Text>
               <TextInput
+                name="latitude"
+                onChangeText={(e) => updateLocation(e, "latitude")}
                 style={{
                   flex: 1,
-                  fontSize: 14,
+                  fontSize: 16,
                   borderWidth: 1,
                   borderColor: "#d8d8d8",
                   textAlign: "center",
                   paddingVertical: 6,
                   paddingHorizontal: 6,
                 }}
-                value={parseFloat(newLocation && newLocation.latitude).toFixed(
-                  4
-                )}
+                defaultValue={newLocation && newLocation.latitude}
               />
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ width: 72 }}>Longitude </Text>
+              <Text style={{ width: 75, fontWeight: "500" }}>Longitude </Text>
               <TextInput
+                name="longitude"
+                onChangeText={(e) => updateLocation(e, "longitude")}
                 style={{
                   flex: 1,
-                  fontSize: 14,
+                  fontSize: 16,
                   borderWidth: 1,
                   borderColor: "#d8d8d8",
                   textAlign: "center",
                   paddingVertical: 6,
                   paddingHorizontal: 6,
                 }}
-                value={parseFloat(newLocation && newLocation.longitude).toFixed(
-                  4
-                )}
+                defaultValue={newLocation && newLocation.longitude}
               />
             </View>
           </View>
