@@ -89,7 +89,8 @@ function EditGPS({ route, navigation }) {
         style={{
           flex: newLocation ? 1 : 0.4,
           paddingTop: 24,
-          borderWidth: 1,
+          paddingHorizontal: 24,
+          width: "100%",
         }}
       >
         <Text
@@ -104,6 +105,7 @@ function EditGPS({ route, navigation }) {
           <View
             style={{
               flexDirection: "column",
+              paddingTop: 12,
             }}
           >
             <View

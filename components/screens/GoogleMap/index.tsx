@@ -1,22 +1,14 @@
 import React from "react";
 import {
-  Alert,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from "react-native";
-import MapView, {
-  Callout,
-  MapCallout,
-  Marker,
-  PROVIDER_GOOGLE,
-} from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { UrlTile } from "react-native-maps";
 
 import image from "../../../assets/images/map-marker.png";
 import GenerateImage from "../../../core/utils/GenerateImage";
