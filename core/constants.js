@@ -40,9 +40,11 @@ const stats = {
     noise: 'Bruit',
     luminosity: 'Luminosité',
     air_treatment: "Traitement de l'Air",
+    Dimming_Command: "Dimming_Command"
 };
 
 export const measurementKeys = [
+    { value: "", icon: require("../assets/images/measure/light.png"), key: "Dimming_Command", name: "Dimming_Command", unit: "Lux", },
 
     { value: "", icon: require("../assets/images/measure/light.png"), key: "luminosity", name: "Luminosity", unit: "Lux", },
 
@@ -71,7 +73,9 @@ export const measurementKeys = [
     // },
 
     { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "Sensor_Humidity", name: "Humidity", unit: "%" },
+    { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Temperature", name: "Temperature", unit: "°C" },
     { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Sensor_Temperature", name: "Temperature", unit: "°C" },
+    { value: "", icon: require("../assets/images/measure/temperature.png"), key: "Bulb_Temperature", name: "Bulb Temperature", unit: "°C" },
     { value: "", icon: require("../assets/images/measure/irrigation.png"), key: "humidity", name: "Humidity", unit: "%" },
     { value: "", icon: require("../assets/images/measure/temperature.png"), key: "temperature", name: "Temperature", unit: "°C" },
     { value: "", icon: require("../assets/images/measure/pm-alt.png"), key: "exposure", name: "Exposure" },

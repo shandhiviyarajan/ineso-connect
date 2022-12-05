@@ -30,7 +30,7 @@ function LightDimming({ category }) {
               marginBottom: 6,
             }}
           >
-            Dimming {JSON.stringify(is_command)}
+            Dimming
           </Text>
         )}
         <SelectBox
