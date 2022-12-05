@@ -1,8 +1,9 @@
-import { Alert } from "react-native";
-
 
 const GenerateImage = model => {
     switch (model) {
+        case 'UL2014A_DCDO_868':
+            return require("../../catalog/UL2014A_DCDO_868/picture.png");
+
         case 'INERI-TAG-HIGH_LOW_BED':
             return require("../../catalog/ineso/INERI-TAG-HIGH_LOW_BED/picture.png");
         case 'INESP-PM1-01-433':

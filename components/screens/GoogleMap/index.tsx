@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,17 +10,16 @@ import {
 import MapView, { Callout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
-import image from "../../../assets/images/map-marker.png";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
+import { removeUnderscore, toCapitalize } from "../../../core/utils/Capitalize";
 const DeviceGoogleMaps = () => {
   const devices = useSelector((state) => state.device.devices);
   const clientId = useSelector((state) => state.client.clientId);
   const delta = {
-    latitudeDelta: 1,
-    longitudeDelta: 1,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
   };
   const dispatchAction = useDispatch();
   const [initialRegion, setRegion] = React.useState({
@@ -72,25 +72,13 @@ const DeviceGoogleMaps = () => {
       latitudeDelta: delta.latitudeDelta,
       longitudeDelta: delta.longitudeDelta,
     });
-
-    mapRef.current.animateToRegion({});
   };
 
-  function renderMarker({ location }) {
-    return (
-      <Marker image={image} coordinate={location}>
-        <Callout>
-          <Text> Callout</Text>
-        </Callout>
-      </Marker>
-    );
-  }
+  let mapRef = React.useRef(null);
 
   function onMapReady(e) {
-    console.log(e);
+    mapRef.fitToElements();
   }
-
-  let mapRef = React.useRef(null);
 
   return (
     <>
@@ -100,23 +88,15 @@ const DeviceGoogleMaps = () => {
           flex: 1,
         }}
       >
-        {/* <View
-        style={{
-          zIndex: 200,
-          flex: 1,
-          height: 400,
-        }}
-      >
-        <Text>{JSON.stringify(devices.data && devices.data[0])}</Text>
-      </View> */}
         <>
           <View
             style={{
               flex: 4,
-              // ...StyleSheet.absoluteFillObject,
+              ...StyleSheet.absoluteFillObject,
             }}
           >
             <MapView
+              moveOnMarkerPress={true}
               ref={(map) => {
                 mapRef = map;
               }}
@@ -142,7 +122,8 @@ const DeviceGoogleMaps = () => {
                         description={device.metadata.name}
                         coordinate={{
                           latitude: device.metadata.gpsLocation.latitude,
-                          longitude: device.metadata.gpsLocation.longitude,
+                          longitude:
+                            device.metadata.gpsLocation.longitude + i * 0.001,
                         }}
                       >
                         <View
@@ -160,9 +141,63 @@ const DeviceGoogleMaps = () => {
                         >
                           <Image
                             source={GenerateImage(device.metadata.model)}
-                            style={{ width: 32, height: 32, tintColor: "#fff" }}
+                            style={{
+                              width: 32,
+                              height: 32,
+                              tintColor: "#fff",
+                              resizeMode: "contain",
+                            }}
                           />
                         </View>
+                        <Callout
+                          tooltip={true}
+                          onPress={() => {
+                            Alert.alert(0);
+                          }}
+                        >
+                          <View
+                            style={{
+                              width: 300,
+                              height: 80,
+                              backgroundColor: "#333",
+                              borderRadius: 2,
+                              padding: 24,
+                              flexDirection: "row",
+                            }}
+                          >
+                            <Image
+                              source={GenerateImage(device.metadata.model)}
+                              style={{
+                                resizeMode: "contain",
+                                width: 44,
+                                height: 44,
+                                tintColor: "#fff",
+                                marginRight: 12,
+                              }}
+                            />
+                            <View>
+                              <Text
+                                style={{
+                                  fontSize: 16,
+                                  fontWeight: "500",
+                                  color: "#fff",
+                                  paddingRight: 24,
+                                }}
+                              >
+                                {device.metadata.name}
+                              </Text>
+                              <Text
+                                style={{
+                                  fontSize: 12,
+                                  fontWeight: "400",
+                                  color: "#d8d8d8",
+                                }}
+                              >
+                                {toCapitalize(removeUnderscore(device.type))}
+                              </Text>
+                            </View>
+                          </View>
+                        </Callout>
                       </Marker>
                     )
                 )}

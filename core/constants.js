@@ -44,18 +44,26 @@ const stats = {
 };
 
 export const measurementKeys = [
-    { value: "", icon: require("../assets/images/measure/light.png"), key: "Dimming_Command", name: "Dimming_Command", unit: "Lux", },
+    { value: "", icon: require("../assets/images/measure/light.png"), key: "Dimming_Command", name: "Dimm", unit: "%", },
 
     { value: "", icon: require("../assets/images/measure/light.png"), key: "luminosity", name: "Luminosity", unit: "Lux", },
 
 
 
-    // {
-    //     value: "", icon: require("../assets/images/measure/temperature.png"),
-    //     key: "Internal_Temperature",
-    //     name: "Internal temperature",
-    //     unit: "°C",
-    // },
+    {
+        value: "", icon: require("../assets/images/measure/temperature.png"),
+        key: "Internal_Temperature",
+        name: "Internal temperature",
+        unit: "°C",
+    },
+
+    {
+
+        value: "", icon: require("../assets/images/measure/light.png"),
+        key: "Burning_Time",
+        name: "Burning time",
+        unit: "hours",
+    },
     // {
     //     value: "", icon: false,
     //     key: "Restarted",

@@ -39,7 +39,10 @@ const models = [
     { key: "BB10_LBV_CLP_W", name_en: "Safe X clip" },
     { key: "LEVANTE_SSL_868", name_en: "Air Sanitizer Switch" },
     { key: "PLACEPOD_S", name_en: "Parking Ground Sensor" },
-    { key: "PMO_D725A", name_en: "Outdoor Air Quality Sensor PM Pro" }
+    { key: "PMO_D725A", name_en: "Outdoor Air Quality Sensor PM Pro" },
+    {
+        key: "UL2014A_DCDO_868", name_en: "Light Switch Box DALI"
+    }
 ]
 const vendors = [
     { key: "ineso", name_en: "Ineso" },
