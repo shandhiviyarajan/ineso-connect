@@ -19,6 +19,7 @@ function LightDimming({ category }) {
   const is_command = category_command.filter((cc) => cc.name === category)[0];
 
   const commands = ["Turn on", "Turn off", "Dimming light"];
+
   return (
     <>
       <View>
@@ -38,7 +39,9 @@ function LightDimming({ category }) {
           onSelect={(e) => {
             handleSelect(e);
           }}
-          data={commands}
+          data={
+            is_command.commands.dimming ? commands : ["Turn on", "Turn off"]
+          }
         />
         {is_command.commands.dimming && (
           <View
