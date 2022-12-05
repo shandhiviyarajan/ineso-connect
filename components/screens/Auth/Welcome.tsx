@@ -45,7 +45,7 @@ export const Welcome = ({ navigation }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: 24,
-        backgroundColor: SystemColors.primary,
+        backgroundColor: "SystemColors.primary",
       }}
     >
       <ImageBackground
@@ -64,7 +64,7 @@ export const Welcome = ({ navigation }) => {
       >
         <View
           style={{
-            backgroundColor: SystemColors.primary,
+            backgroundColor: "#000",
             opacity: 0.25,
             top: 0,
             right: 0,

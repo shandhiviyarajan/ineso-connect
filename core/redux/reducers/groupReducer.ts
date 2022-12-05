@@ -19,7 +19,6 @@ const groupReducer = (state = initialState, action) => {
           errors: false,
         },
       };
-
     case GROUP_TYPES.GET_GROUP_SUCCESS:
       return {
         ...state,

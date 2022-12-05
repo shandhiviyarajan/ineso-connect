@@ -68,21 +68,27 @@ function EditGPS({ route, navigation }) {
   };
 
   React.useEffect(() => {
+    console.log(activeDevice.metadata.gpsLocation);
     if (activeDevice) {
-      setNewCoordinates({
+      setNewCoordinates((prevState) => ({
+        ...prevState,
+
         latitude: activeDevice.metadata.gpsLocation.latitude,
         longitude: activeDevice.metadata.gpsLocation.longitude,
-      });
+      }));
     }
-  }, [activeDevice]);
+  }, []);
 
   const updateLocation = (e, name) => {
-    console.log(e);
     setNewCoordinates((prevState) => ({
       ...prevState,
       [name]: e,
     }));
   };
+
+  React.useEffect(() => {
+    console.log(newLocation);
+  }, [newLocation]);
 
   return (
     <View

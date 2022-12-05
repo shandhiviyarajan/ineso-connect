@@ -5,6 +5,8 @@ export const GROUP_TYPES = {
     GET_GROUP: "GET_GROUP",
     GET_GROUP_SUCCESS: "GET_GROUP_SUCCESS",
     GET_GROUP_FAIL: "GET_GROUP_FAIL",
+
+
 };
 //Fetch sites actions
 export const ActionFetchGroups = (payload) => {

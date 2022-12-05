@@ -1,36 +1,14 @@
 export const PROFILE_TYPES = {
-  // Edit personal profile
-  EDIT_PROFILE: 'EDIT_PROFILE',
-  EDIT_PROFILE_SUCCESS: 'EDIT_PROFILE_SUCCESS',
-  EDIT_PROFILE_FAIL: 'EDIT_PROFILE_FAIL',
-  // Edit general profile
-  EDIT_GENERAL_PROFILE: 'EDIT_GENERAL_PROFILE',
-  EDIT_GENERAL_PROFILE_SUCCESS: 'EDIT_GENERAL_PROFILE_SUCCESS',
-  EDIT_GENERAL_PROFILE_FAIL: 'EDIT_GENERAL_PROFILE_FAIL',
   //Get User actions
   GET_USER: 'GET_USER',
   GET_USER_SUCCESS: 'GET_USER_SUCCESS',
   GET_USER_FAIL: 'GET_USER_FAIL',
-  //get percentage
-  GET_PERCENTAGE: 'GET_PERCENTAGE',
-  GET_PERCENTAGE_FAIL: 'GET_PERCENTAGE_FAIL',
-  GET_PERCENTAGE_SUCCESS: 'GET_PERCENTAGE_SUCCESS',
+
   //get file status
   GET_FILE_STATUS: 'GET_FILE_STATUS',
   GET_FILE_STATUS_SUCCESS: 'GET_FILE_STATUS_SUCCESS',
   GET_FILE_STATUS_FAIL: 'GET_FILE_STATUS_FAIL',
   //Get more info
-  MORE_INFO: 'MORE_INFO',
-  MORE_INFO_SUCCESS: 'MORE_INFO_SUCCESS',
-  MORE_INFO_FAIL: 'MORE_INFO_FAIL',
-  //upload profile fpicture
-  UPLOAD_PROFIE_PICTURE: 'UPLOAD_PROFIE_PICTURE',
-  UPLOAD_PROFIE_PICTURE_SUCCESS: 'UPLOAD_PROFIE_PICTURE_SUCCESS',
-  UPLOAD_PROFIE_PICTURE_FAIL: 'UPLOAD_PROFIE_PICTURE_FAIL',
-  //get profile picture
-  GET_PROFILE_PIC: 'GET_PROFILE_PIC',
-  GET_PROFILE_PIC_SUCCESS: 'GET_PROFILE_PIC_SUCCESS',
-  GET_PROFILE_PIC_FAIL: 'GET_PROFILE_PIC_FAIL'
 };
 //GET User
 export const GetUserAction = (payload) => {
@@ -173,15 +151,15 @@ export const GetProfilePicAction = (payload) => {
   };
 };
 
-export const GetProfilePicSuccessAction = (payload) =>{
-  return{
-    type:PROFILE_TYPES.GET_PROFILE_PIC_SUCCESS,
+export const GetProfilePicSuccessAction = (payload) => {
+  return {
+    type: PROFILE_TYPES.GET_PROFILE_PIC_SUCCESS,
     payload
   }
 }
-export const GetProfilePicFailAction = (payload) =>{
-  return{
-    type:PROFILE_TYPES.GET_PROFILE_PIC_FAIL,
+export const GetProfilePicFailAction = (payload) => {
+  return {
+    type: PROFILE_TYPES.GET_PROFILE_PIC_FAIL,
     payload
   }
 }

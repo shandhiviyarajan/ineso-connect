@@ -52,7 +52,6 @@ const DeviceGoogleMaps = () => {
   }, [devices]);
 
   const centerMap = async (e) => {
-    console.log(e);
     setRegion({
       latitude:
         devices &&
@@ -113,27 +112,6 @@ const DeviceGoogleMaps = () => {
         <>
           <View
             style={{
-              flex: 1,
-              paddingTop: 64,
-            }}
-          >
-            <TouchableHighlight onPress={centerMap}>
-              <View>
-                <Text>Center</Text>
-              </View>
-            </TouchableHighlight>
-            {devices &&
-              devices.data &&
-              devices.data.map((d, i) => (
-                <Text>
-                  {d && d.metadata && d.metadata.name}
-                  {d && d.metadata && d.metadata.gpsLocation.latitude} + "- " +
-                  {d && d.metadata && d.metadata.gpsLocation.longitude}
-                </Text>
-              ))}
-          </View>
-          <View
-            style={{
               flex: 4,
               // ...StyleSheet.absoluteFillObject,
             }}
@@ -141,7 +119,6 @@ const DeviceGoogleMaps = () => {
             <MapView
               ref={(map) => {
                 mapRef = map;
-                console.log(mapRef);
               }}
               onMapReady={onMapReady}
               showsUserLocation={false}

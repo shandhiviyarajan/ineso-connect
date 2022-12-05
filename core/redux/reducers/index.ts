@@ -8,9 +8,9 @@ import groupReducer from "./groupReducer";
 import alertReducer from "./alertReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  persistStore,
+  //  persistStore,
   persistReducer,
-  persistCombineReducers,
+  //  persistCombineReducers,
 } from "redux-persist";
 import metaReducer from "./metaReducer";
 import qrReducer from "./qrReducer";
