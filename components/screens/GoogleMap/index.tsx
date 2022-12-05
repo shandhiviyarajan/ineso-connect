@@ -12,9 +12,12 @@ import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { SystemColors } from "../../../core/Styles/theme/colors";
-import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
+import {
+  ActionFetchDevice,
+  ActionFetchDevices,
+} from "../../../core/redux/actions/deviceActions";
 import { removeUnderscore, toCapitalize } from "../../../core/utils/Capitalize";
-const DeviceGoogleMaps = () => {
+const DeviceGoogleMaps = ({ navigation }) => {
   const devices = useSelector((state) => state.device.devices);
   const clientId = useSelector((state) => state.client.clientId);
   const delta = {
@@ -22,26 +25,21 @@ const DeviceGoogleMaps = () => {
     longitudeDelta: 0.001,
   };
   const dispatchAction = useDispatch();
-  const [initialRegion, setRegion] = React.useState({
-    latitude: 45.4708,
-    longitude: 9.1911,
-    latitudeDelta: delta.latitudeDelta,
-    longitudeDelta: delta.longitudeDelta,
-  });
+  const [initialRegion, setRegion] = React.useState({});
 
   const moveToDevice = (device) => {
     console.log(device);
   };
 
-  React.useEffect(() => {
+  const handleDeviceClick = ({ vendor, serial }) => {
     dispatchAction(
-      ActionFetchDevices({
-        clientId: clientId,
-        siteId: false,
-        groupId: false,
+      ActionFetchDevice({
+        clientId,
+        deviceId: `${vendor}:${serial}`,
       })
     );
-  }, [dispatchAction]);
+    navigation.navigate("All devices");
+  };
 
   React.useEffect(() => {
     async () => {
@@ -77,7 +75,9 @@ const DeviceGoogleMaps = () => {
   let mapRef = React.useRef(null);
 
   function onMapReady(e) {
-    mapRef.fitToElements();
+    setTimeout(() => {
+      mapRef.fitToElements();
+    }, 1000);
   }
 
   return (
@@ -151,9 +151,7 @@ const DeviceGoogleMaps = () => {
                         </View>
                         <Callout
                           tooltip={true}
-                          onPress={() => {
-                            Alert.alert(0);
-                          }}
+                          onPress={() => handleDeviceClick(device)}
                         >
                           <View
                             style={{
