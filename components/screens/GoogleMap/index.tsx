@@ -123,7 +123,8 @@ const DeviceGoogleMaps = ({ navigation }) => {
                         coordinate={{
                           latitude: device.metadata.gpsLocation.latitude,
                           longitude:
-                            device.metadata.gpsLocation.longitude + i * 0.001,
+                            device.metadata.gpsLocation.longitude +
+                            i * 0.000075,
                         }}
                       >
                         <View
