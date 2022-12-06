@@ -1,23 +1,19 @@
 import React from "react";
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { SystemColors } from "../../../core/Styles/theme/colors";
+import { useIsFocused } from "@react-navigation/native";
 import {
   ActionFetchDevice,
   ActionFetchDevices,
 } from "../../../core/redux/actions/deviceActions";
 import { removeUnderscore, toCapitalize } from "../../../core/utils/Capitalize";
 const DeviceGoogleMaps = ({ navigation }) => {
+  const isFocused = useIsFocused();
+
   const devices = useSelector((state) => state.device.devices);
   const clientId = useSelector((state) => state.client.clientId);
   const delta = {
@@ -29,6 +25,17 @@ const DeviceGoogleMaps = ({ navigation }) => {
 
   const moveToDevice = (device) => {
     console.log(device);
+    setRegion({
+      latitude: device.metadata.gpsLocation.latitude
+        ? device.metadata.gpsLocation.latitude
+        : 45.4708,
+
+      longitude: device.metadata.gpsLocation.longitude
+        ? device.metadata.gpsLocation.longitude
+        : 9.1911,
+      latitudeDelta: delta.latitudeDelta,
+      longitudeDelta: delta.longitudeDelta,
+    });
   };
 
   const handleDeviceClick = ({ vendor, serial }) => {
@@ -42,14 +49,11 @@ const DeviceGoogleMaps = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    async () => {
-      if (devices) {
-        centerMap();
-      }
-    };
+    mapRef.fitToElements(true);
   }, [devices]);
 
   const centerMap = async (e) => {
+    console.log("center", e);
     setRegion({
       latitude:
         devices &&
@@ -74,9 +78,12 @@ const DeviceGoogleMaps = ({ navigation }) => {
 
   let mapRef = React.useRef(null);
 
+  function onMarkerSelect(e) {
+    console.log(e);
+  }
   function onMapReady(e) {
     setTimeout(() => {
-      mapRef.fitToElements();
+      console.log(mapRef);
     }, 1000);
   }
 
@@ -96,6 +103,7 @@ const DeviceGoogleMaps = ({ navigation }) => {
             }}
           >
             <MapView
+              onMarkerSelect={onMarkerSelect}
               moveOnMarkerPress={true}
               ref={(map) => {
                 mapRef = map;
@@ -156,20 +164,21 @@ const DeviceGoogleMaps = ({ navigation }) => {
                         >
                           <View
                             style={{
-                              width: 300,
+                              width: 340,
                               height: 80,
                               backgroundColor: "#333",
                               borderRadius: 2,
                               padding: 24,
                               flexDirection: "row",
+                              alignItems: "center",
                             }}
                           >
                             <Image
                               source={GenerateImage(device.metadata.model)}
                               style={{
                                 resizeMode: "contain",
-                                width: 44,
-                                height: 44,
+                                width: 40,
+                                height: 40,
                                 tintColor: "#fff",
                                 marginRight: 12,
                               }}
@@ -177,7 +186,7 @@ const DeviceGoogleMaps = ({ navigation }) => {
                             <View>
                               <Text
                                 style={{
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: "500",
                                   color: "#fff",
                                   paddingRight: 24,
