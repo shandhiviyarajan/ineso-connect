@@ -533,27 +533,7 @@ const Devices = () => {
             </View>
           )}
 
-          {devices.isLoading ||
-            (currentDevices === null && (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "700",
-                    fontSize: 16,
-                  }}
-                >
-                  Fetching devices...
-                </Text>
-              </View>
-            ))}
-
-          {!devices.isLoading && currentDevices && currentDevices.length === 0 && (
+          {devices.isLoading && (
             <View
               style={{
                 flex: 1,
@@ -567,35 +547,60 @@ const Devices = () => {
                   fontSize: 16,
                 }}
               >
-                {!QR_CODE && <>No devices found !</>}
-                {QR_CODE && <>No devices found for below QR code -{QR_CODE}</>}
+                <ActivityIndicator />
               </Text>
             </View>
           )}
-          {!devices.isLoading && currentDevices && currentDevices.length > 0 && (
-            <ScrollView
-              scrollEventThrottle={1}
-              onScrollBeginDrag={onScrollBeginDrag}
-              contentContainerStyle={{
-                paddingHorizontal: 12,
-                paddingVertical: 12,
-                paddingBottom: 72,
-                justifyContent: devices.isLoading ? "center" : "flex-start",
-              }}
-            >
-              {currentDevices &&
-                currentDevices.map(
-                  (device, index) =>
-                    device && (
-                      <DeviceCard
-                        key={device && device._id}
-                        device={device}
-                        onPress={() => handleDeviceClick(device)}
-                      />
-                    )
-                )}
-            </ScrollView>
-          )}
+
+          {!devices.isLoading &&
+            currentDevices &&
+            currentDevices.length === 0 && (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "700",
+                    fontSize: 16,
+                  }}
+                >
+                  {!QR_CODE && <>No devices found !</>}
+                  {QR_CODE && (
+                    <>No devices found for below QR code -{QR_CODE}</>
+                  )}
+                </Text>
+              </View>
+            )}
+          {!devices.isLoading &&
+            currentDevices &&
+            currentDevices.length > 0 && (
+              <ScrollView
+                scrollEventThrottle={1}
+                onScrollBeginDrag={onScrollBeginDrag}
+                contentContainerStyle={{
+                  paddingHorizontal: 12,
+                  paddingVertical: 12,
+                  paddingBottom: 72,
+                  justifyContent: devices.isLoading ? "center" : "flex-start",
+                }}
+              >
+                {currentDevices &&
+                  currentDevices.map(
+                    (device, index) =>
+                      device && (
+                        <DeviceCard
+                          key={device && device._id}
+                          device={device}
+                          onPress={() => handleDeviceClick(device)}
+                        />
+                      )
+                  )}
+              </ScrollView>
+            )}
         </View>
       </View>
     </>
