@@ -24,7 +24,6 @@ const DeviceGoogleMaps = ({ navigation }) => {
   const [initialRegion, setRegion] = React.useState({});
 
   const moveToDevice = (device) => {
-    console.log(device);
     setRegion({
       latitude: device.metadata.gpsLocation.latitude
         ? device.metadata.gpsLocation.latitude
@@ -103,12 +102,10 @@ const DeviceGoogleMaps = ({ navigation }) => {
             }}
           >
             <MapView
-              onMarkerSelect={onMarkerSelect}
               moveOnMarkerPress={true}
               ref={(map) => {
                 mapRef = map;
               }}
-              onMapReady={onMapReady}
               showsUserLocation={false}
               customMapStyle={[]}
               zoomEnabled={true}
