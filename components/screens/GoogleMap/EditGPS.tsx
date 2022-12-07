@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { View, Text, Dimensions, Image, TextInput } from "react-native";
 import MapView, { Marker, MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,16 +17,11 @@ function EditGPS({ route, navigation }) {
     longitude: 0,
   });
 
+  let mapRef = useRef(null);
   const [isSaving, setSaving] = React.useState(false);
   const dispatchAction = useDispatch();
 
   const handleSaveGPS = () => {
-    console.log(
-      newLocation,
-      clientId,
-      activeDevice.vendor,
-      activeDevice.serial
-    );
     if (newLocation) {
       setSaving(true);
       apiUpdateGPSCoodinates({
@@ -68,26 +63,24 @@ function EditGPS({ route, navigation }) {
   };
 
   React.useEffect(() => {
-    console.log(activeDevice.metadata.gpsLocation);
     if (activeDevice) {
-      setNewCoordinates((prevState) => ({
-        ...prevState,
-
-        latitude: activeDevice.metadata.gpsLocation.latitude,
+      setNewCoordinates({
         longitude: activeDevice.metadata.gpsLocation.longitude,
-      }));
+        latitude: activeDevice.metadata.gpsLocation.latitude,
+      });
     }
   }, []);
 
   const updateLocation = (e, name) => {
     setNewCoordinates((prevState) => ({
       ...prevState,
-      [name]: e,
+      [name]: parseFloat(e),
     }));
   };
 
   React.useEffect(() => {
-    console.log(newLocation);
+    console.log("newlocation", newLocation);
+    mapRef.fitToElements(true);
   }, [newLocation]);
 
   return (
@@ -131,9 +124,10 @@ function EditGPS({ route, navigation }) {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ width: 75, fontWeight: "500" }}>Latitude </Text>
+              <Text style={{ width: 75, fontWeight: "500" }}>Latitude</Text>
               <TextInput
                 name="latitude"
+                keyboardType="numeric"
                 onChangeText={(e) => updateLocation(e, "latitude")}
                 style={{
                   flex: 1,
@@ -143,14 +137,16 @@ function EditGPS({ route, navigation }) {
                   textAlign: "center",
                   paddingVertical: 6,
                   paddingHorizontal: 6,
+                  color: "#000",
                 }}
-                defaultValue={newLocation && newLocation.latitude}
+                value={newLocation && newLocation.latitude + ""}
               />
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={{ width: 75, fontWeight: "500" }}>Longitude </Text>
               <TextInput
                 name="longitude"
+                keyboardType="numeric"
                 onChangeText={(e) => updateLocation(e, "longitude")}
                 style={{
                   flex: 1,
@@ -160,8 +156,9 @@ function EditGPS({ route, navigation }) {
                   textAlign: "center",
                   paddingVertical: 6,
                   paddingHorizontal: 6,
+                  color: "#000",
                 }}
-                defaultValue={newLocation && newLocation.longitude}
+                value={newLocation && newLocation.longitude + ""}
               />
             </View>
           </View>
@@ -175,9 +172,10 @@ function EditGPS({ route, navigation }) {
       >
         {activeDevice && (
           <MapView
+            ref={(map) => (mapRef = map)}
             customMapStyle={[]}
             zoomEnabled={true}
-            scrollEnabled={false}
+            scrollEnabled={true}
             showsUserLocation={false}
             initialRegion={{
               latitude: activeDevice.metadata.gpsLocation.latitude,
@@ -194,8 +192,8 @@ function EditGPS({ route, navigation }) {
               draggable={true}
               onDragEnd={(e) => setNewCoordinates(e.nativeEvent.coordinate)}
               coordinate={{
-                latitude: newLocation && newLocation.latitude,
                 longitude: newLocation && newLocation.longitude,
+                latitude: newLocation && newLocation.latitude,
               }}
             >
               <View

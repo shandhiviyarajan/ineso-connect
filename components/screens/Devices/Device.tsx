@@ -68,7 +68,7 @@ export const Device = ({ navigation }) => {
                 resizeMode: "contain",
                 height: 24,
                 width: 24,
-                tintColor: "#666",
+                tintColor: "#000",
                 marginRight: 6,
               }}
             />
@@ -91,7 +91,7 @@ export const Device = ({ navigation }) => {
             style={{
               fontSize: 16,
               fontWeight: "500",
-              color: "#5E5E5E",
+              color: "#000",
             }}
           >
             {toCapitalize(title)}
@@ -100,7 +100,7 @@ export const Device = ({ navigation }) => {
         <Text
           style={{
             fontSize: 20,
-            color: "#5E5E5E",
+            color: "#666",
             fontWeight: "400",
           }}
         >
@@ -110,7 +110,7 @@ export const Device = ({ navigation }) => {
             ? parseFloat(value).toFixed(1)
             : parseFloat(value)}
         </Text>
-        <Text style={{ fontSize: 20, color: "#a5a5a5", fontWeight: "400" }}>
+        <Text style={{ fontSize: 20, color: "#666", fontWeight: "400" }}>
           &nbsp;
           {unit}
         </Text>
