@@ -1,5 +1,12 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -95,6 +102,33 @@ const DeviceGoogleMaps = ({ navigation }) => {
         }}
       >
         <>
+          <TouchableHighlight
+            underlayColor="transparent"
+            style={{
+              width: 36,
+              height: 36,
+              position: "absolute",
+              top: 48,
+              right: 24,
+              zIndex: 100,
+            }}
+            onPress={() => {
+              mapRef.fitToElements(true);
+            }}
+          >
+            <View>
+              <Image
+                source={require("../../../assets/images/center-map.png")}
+                style={{
+                  width: 32,
+                  height: 32,
+                  tintColor: "#000",
+                  resizeMode: "contain",
+                }}
+              />
+            </View>
+          </TouchableHighlight>
+
           <View
             style={{
               flex: 4,
