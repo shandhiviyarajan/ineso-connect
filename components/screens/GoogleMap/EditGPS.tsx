@@ -79,7 +79,6 @@ function EditGPS({ route, navigation }) {
   };
 
   React.useEffect(() => {
-    console.log("newlocation", newLocation);
     mapRef.fitToElements(true);
   }, [newLocation]);
 
