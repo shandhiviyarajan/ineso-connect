@@ -90,7 +90,7 @@ export const Device = ({ navigation }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: "500",
+              fontWeight: "400",
               color: "#000",
             }}
           >
@@ -240,7 +240,7 @@ export const Device = ({ navigation }) => {
                 width: 64,
                 height: 64,
                 marginRight: 12,
-                tintColor: SystemColors.primary,
+                tintColor: "#000",
                 resizeMode: "contain",
               }}
             ></Image>
@@ -271,24 +271,6 @@ export const Device = ({ navigation }) => {
               backgroundColor: "#F2F5F9",
             }}
           >
-            {category_command.filter((cc) => cc.name === activeDevice.category)
-              .length > 0 && (
-              <>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "500",
-                    marginBottom: 12,
-                  }}
-                >
-                  Command
-                </Text>
-                <View style={styles.card}>
-                  <LightDimming category={activeDevice.category} />
-                </View>
-              </>
-            )}
-
             <View style={styles.card}>
               <View
                 style={{
@@ -380,6 +362,7 @@ export const Device = ({ navigation }) => {
                   style={{
                     fontSize: 16,
                     color: "#000",
+                    fontWeight: 400,
                   }}
                 >
                   Last measurement:
@@ -389,7 +372,7 @@ export const Device = ({ navigation }) => {
                   {activeDevice.lastMeasurement &&
                     activeDevice.lastMeasurement.time &&
                     moment(activeDevice.lastMeasurement.time).format(
-                      "DD-MMM-YYYY hh:mm:ss A"
+                      "DD-MMM-YYYY hh:mm A"
                     )}
                 </Text>
               </View>
@@ -410,6 +393,24 @@ export const Device = ({ navigation }) => {
                     )
                 )}
             </View>
+
+            {category_command.filter((cc) => cc.name === activeDevice.category)
+              .length > 0 && (
+              <>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "500",
+                    marginBottom: 12,
+                  }}
+                >
+                  Command
+                </Text>
+                <View style={styles.card}>
+                  <LightDimming category={activeDevice.category} />
+                </View>
+              </>
+            )}
             <>
               <Text
                 style={{
@@ -429,6 +430,7 @@ export const Device = ({ navigation }) => {
                       (cycle, i) =>
                         i === 0 && (
                           <View
+                            key={"cycle" + i}
                             style={{
                               flexDirection: "row",
                               alignItems: "center",
@@ -442,7 +444,6 @@ export const Device = ({ navigation }) => {
                                 alignItems: "center",
                                 justifyContent: "space-between",
                               }}
-                              key={"cycle" + i}
                             >
                               <View
                                 style={{
@@ -460,7 +461,7 @@ export const Device = ({ navigation }) => {
                                     marginTop: 0,
                                   }}
                                 >
-                                  Current State :{" "}
+                                  Current State:{" "}
                                   {cycle.state &&
                                     cycle.state &&
                                     toCapitalize(
@@ -641,7 +642,7 @@ export const Device = ({ navigation }) => {
                               marginTop: 0,
                             }}
                           >
-                            Current State :{" "}
+                            Current State:{" "}
                             {cycle.state &&
                               cycle.state &&
                               toCapitalize(
@@ -655,7 +656,7 @@ export const Device = ({ navigation }) => {
                               fontSize: 16,
                             }}
                           >
-                            Date : {moment(cycle.date).format("D - MMM - yyyy")}
+                            Date: {moment(cycle.date).format("D - MMM - yyyy")}
                           </Text>
                         </View>
                       </View>
