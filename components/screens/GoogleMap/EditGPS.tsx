@@ -94,7 +94,7 @@ function EditGPS({ route, navigation }) {
     >
       <View
         style={{
-          flex: newLocation ? 1 : 0.4,
+          flex: newLocation ? 1.6 : 0.4,
           paddingTop: 16,
           paddingHorizontal: 24,
           width: "100%",

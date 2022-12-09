@@ -32,14 +32,21 @@ function LightDimming({ activeDevice }) {
         console.log("Turn off");
         setLoading(true);
         apiDeviceCommand({
-          deviceId: activeDevice._id,
+          deviceId: `${activeDevice.vendor}:${activeDevice.serial}`,
           clientId,
           payload: {
-            command_name: is_command.commands.off,
+            command: is_command.commands.off,
           },
         })
           .then(() => {
             Message("success", "Device Turned off", "");
+          })
+          .catch((error) => {
+            Message(
+              "error",
+              "Device command failed",
+              error.response.data.message
+            );
           })
           .finally(() => {
             setLoading(false);
@@ -51,14 +58,21 @@ function LightDimming({ activeDevice }) {
         console.log("Turn on");
         setLoading(true);
         apiDeviceCommand({
-          deviceId: activeDevice._id,
+          deviceId: `${activeDevice.vendor}:${activeDevice.serial}`,
           clientId,
           payload: {
-            command_name: is_command.commands.on,
+            command: is_command.commands.on,
           },
         })
           .then(() => {
             Message("success", "Device Turned on", "");
+          })
+          .catch((error) => {
+            Message(
+              "error",
+              "Device command failed",
+              error.response.data.message
+            );
           })
           .finally(() => {
             setLoading(false);
@@ -79,15 +93,18 @@ function LightDimming({ activeDevice }) {
   const updateDimming = () => {
     setLoading(true);
     apiDeviceCommand({
-      deviceId: activeDevice._id,
+      deviceId: `${activeDevice.vendor}:${activeDevice.serial}`,
       clientId,
       payload: {
-        command_name: is_command.commands.dim,
+        command: is_command.commands.dim,
         value: parseInt(slide),
       },
     })
       .then(() => {
-        Message("success", "Device Turned on", "");
+        Message("success", "Device command successful", "");
+      })
+      .catch((error) => {
+        Message("error", "Device command failed", error.response.data.message);
       })
       .finally(() => {
         setLoading(false);

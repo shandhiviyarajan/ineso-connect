@@ -11,7 +11,7 @@ export const apiDeviceCommand = async ({ clientId, deviceId, payload }) => {
     console.log(clientId, deviceId, payload);
     return await new Promise(async (resolve, reject) => {
         const httpRequest = await httpInstance();
-        httpRequest.post(COMMAND.DEVICE_COMMAND(clientId, deviceId), JSON.stringify(payload))
+        httpRequest.post(COMMAND.DEVICE_COMMAND(clientId, deviceId), payload)
             .then((response) => {
                 resolve(response);
                 console.log(response);
