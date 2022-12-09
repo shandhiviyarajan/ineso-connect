@@ -1,5 +1,12 @@
 import React, { useRef } from "react";
-import { View, Text, Dimensions, Image, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  Image,
+  TextInput,
+  TouchableHighlight,
+} from "react-native";
 import MapView, { Marker, MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { apiUpdateGPSCoodinates } from "../../../core/API/apiDevices";
@@ -94,7 +101,7 @@ function EditGPS({ route, navigation }) {
     >
       <View
         style={{
-          flex: newLocation ? 1.6 : 0.4,
+          flex: newLocation ? 1.5 : 0.4,
           paddingTop: 16,
           paddingHorizontal: 24,
           width: "100%",
@@ -102,9 +109,10 @@ function EditGPS({ route, navigation }) {
       >
         <Text
           style={{
-            fontSize: 16,
-            fontWeight: "500",
+            fontSize: 14,
+            fontWeight: "400",
             textAlign: "center",
+            marginBottom: 16,
           }}
         >
           Drag the marker to change the location
@@ -123,7 +131,9 @@ function EditGPS({ route, navigation }) {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ width: 75, fontWeight: "500" }}>Latitude</Text>
+              <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
+                Latitude
+              </Text>
               <TextInput
                 name="latitude"
                 keyboardType="numeric"
@@ -134,15 +144,18 @@ function EditGPS({ route, navigation }) {
                   borderWidth: 1,
                   borderColor: "#d8d8d8",
                   textAlign: "center",
-                  paddingVertical: 6,
-                  paddingHorizontal: 6,
+                  paddingVertical: 8,
+                  paddingHorizontal: 8,
                   color: "#000",
+                  backgroundColor: "#fff",
                 }}
                 value={newLocation && newLocation.latitude + ""}
               />
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ width: 75, fontWeight: "500" }}>Longitude </Text>
+              <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
+                Longitude{" "}
+              </Text>
               <TextInput
                 name="longitude"
                 keyboardType="numeric"
@@ -153,9 +166,10 @@ function EditGPS({ route, navigation }) {
                   borderWidth: 1,
                   borderColor: "#d8d8d8",
                   textAlign: "center",
-                  paddingVertical: 6,
-                  paddingHorizontal: 6,
+                  paddingVertical: 8,
+                  paddingHorizontal: 8,
                   color: "#000",
+                  backgroundColor: "#fff",
                 }}
                 value={newLocation && newLocation.longitude + ""}
               />
@@ -169,6 +183,33 @@ function EditGPS({ route, navigation }) {
           width: Dimensions.get("screen").width,
         }}
       >
+        <TouchableHighlight
+          underlayColor="transparent"
+          style={{
+            width: 36,
+            height: 36,
+            position: "absolute",
+            top: 24,
+            right: 24,
+            zIndex: 100,
+          }}
+          onPress={() => {
+            mapRef.fitToElements(true);
+          }}
+        >
+          <View>
+            <Image
+              source={require("../../../assets/images/center-map.png")}
+              style={{
+                width: 32,
+                height: 32,
+                tintColor: "#000",
+                resizeMode: "contain",
+              }}
+            />
+          </View>
+        </TouchableHighlight>
+
         {activeDevice && (
           <MapView
             ref={(map) => (mapRef = map)}
