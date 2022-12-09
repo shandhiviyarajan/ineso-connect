@@ -1,41 +1,104 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert, ActivityIndicator } from "react-native";
 import Slider from "@react-native-community/slider";
 import SelectBox from "../../../atoms/SelectBox";
 import { SystemColors } from "../../../../core/Styles/theme/colors";
 import { category_command } from "../../../../core/utils/Categories";
+import { apiDeviceCommand } from "../../../../core/API/apiCommands";
+import { useSelector } from "react-redux";
+import { Message } from "../../../molecules/Toast";
 
-function LightDimming({ category }) {
+function LightDimming({ activeDevice }) {
+  const clientId = useSelector((state) => state.client.clientId);
   const [slide, setSlide] = React.useState(50);
+  const [activeCommand, setActiveCommand] = React.useState(false);
+  const [payload, setPayload] = React.useState({
+    command_name: "",
+    value: 0,
+  });
+
+  const is_command = category_command.filter(
+    (cc) => cc.name === activeDevice.category
+  )[0];
+
+  const commands = ["Turn on", "Turn off", "Dimming"];
+
+  const [loading, setLoading] = React.useState(false);
+
   const handleSelect = (e) => {
-    console.log(e);
+    setActiveCommand(e);
+    switch (e) {
+      case "Turn off":
+        console.log("Turn off");
+        setLoading(true);
+        apiDeviceCommand({
+          deviceId: activeDevice._id,
+          clientId,
+          payload: {
+            command_name: is_command.commands.off,
+          },
+        })
+          .then(() => {
+            Message("success", "Device Turned off", "");
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+
+        break;
+
+      case "Turn on":
+        console.log("Turn on");
+        setLoading(true);
+        apiDeviceCommand({
+          deviceId: activeDevice._id,
+          clientId,
+          payload: {
+            command_name: is_command.commands.on,
+          },
+        })
+          .then(() => {
+            Message("success", "Device Turned on", "");
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+
+        break;
+
+      case "Dimming":
+        console.log("Dimming");
+        break;
+    }
   };
 
   const onValueChange = (e) => {
-    console.log(e);
     setSlide(parseInt(e));
   };
 
-  const is_command = category_command.filter((cc) => cc.name === category)[0];
-
-  const commands = ["Turn on", "Turn off", "Dimming light"];
+  const updateDimming = () => {
+    setLoading(true);
+    apiDeviceCommand({
+      deviceId: activeDevice._id,
+      clientId,
+      payload: {
+        command_name: is_command.commands.dim,
+        value: parseInt(slide),
+      },
+    })
+      .then(() => {
+        Message("success", "Device Turned on", "");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <>
       <View>
-        {is_command.commands.dimming && (
-          <Text
-            style={{
-              fontSize: 16,
-              marginBottom: 6,
-            }}
-          >
-            Dimming
-          </Text>
-        )}
         <SelectBox
-          defaultValue="Turn on"
-          placeholder="Command"
+          placeholder="Select Command"
           onSelect={(e) => {
             handleSelect(e);
           }}
@@ -43,7 +106,7 @@ function LightDimming({ category }) {
             is_command.commands.dimming ? commands : ["Turn on", "Turn off"]
           }
         />
-        {is_command.commands.dimming && (
+        {is_command.commands.dimming && activeCommand === "Dimming" && (
           <View
             style={{
               flex: 1,
@@ -61,11 +124,13 @@ function LightDimming({ category }) {
                 maximumValue={100}
                 minimumTrackTintColor={SystemColors.primary}
                 maximumTrackTintColor="#F2F5F9"
+                onSlidingComplete={updateDimming}
               />
             </View>
             <Text style={{ fontWeight: "600", fontSize: 16 }}>{slide}%</Text>
           </View>
         )}
+        {loading && <ActivityIndicator />}
       </View>
     </>
   );

@@ -82,8 +82,11 @@ export const Device = ({ navigation }) => {
               }}
               source={GenerateImage(
                 activeDevice &&
+                  activeDevice.metadata &&
                   activeDevice.metadata.model &&
                   activeDevice.metadata.model
+                  ? activeDevice.metadata.model
+                  : ""
               )}
             />
           )}
@@ -362,7 +365,7 @@ export const Device = ({ navigation }) => {
                   style={{
                     fontSize: 16,
                     color: "#000",
-                    fontWeight: 400,
+                    fontWeight: "400",
                   }}
                 >
                   Last measurement:
@@ -407,7 +410,7 @@ export const Device = ({ navigation }) => {
                   Command
                 </Text>
                 <View style={styles.card}>
-                  <LightDimming category={activeDevice.category} />
+                  <LightDimming activeDevice={activeDevice} />
                 </View>
               </>
             )}
