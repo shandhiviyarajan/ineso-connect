@@ -612,7 +612,7 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
-                  activeDevice.metadata.lifecycle.map((cycle, i) => (
+                  activeDevice.metadata.maintenance.map((cycle, i) => (
                     <View
                       style={{
                         flexDirection: "row",
@@ -639,7 +639,6 @@ export const Device = ({ navigation }) => {
                               fontWeight: "400",
                               width: "100%",
                               display: "flex",
-
                               fontSize: 16,
                               marginBottom: 6,
                               marginTop: 0,
@@ -659,7 +658,8 @@ export const Device = ({ navigation }) => {
                               fontSize: 16,
                             }}
                           >
-                            Date: {moment(cycle.date).format("D - MMM - yyyy")}
+                            Date:{" "}
+                            {moment(cycle.timestamp).format("D - MMM - yyyy")}
                           </Text>
                         </View>
                       </View>

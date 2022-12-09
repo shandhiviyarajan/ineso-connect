@@ -1,10 +1,10 @@
 export const RenameMaintenence = (value) => {
 
-    if (value === "produced") {
+    if (value === "in_stock") {
         return "In stock";
     }
 
-    if (value === "blank") {
+    if (value === "in_use") {
         return "In use";
     }
 
