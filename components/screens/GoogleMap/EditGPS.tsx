@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableHighlight,
 } from "react-native";
-import MapView, { Marker, MarkerAnimated } from "react-native-maps";
+import MapView, { Callout, Marker, MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { apiUpdateGPSCoodinates } from "../../../core/API/apiDevices";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
@@ -251,6 +251,17 @@ function EditGPS({ route, navigation }) {
                   style={{ width: 32, height: 32, tintColor: "#fff" }}
                 />
               </View>
+              <Callout>
+                <View>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Drag
+                  </Text>
+                </View>
+              </Callout>
             </Marker>
           </MapView>
         )}
