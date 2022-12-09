@@ -242,7 +242,7 @@ const Devices = () => {
                   height: 48,
                   width: 48,
                   borderRadius: 8,
-                  tintColor: SystemColors.primary,
+                  tintColor: "#000",
                   resizeMode: "contain",
                 }}
               />

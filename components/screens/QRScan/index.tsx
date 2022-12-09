@@ -70,6 +70,10 @@ function QRActivate() {
     }
   };
 
+  const toDevices = () => {
+    navigation.navigate("Dashboard");
+  };
+
   const [feedback, setFeedBackModal] = React.useState(false);
   return (
     <>
@@ -89,7 +93,7 @@ function QRActivate() {
                 Please select a Client & Start Scanning the QR Code
               </Text>
 
-              <Button>View Devices</Button>
+              <Button onPress={toDevices}>View Devices</Button>
             </>
           )}
           {isLoading && client && (
@@ -145,6 +149,7 @@ const styles = StyleSheet.create({
   bottomContainerText: {
     color: "#000",
     paddingTop: 16,
+    paddingBottom: 16,
     fontSize: 16,
     fontWeight: "500",
     textAlign: "center",

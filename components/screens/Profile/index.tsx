@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Alert,
-  Dimensions,
-  Image,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { Image, Text, TouchableHighlight, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
