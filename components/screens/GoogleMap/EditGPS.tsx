@@ -120,7 +120,8 @@ function EditGPS({ route, navigation }) {
             <View
               style={{
                 flexDirection: "column",
-                paddingTop: 12,
+                paddingTop: 0,
+                paddingBottom: 12,
               }}
             >
               <View

@@ -28,7 +28,12 @@ const DeviceGoogleMaps = ({ navigation }) => {
     longitudeDelta: 0.001,
   };
   const dispatchAction = useDispatch();
-  const [initialRegion, setRegion] = React.useState({});
+  const [initialRegion, setRegion] = React.useState({
+    latitude: 45.4708,
+    longitude: 9.1911,
+    latitudeDelta: delta.latitudeDelta,
+    longitudeDelta: delta.longitudeDelta,
+  });
 
   const moveToDevice = (device) => {
     setRegion({
@@ -39,8 +44,8 @@ const DeviceGoogleMaps = ({ navigation }) => {
       longitude: device.metadata.gpsLocation.longitude
         ? device.metadata.gpsLocation.longitude
         : 9.1911,
-      latitudeDelta: delta.latitudeDelta,
-      longitudeDelta: delta.longitudeDelta,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
     });
   };
 
@@ -55,7 +60,9 @@ const DeviceGoogleMaps = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    mapRef.fitToElements(true);
+    if (devices) {
+      mapRef.fitToElements(true);
+    }
   }, [devices]);
 
   const centerMap = async (e) => {
@@ -84,6 +91,9 @@ const DeviceGoogleMaps = ({ navigation }) => {
 
   let mapRef = React.useRef(null);
 
+  const fitMap = () => {
+    mapRef.fitToElements(true);
+  };
   function onMarkerSelect(e) {
     console.log(e);
   }
@@ -108,13 +118,11 @@ const DeviceGoogleMaps = ({ navigation }) => {
               width: 36,
               height: 36,
               position: "absolute",
-              top: 48,
+              top: 24,
               right: 24,
               zIndex: 100,
             }}
-            onPress={() => {
-              mapRef.fitToElements(true);
-            }}
+            onPress={fitMap}
           >
             <View>
               <Image
@@ -136,6 +144,7 @@ const DeviceGoogleMaps = ({ navigation }) => {
             }}
           >
             <MapView
+              onLayout={fitMap}
               moveOnMarkerPress={true}
               ref={(map) => {
                 mapRef = map;
@@ -143,7 +152,6 @@ const DeviceGoogleMaps = ({ navigation }) => {
               showsUserLocation={false}
               customMapStyle={[]}
               zoomEnabled={true}
-              initialRegion={initialRegion}
               style={{
                 ...StyleSheet.absoluteFillObject,
               }}
@@ -205,13 +213,17 @@ const DeviceGoogleMaps = ({ navigation }) => {
                             }}
                           >
                             <Image
-                              source={GenerateImage(device.metadata.model)}
+                              source={GenerateImage(
+                                device &&
+                                  device.metadata &&
+                                  device.metadata.model
+                              )}
                               style={{
-                                resizeMode: "contain",
-                                width: 40,
-                                height: 40,
+                                width: 36,
+                                height: 36,
                                 tintColor: "#fff",
                                 marginRight: 12,
+                                resizeMode: "contain",
                               }}
                             />
                             <View>
