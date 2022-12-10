@@ -618,7 +618,12 @@ export const Device = ({ navigation }) => {
                           <View
                             style={{
                               flexDirection: "row",
-                              marginBottom: 12,
+                              marginBottom: 16,
+                              justifyContent: "space-between",
+
+                              paddingBottom: 12,
+                              borderBottomColor: "#d9d9d9",
+                              borderBottomWidth: 1,
                             }}
                           >
                             <Text
@@ -626,6 +631,7 @@ export const Device = ({ navigation }) => {
                                 marginBottom: 6,
                                 color: "#5E5E5E",
                                 fontSize: 16,
+                                marginRight: 12,
                               }}
                             >
                               {moment(cycle.date).format("D / MMM / yyyy")}
@@ -647,6 +653,17 @@ export const Device = ({ navigation }) => {
                                   RenameMaintenence(cycle.state && cycle.state)
                                 )}
                             </Text>
+                            {/* <View>
+                              <Image
+                                source={require("../../../assets/images/right-arrow.png")}
+                                style={{
+                                  resizeMode: "contain",
+                                  width: 20,
+                                  height: 20,
+                                  tintColor: SystemColors.primary,
+                                }}
+                              />
+                            </View> */}
                           </View>
                           <View>
                             <Button>Declare an incident</Button>
