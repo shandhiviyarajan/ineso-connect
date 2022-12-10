@@ -32,11 +32,24 @@ export const Device = ({ navigation }) => {
     return <View>{children}</View>;
   }
 
+  const getWarrantyDays = (date) => {
+    let d = new Date(date);
+    let today = Date.now();
+    let new_dy = d.setDate(d.getDate() + 730); // set warranty on days
+    let days = "";
+
+    days = moment(new_dy).diff(today, "years", true) + "";
+    return parseInt(days);
+  };
+
   const getWarrantyYear = (date) => {
     let d = new Date(date);
-    console.log(date);
+    let today = Date.now();
     let new_d = d.setMonth(d.getMonth() + 24); //set 2 years warranty
-    let year = moment(new_d).diff(Date.now(), "years", true) + "";
+    let new_dy = d.setDate(d.getDate() + 730); // set warranty on days
+    let year = "";
+
+    year = moment(new_d).diff(today, "years", true) + "";
 
     if (year.split(".")[1] === "00") {
       return parseInt(year);
@@ -530,8 +543,14 @@ export const Device = ({ navigation }) => {
                             fontWeight: "400",
                           }}
                         >
-                          Operating time:{" "}
-                          {moment(1670678677007).diff(Date.now(), "days")} days
+                          Operating time: {getWarrantyDays(cycle.timestamp)}
+                          {/* {moment(cycle.timestamp).diff(
+                            Date.now(),
+                            "days"
+                          )}{" "} */}
+                          {getWarrantyDays(cycle.timestamp) > 1
+                            ? "days"
+                            : "day"}
                         </Text>
                         <View
                           style={{
