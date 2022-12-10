@@ -1,6 +1,8 @@
 import React from "react";
 import {
   Alert,
+  Dimensions,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,12 +22,13 @@ import {
 import { removeUnderscore, toCapitalize } from "../../../core/utils/Capitalize";
 const DeviceGoogleMaps = ({ navigation }) => {
   const isFocused = useIsFocused();
-
+  const { width, height } = Dimensions.get("window");
+  const ASPECT_RATIO = width / height;
   const devices = useSelector((state) => state.device.devices);
   const clientId = useSelector((state) => state.client.clientId);
   const delta = {
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
+    latitudeDelta: 0.0001,
+    longitudeDelta: 0.0001 * ASPECT_RATIO,
   };
   const dispatchAction = useDispatch();
   const [initialRegion, setRegion] = React.useState({
@@ -44,8 +47,8 @@ const DeviceGoogleMaps = ({ navigation }) => {
       longitude: device.metadata.gpsLocation.longitude
         ? device.metadata.gpsLocation.longitude
         : 9.1911,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.001,
+      latitudeDelta: delta.latitudeDelta,
+      longitudeDelta: delta.longitudeDelta,
     });
   };
 
@@ -59,49 +62,31 @@ const DeviceGoogleMaps = ({ navigation }) => {
     navigation.navigate("All devices");
   };
 
+  let mapRef = React.useRef(null);
+  const DEFAULT_PADDING = { top: 160, right: 60, bottom: 60, left: 60 };
+  function createMarkers() {
+    mapRef.fitToCoordinates(
+      devices &&
+        devices.data &&
+        devices.data.map((device) => {
+          return device.metadata.gpsLocation;
+        }),
+      DEFAULT_PADDING,
+      true
+    );
+    mapRef.fitToElements(true);
+  }
+
+  const fitMap = () => {
+    // createMarkers();
+    mapRef.fitToElements(true);
+  };
+
   React.useEffect(() => {
     if (devices) {
       mapRef.fitToElements(true);
     }
   }, [devices]);
-
-  const centerMap = async (e) => {
-    console.log("center", e);
-    setRegion({
-      latitude:
-        devices &&
-        devices.data &&
-        devices.data[0] &&
-        devices.data[0].metadata &&
-        devices.data[0].metadata.gpsLocation.latitude
-          ? devices.data[0].metadata.gpsLocation.latitude
-          : 45.4708,
-      longitude:
-        devices &&
-        devices.data &&
-        devices.data[0] &&
-        devices.data[0].metadata &&
-        devices.data[0].metadata.gpsLocation.longitude
-          ? devices.data[0].metadata.gpsLocation.longitude
-          : 9.1911,
-      latitudeDelta: delta.latitudeDelta,
-      longitudeDelta: delta.longitudeDelta,
-    });
-  };
-
-  let mapRef = React.useRef(null);
-
-  const fitMap = () => {
-    mapRef.fitToElements(true);
-  };
-  function onMarkerSelect(e) {
-    console.log(e);
-  }
-  function onMapReady(e) {
-    setTimeout(() => {
-      console.log(mapRef);
-    }, 1000);
-  }
 
   return (
     <>
@@ -118,7 +103,7 @@ const DeviceGoogleMaps = ({ navigation }) => {
               width: 36,
               height: 36,
               position: "absolute",
-              top: 24,
+              top: Platform.OS === "ios" ? 48 : 24,
               right: 24,
               zIndex: 100,
             }}
@@ -140,7 +125,6 @@ const DeviceGoogleMaps = ({ navigation }) => {
           <View
             style={{
               flex: 4,
-              ...StyleSheet.absoluteFillObject,
             }}
           >
             <MapView
@@ -149,11 +133,14 @@ const DeviceGoogleMaps = ({ navigation }) => {
               ref={(map) => {
                 mapRef = map;
               }}
-              showsUserLocation={false}
+              showsUserLocation={true}
               customMapStyle={[]}
               zoomEnabled={true}
               style={{
-                ...StyleSheet.absoluteFillObject,
+                borderWidth: 1,
+                width: "100%",
+                marginTop: 0,
+                height: Dimensions.get("screen").height - 56,
               }}
             >
               {devices &&

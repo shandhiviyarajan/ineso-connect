@@ -115,8 +115,10 @@ export const SelectBoxes = ({ navigation }) => {
     }));
   };
   React.useEffect(() => {
-    if (clients.data) {
-      dispatchAction(ActionSetClientId(clients.data[0].id));
+    if (clients.data && clients.data.length > 0) {
+      dispatchAction(
+        ActionSetClientId(clients && clients.data && clients.data[0].id)
+      );
 
       setDefaultClient(clients.data[0]);
 
