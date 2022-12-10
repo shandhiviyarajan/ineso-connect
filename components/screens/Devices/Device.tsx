@@ -34,9 +34,15 @@ export const Device = ({ navigation }) => {
 
   const getWarrantyYear = (date) => {
     let d = new Date(date);
-
+    console.log(date);
     let new_d = d.setMonth(d.getMonth() + 24); //set 2 years warranty
-    return moment(new_d).diff(Date.now(), "years", true);
+    let year = moment(new_d).diff(Date.now(), "years", true) + "";
+
+    if (year.split(".")[1] === "00") {
+      return parseInt(year);
+    } else {
+      return parseFloat(year).toFixed(2);
+    }
   };
 
   function DeviceInfo({ title, value, unit, icon }) {
@@ -525,7 +531,7 @@ export const Device = ({ navigation }) => {
                           }}
                         >
                           Operating time:{" "}
-                          {moment(cycle.timestamp).diff(Date.now(), "days")}
+                          {moment(1670678677007).diff(Date.now(), "days")} days
                         </Text>
                         <View
                           style={{
@@ -586,9 +592,8 @@ export const Device = ({ navigation }) => {
                                   textAlign: "center",
                                 }}
                               >
-                                {parseFloat(
-                                  getWarrantyYear(cycle.timestamp)
-                                ).toFixed(2)}
+                                {parseFloat(getWarrantyYear(cycle.timestamp)) +
+                                  " Years"}
                               </Text>
                             </View>
                           </View>
