@@ -20,6 +20,7 @@ import { ActionSyncDevice } from "../../../core/redux/actions/deviceActions";
 import { generateModel, vendorName } from "../../../core/utils/generateModel";
 import LightDimming from "./components/LightDimming";
 import { category_command } from "../../../core/utils/Categories";
+import { Button } from "../../atoms/Button";
 
 export const Device = ({ navigation }) => {
   const activeDevice = useSelector((state) => state.device.device.data);
@@ -613,57 +614,42 @@ export const Device = ({ navigation }) => {
                   activeDevice.metadata.lifecycle.map(
                     (cycle, i) =>
                       i === 0 && (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                        <View key={"cycle" + i}>
                           <View
                             style={{
-                              flex: 1,
                               flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
+                              marginBottom: 12,
                             }}
-                            key={"cycle" + i}
                           >
-                            <View
+                            <Text
                               style={{
-                                flex: 4,
+                                marginBottom: 6,
+                                color: "#5E5E5E",
+                                fontSize: 16,
                               }}
                             >
-                              <Text
-                                style={{
-                                  fontWeight: "400",
-                                  width: "100%",
-                                  display: "flex",
-                                  fontSize: 16,
-                                  marginBottom: 6,
-                                  marginTop: 0,
-                                }}
-                              >
-                                Current State:{" "}
-                                {cycle.state &&
-                                  cycle.state &&
-                                  toCapitalize(
-                                    RenameMaintenence(
-                                      cycle.state && cycle.state
-                                    )
-                                  )}
-                              </Text>
-                              <Text
-                                style={{
-                                  marginBottom: 6,
-                                  color: "#5E5E5E",
-                                  fontSize: 16,
-                                }}
-                              >
-                                Date:{" "}
-                                {moment(cycle.date).format("D - MMM - yyyy")}
-                              </Text>
-                            </View>
+                              {moment(cycle.date).format("D / MMM / yyyy")}
+                            </Text>
+                            <Text
+                              style={{
+                                fontWeight: "400",
+                                width: "100%",
+                                display: "flex",
+                                fontSize: 16,
+                                marginBottom: 6,
+                                marginTop: 0,
+                              }}
+                            >
+                              {" "}
+                              {cycle.state &&
+                                cycle.state &&
+                                toCapitalize(
+                                  RenameMaintenence(cycle.state && cycle.state)
+                                )}
+                            </Text>
+                          </View>
+                          <View>
+                            <Button>Declare an incident</Button>
                           </View>
                         </View>
                       )
