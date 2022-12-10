@@ -39,8 +39,8 @@ export const SelectBoxes = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       setToken(isAuthenticated);
-      dispatchAction(MeAction());
       dispatchAction(ActionFetchClients());
+      dispatchAction(MeAction());
     })();
   }, []);
 
