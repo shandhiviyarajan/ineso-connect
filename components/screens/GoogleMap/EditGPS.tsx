@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   TouchableHighlight,
+  KeyboardAvoidingView,
 } from "react-native";
 import MapView, { Callout, Marker, MarkerAnimated } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -99,84 +100,83 @@ function EditGPS({ route, navigation }) {
         width: "100%",
       }}
     >
-      <View
+      <KeyboardAvoidingView
         style={{
-          flex: newLocation ? 1.5 : 0.4,
-          paddingTop: 16,
-          paddingHorizontal: 24,
-          width: "100%",
+          width: "90%",
         }}
       >
-        <Text
-          style={{
-            fontSize: 14,
-            fontWeight: "400",
-            textAlign: "center",
-            marginBottom: 16,
-          }}
-        >
-          Drag the marker to change the location
-        </Text>
-        {newLocation && (
-          <View
+        <View>
+          <Text
             style={{
-              flexDirection: "column",
-              paddingTop: 12,
+              fontSize: 14,
+              fontWeight: "400",
+              textAlign: "center",
+              marginVertical: 6,
             }}
           >
+            Drag the marker to change the location
+          </Text>
+          {newLocation && (
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 12,
+                flexDirection: "column",
+                paddingTop: 12,
               }}
             >
-              <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
-                Latitude
-              </Text>
-              <TextInput
-                name="latitude"
-                keyboardType="numeric"
-                onChangeText={(e) => updateLocation(e, "latitude")}
+              <View
                 style={{
-                  flex: 1,
-                  fontSize: 16,
-                  borderWidth: 1,
-                  borderColor: "#d8d8d8",
-                  textAlign: "center",
-                  paddingVertical: 8,
-                  paddingHorizontal: 8,
-                  color: "#000",
-                  backgroundColor: "#fff",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 12,
                 }}
-                value={newLocation && newLocation.latitude + ""}
-              />
+              >
+                <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
+                  Latitude
+                </Text>
+                <TextInput
+                  name="latitude"
+                  keyboardType="numeric"
+                  onChangeText={(e) => updateLocation(e, "latitude")}
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    borderWidth: 1,
+                    borderColor: "#d8d8d8",
+                    textAlign: "center",
+                    paddingVertical: 6,
+                    paddingHorizontal: 6,
+                    color: "#000",
+                    backgroundColor: "#fff",
+                  }}
+                  value={newLocation && newLocation.latitude + ""}
+                />
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
+                  Longitude{" "}
+                </Text>
+                <TextInput
+                  name="longitude"
+                  keyboardType="numeric"
+                  onChangeText={(e) => updateLocation(e, "longitude")}
+                  style={{
+                    flex: 1,
+                    fontSize: 16,
+                    borderWidth: 1,
+                    borderColor: "#d8d8d8",
+                    textAlign: "center",
+                    paddingVertical: 6,
+                    paddingHorizontal: 6,
+                    color: "#000",
+                    backgroundColor: "#fff",
+                  }}
+                  value={newLocation && newLocation.longitude + ""}
+                />
+              </View>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 16, width: 90, fontWeight: "400" }}>
-                Longitude{" "}
-              </Text>
-              <TextInput
-                name="longitude"
-                keyboardType="numeric"
-                onChangeText={(e) => updateLocation(e, "longitude")}
-                style={{
-                  flex: 1,
-                  fontSize: 16,
-                  borderWidth: 1,
-                  borderColor: "#d8d8d8",
-                  textAlign: "center",
-                  paddingVertical: 8,
-                  paddingHorizontal: 8,
-                  color: "#000",
-                  backgroundColor: "#fff",
-                }}
-                value={newLocation && newLocation.longitude + ""}
-              />
-            </View>
-          </View>
-        )}
-      </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
       <View
         style={{
           flex: 5,
