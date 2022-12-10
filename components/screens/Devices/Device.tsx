@@ -480,7 +480,7 @@ export const Device = ({ navigation }) => {
                                     fontSize: 16,
                                   }}
                                 >
-                                  Date :{" "}
+                                  Date:{" "}
                                   {moment(cycle.date).format("D - MMM - yyyy")}
                                 </Text>
                               </View>
@@ -502,22 +502,35 @@ export const Device = ({ navigation }) => {
             </>
             {activeDevice &&
               activeDevice.metadata &&
-              activeDevice.metadata.lifecycle
-                .filter((c) => c.state === "blank")
-                .map(
-                  (cycle, i) =>
-                    i === 0 && (
-                      <>
+              activeDevice.metadata.maintenance.map(
+                (cycle, i) =>
+                  i === 0 && (
+                    <>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "500",
+                          marginBottom: 12,
+                        }}
+                      >
+                        Warranty
+                      </Text>
+                      <View style={styles.card}>
                         <Text
                           style={{
-                            fontSize: 20,
-                            fontWeight: "500",
-                            marginBottom: 12,
+                            paddingVertical: 8,
+                            fontSize: 16,
+                            fontWeight: "400",
                           }}
                         >
-                          Warranty
+                          Operating time:{" "}
+                          {moment(cycle.timestamp).diff(Date.now(), "days")}
                         </Text>
-                        <View style={styles.card}>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                          }}
+                        >
                           <Text
                             style={{
                               paddingVertical: 8,
@@ -525,79 +538,64 @@ export const Device = ({ navigation }) => {
                               fontWeight: "400",
                             }}
                           >
-                            Operating time:
-                            {-moment(cycle.date).diff(Date.now(), "days")}
+                            Warranty status:{" "}
                           </Text>
-                          <View
+                          <Text
                             style={{
-                              flexDirection: "row",
+                              paddingVertical: 8,
+                              fontSize: 18,
+                              fontWeight: "500",
+                              color: SystemColors.success,
                             }}
                           >
-                            <Text
-                              style={{
-                                paddingVertical: 8,
-                                fontSize: 16,
-                                fontWeight: "400",
-                              }}
-                            >
-                              Warranty status :
-                            </Text>
-                            <Text
-                              style={{
-                                paddingVertical: 8,
-                                fontSize: 18,
-                                fontWeight: "400",
-                                color: SystemColors.success,
-                              }}
-                            >
-                              Running
-                            </Text>
-                          </View>
+                            Running
+                          </Text>
+                        </View>
 
-                          <View>
+                        <View>
+                          <View
+                            style={{
+                              backgroundColor: "#eee",
+                              height: 24,
+                              borderRadius: 6,
+                              width: "100%",
+                              position: "relative",
+                            }}
+                          >
                             <View
                               style={{
-                                backgroundColor: "#eee",
+                                backgroundColor: SystemColors.primary,
                                 height: 24,
                                 borderRadius: 6,
-                                width: "100%",
-                                position: "relative",
+                                width:
+                                  (getWarrantyYear(cycle.timestamp) / 2) * 100 +
+                                  "%",
+                                position: "absolute",
+                                left: 0,
+                                top: 0,
+                                paddingTop: 2,
+                                paddingLeft: 6,
                               }}
                             >
-                              <View
+                              <Text
                                 style={{
-                                  backgroundColor: SystemColors.primary,
-                                  height: 24,
-                                  borderRadius: 6,
-                                  width:
-                                    (getWarrantyYear(cycle.date) / 2) * 100 +
-                                    "%",
-                                  position: "absolute",
-                                  left: 0,
-                                  top: 0,
-                                  paddingTop: 2,
-                                  paddingLeft: 6,
+                                  color: "#fff",
+                                  fontWeight: "bold",
+                                  width: "100%",
+                                  textAlign: "center",
                                 }}
                               >
-                                <Text
-                                  style={{
-                                    color: "#fff",
-                                    fontWeight: "bold",
-                                    width: "100%",
-                                    textAlign: "center",
-                                  }}
-                                >
-                                  {parseFloat(
-                                    getWarrantyYear(cycle.date)
-                                  ).toFixed(2)}
-                                </Text>
-                              </View>
+                                {parseFloat(
+                                  getWarrantyYear(cycle.timestamp)
+                                ).toFixed(2)}
+                              </Text>
                             </View>
                           </View>
                         </View>
-                      </>
-                    )
-                )}
+                      </View>
+                    </>
+                  )
+              )}
 
             <>
               <Text
@@ -612,59 +610,64 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
-                  activeDevice.metadata.maintenance.map((cycle, i) => (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                        key={"cycle" + i}
-                      >
+                  activeDevice.metadata.lifecycle.map(
+                    (cycle, i) =>
+                      i === 0 && (
                         <View
                           style={{
-                            flex: 4,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          <Text
+                          <View
                             style={{
-                              fontWeight: "400",
-                              width: "100%",
-                              display: "flex",
-                              fontSize: 16,
-                              marginBottom: 6,
-                              marginTop: 0,
+                              flex: 1,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
                             }}
+                            key={"cycle" + i}
                           >
-                            Current State:{" "}
-                            {cycle.state &&
-                              cycle.state &&
-                              toCapitalize(
-                                RenameMaintenence(cycle.state && cycle.state)
-                              )}
-                          </Text>
-                          <Text
-                            style={{
-                              marginBottom: 6,
-                              color: "#5E5E5E",
-                              fontSize: 16,
-                            }}
-                          >
-                            Date:{" "}
-                            {moment(cycle.timestamp).format("D - MMM - yyyy")}
-                          </Text>
+                            <View
+                              style={{
+                                flex: 4,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontWeight: "400",
+                                  width: "100%",
+                                  display: "flex",
+                                  fontSize: 16,
+                                  marginBottom: 6,
+                                  marginTop: 0,
+                                }}
+                              >
+                                Current State:{" "}
+                                {cycle.state &&
+                                  cycle.state &&
+                                  toCapitalize(
+                                    RenameMaintenence(
+                                      cycle.state && cycle.state
+                                    )
+                                  )}
+                              </Text>
+                              <Text
+                                style={{
+                                  marginBottom: 6,
+                                  color: "#5E5E5E",
+                                  fontSize: 16,
+                                }}
+                              >
+                                Date:{" "}
+                                {moment(cycle.date).format("D - MMM - yyyy")}
+                              </Text>
+                            </View>
+                          </View>
                         </View>
-                      </View>
-                    </View>
-                  ))}
+                      )
+                  )}
               </View>
             </>
             {/* <View style={styles.card}>
