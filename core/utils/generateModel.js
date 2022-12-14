@@ -61,10 +61,15 @@ const vendors = [
     },
     { key: "nippongases", name_en: "Ineso" }
 ]
-export const generateModel = (value) => {
+export const generateModel = (value, type) => {
     let m = models.filter(model => model.key === value);
 
-    return m.length > 0 ? m[0].name_en : ""
+    if (type === "type") {
+        return m.length > 0 ? m[0].name_en : ""
+    } else {
+        return m.length > 0 ? m[0].key : ""
+    }
+
 }
 
 export const vendorName = (key) => {

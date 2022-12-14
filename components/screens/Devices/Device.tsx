@@ -276,7 +276,7 @@ export const Device = ({ navigation }) => {
               <Text
                 style={{ fontSize: 16, fontWeight: "400", marginBottom: 8 }}
               >
-                {toCapitalize(removeUnderscore(activeDevice.type))}
+                {generateModel(activeDevice.metadata.model, "type")}
               </Text>
               {activeDevice.online_status && <Online />}
               {!activeDevice.online_status && <OffLine />}
@@ -312,7 +312,7 @@ export const Device = ({ navigation }) => {
                 </Text>
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
                   {activeDevice.metadata.model &&
-                    generateModel(activeDevice.metadata.model)}
+                    generateModel(activeDevice.metadata.model, "model")}
                 </Text>
               </View>
               <View
@@ -548,8 +548,8 @@ export const Device = ({ navigation }) => {
                             "days"
                           )}{" "} */}
                           {getWarrantyDays(cycle.timestamp) > 1
-                            ? "days"
-                            : "day"}
+                            ? "Days"
+                            : "Day"}
                         </Text>
                         <View
                           style={{

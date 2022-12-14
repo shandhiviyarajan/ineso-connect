@@ -272,7 +272,8 @@ const Devices = () => {
                   }}
                 >
                   {generateModel(
-                    device && device.metadata && device.metadata.model
+                    device && device.metadata && device.metadata.model,
+                    "type"
                   )}
                 </Text>
               </View>
