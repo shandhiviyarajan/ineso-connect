@@ -447,8 +447,8 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
-                  activeDevice.metadata.lifecycle
-                    .filter((c) => c.state === "blank")
+                  activeDevice.metadata.maintenance
+                    .filter((c) => c.state === "in_use")
                     .map(
                       (cycle, i) =>
                         i === 0 && (
@@ -500,7 +500,8 @@ export const Device = ({ navigation }) => {
                                     fontSize: 16,
                                   }}
                                 >
-                                  Date: {moment(cycle.date).format("D-MM-yyyy")}
+                                  Date:{" "}
+                                  {moment(cycle.timestamp).format("D-MM-yyyy")}
                                 </Text>
                               </View>
                               <Image
@@ -521,41 +522,22 @@ export const Device = ({ navigation }) => {
             </>
             {activeDevice &&
               activeDevice.metadata &&
-              activeDevice.metadata.maintenance.map(
-                (cycle, i) =>
-                  i === 0 && (
-                    <>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "500",
-                          marginBottom: 12,
-                        }}
-                      >
-                        Warranty
-                      </Text>
-                      <View style={styles.card}>
+              activeDevice.metadata.maintenance
+                .filter((c) => c.state === "in_use")
+                .map(
+                  (cycle, i) =>
+                    i === 0 && (
+                      <>
                         <Text
                           style={{
-                            paddingVertical: 8,
-                            fontSize: 16,
-                            fontWeight: "400",
+                            fontSize: 20,
+                            fontWeight: "500",
+                            marginBottom: 12,
                           }}
                         >
-                          Operating time: {getWarrantyDays(cycle.timestamp)}
-                          {/* {moment(cycle.timestamp).diff(
-                            Date.now(),
-                            "days"
-                          )}{" "} */}
-                          {getWarrantyDays(cycle.timestamp) > 1
-                            ? "Days"
-                            : "Day"}
+                          Warranty
                         </Text>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                          }}
-                        >
+                        <View style={styles.card}>
                           <Text
                             style={{
                               paddingVertical: 8,
@@ -563,63 +545,82 @@ export const Device = ({ navigation }) => {
                               fontWeight: "400",
                             }}
                           >
-                            Warranty status:{" "}
+                            Operating time: {getWarrantyDays(cycle.timestamp)}
+                            {getWarrantyDays(cycle.timestamp) > 1
+                              ? "Days"
+                              : "Day"}
                           </Text>
-                          <Text
-                            style={{
-                              paddingVertical: 8,
-                              fontSize: 18,
-                              fontWeight: "500",
-                              color: SystemColors.success,
-                            }}
-                          >
-                            Running
-                          </Text>
-                        </View>
-
-                        <View>
                           <View
                             style={{
-                              backgroundColor: "#eee",
-                              height: 24,
-                              borderRadius: 6,
-                              width: "100%",
-                              position: "relative",
+                              flexDirection: "row",
                             }}
                           >
-                            <View
+                            <Text
                               style={{
-                                backgroundColor: SystemColors.primary,
-                                height: 24,
-                                borderRadius: 6,
-                                width:
-                                  (getWarrantyYear(cycle.timestamp) / 2) * 100 +
-                                  "%",
-                                position: "absolute",
-                                left: 0,
-                                top: 0,
-                                paddingTop: 2,
-                                paddingLeft: 6,
+                                paddingVertical: 8,
+                                fontSize: 16,
+                                fontWeight: "400",
                               }}
                             >
-                              <Text
+                              Warranty status:{" "}
+                            </Text>
+                            <Text
+                              style={{
+                                paddingVertical: 8,
+                                fontSize: 18,
+                                fontWeight: "500",
+                                color: SystemColors.success,
+                              }}
+                            >
+                              Running
+                            </Text>
+                          </View>
+
+                          <View>
+                            <View
+                              style={{
+                                backgroundColor: "#eee",
+                                height: 24,
+                                borderRadius: 6,
+                                width: "100%",
+                                position: "relative",
+                              }}
+                            >
+                              <View
                                 style={{
-                                  color: "#fff",
-                                  fontWeight: "bold",
-                                  width: "100%",
-                                  textAlign: "center",
+                                  backgroundColor: SystemColors.primary,
+                                  height: 24,
+                                  borderRadius: 6,
+                                  width:
+                                    (getWarrantyYear(cycle.timestamp) / 2) *
+                                      100 +
+                                    "%",
+                                  position: "absolute",
+                                  left: 0,
+                                  top: 0,
+                                  paddingTop: 2,
+                                  paddingLeft: 6,
                                 }}
                               >
-                                {parseFloat(getWarrantyYear(cycle.timestamp)) +
-                                  " Years"}
-                              </Text>
+                                <Text
+                                  style={{
+                                    color: "#fff",
+                                    fontWeight: "bold",
+                                    width: "100%",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {parseFloat(
+                                    getWarrantyYear(cycle.timestamp)
+                                  ) + " Years"}
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
-                      </View>
-                    </>
-                  )
-              )}
+                      </>
+                    )
+                )}
 
             <>
               <Text

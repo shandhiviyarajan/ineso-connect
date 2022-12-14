@@ -26,7 +26,7 @@ function DeviceNotFound({ navigation }) {
           marginVertical: 12,
         }}
         onPress={() => {
-          navigation.navigate("Devices");
+          navigation.navigate("Dashboard");
         }}
       >
         <View>

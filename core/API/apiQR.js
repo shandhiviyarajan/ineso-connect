@@ -13,10 +13,10 @@ export const apiSearchDevices = async ({
     return await new Promise((resolve, reject) => {
         httpRequest.get(ACTIVATE.SEARCH_DEVICE(clientId, qr_code))
             .then((response) => {
+                console.log(response);
                 resolve(response);
             })
             .catch((error) => {
-
                 reject(error);
             });
     });

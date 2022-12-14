@@ -31,19 +31,29 @@ function QRSearchSuccess({ route, navigation }) {
     }
   };
 
+  const redirectToDevice = () => {
+    if (device) {
+      navigation.navigate("All devices");
+    }
+  };
+
   const handleActivateDevice = () => {
     apiActiveDevice({
       clientId,
       deviceId: `${device.vendor}:${device.serial}`,
-    }).then((response) => {
-      dispatchAction(ActionActivateDeviceSuccess(response));
-      Message(
-        "success",
-        "Device Activated",
-        "QR Code device activation is success"
-      );
-      navigation.navigate("All devices");
-    });
+    })
+      .then((response) => {
+        dispatchAction(ActionActivateDeviceSuccess(response));
+        Message(
+          "success",
+          "Device Activated",
+          "QR Code device activation is success"
+        );
+        navigation.navigate("All devices");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   React.useEffect(() => {
     if (device) {
@@ -73,109 +83,156 @@ function QRSearchSuccess({ route, navigation }) {
         Device found
       </Text>
 
-      {device && device.metadata.active && (
-        <>
-          <Text
-            style={{
-              fontSize: 24,
-              marginVertical: 24,
-              color: "green",
-            }}
-          >
-            This device is already activated
-          </Text>
-
-          <View>
-            <Image
-              source={GenerateImage(device.metadata.model)}
+      {device &&
+        device.metadata &&
+        device.metadata.maintenance.filter((c) => c.state === "in_use").length >
+          0 && (
+          <>
+            <Text
               style={{
-                width: 120,
-                height: 120,
+                fontSize: 18,
+                marginVertical: 24,
+                color: "green",
               }}
-            />
-            <View>
-              <Text style={{ textAlign: "center" }}>
-                {device.metadata.model}
-              </Text>
-              <Text style={{ textAlign: "center" }}>
-                {device.metadata.name}
-              </Text>
-            </View>
-          </View>
+            >
+              This device is already commissioned & activated (
+              {device.metadata.name})
+            </Text>
 
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={handleViewDevice}
-          >
-            <View
+            <View>
+              <Image
+                source={GenerateImage(device.metadata.model)}
+                style={{
+                  width: 120,
+                  height: 120,
+                }}
+              />
+              <View>
+                <Text style={{ textAlign: "center" }}></Text>
+              </View>
+            </View>
+            {redirectToDevice()}
+            <TouchableHighlight underlayColor="transparent">
+              <View
+                style={{
+                  width: 180,
+                  height: 44,
+                  backgroundColor: "transparent",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginVertical: 24,
+                }}
+              >
+                <ActivityIndicator />
+              </View>
+            </TouchableHighlight>
+          </>
+        )}
+
+      {device &&
+        device.metadata &&
+        device.metadata.maintenance.filter((c) => c.state === "in_use")
+          .length === 0 && (
+          <>
+            <View>
+              <Image
+                source={GenerateImage(device.metadata.model)}
+                style={{
+                  width: 120,
+                  height: 120,
+                }}
+              />
+              <View>
+                <Text style={{ textAlign: "center" }}>
+                  {device.metadata.model}
+                </Text>
+                <Text style={{ textAlign: "center" }}>
+                  {device.metadata.name}
+                </Text>
+              </View>
+            </View>
+
+            <Text
               style={{
-                width: 180,
-                height: 44,
-                backgroundColor: SystemColors.primary,
-                justifyContent: "center",
-                alignItems: "center",
+                fontSize: 24,
                 marginVertical: 24,
               }}
             >
-              <Text
+              Do you want to commission this device ?
+            </Text>
+
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={handleActivateDevice}
+            >
+              <View
                 style={{
-                  color: "#fff",
-                  textAlign: "center",
-                  fontSize: 16,
+                  width: 180,
+                  height: 44,
+                  backgroundColor: "green",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 24,
                 }}
               >
-                View Device
-              </Text>
-            </View>
-          </TouchableHighlight>
-        </>
-      )}
+                {activate.isLoading && <ActivityIndicator color="#fff" />}
+                {!activate.isLoading && (
+                  <Text
+                    style={{
+                      color: "#fff",
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
+                    Commission Device
+                  </Text>
+                )}
+              </View>
+            </TouchableHighlight>
+            {device && (
+              <TouchableHighlight
+                underlayColor="transparent"
+                onPress={handleViewDevice}
+              >
+                <View
+                  style={{
+                    width: 180,
+                    height: 44,
+                    backgroundColor: SystemColors.primary,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 24,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#fff",
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
+                    View Device
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            )}
 
-      {device && !device.metadata.active && (
-        <>
-          <View>
-            <Image
-              source={GenerateImage(device.metadata.model)}
-              style={{
-                width: 120,
-                height: 120,
-              }}
-            />
-            <View>
-              <Text style={{ textAlign: "center" }}>
-                {device.metadata.model}
-              </Text>
-              <Text style={{ textAlign: "center" }}>
-                {device.metadata.name}
-              </Text>
-            </View>
-          </View>
-
-          <Text
-            style={{
-              fontSize: 24,
-              marginVertical: 24,
-            }}
-          >
-            Do you want to link this device ?
-          </Text>
-
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={handleActivateDevice}
-          >
-            <View
-              style={{
-                width: 180,
-                height: 44,
-                backgroundColor: "green",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 24,
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => {
+                navigation.navigate("Devices");
               }}
             >
-              {activate.isLoading && <ActivityIndicator color="#fff" />}
-              {!activate.isLoading && (
+              <View
+                style={{
+                  width: 180,
+                  height: 44,
+                  backgroundColor: "#333",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 24,
+                }}
+              >
                 <Text
                   style={{
                     color: "#fff",
@@ -183,67 +240,12 @@ function QRSearchSuccess({ route, navigation }) {
                     fontSize: 16,
                   }}
                 >
-                  Activate Device
+                  Cancel
                 </Text>
-              )}
-            </View>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={handleViewDevice}
-          >
-            <View
-              style={{
-                width: 180,
-                height: 44,
-                backgroundColor: SystemColors.primary,
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 24,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#fff",
-                  textAlign: "center",
-                  fontSize: 16,
-                }}
-              >
-                View Device
-              </Text>
-            </View>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={() => {
-              navigation.navigate("Devices");
-            }}
-          >
-            <View
-              style={{
-                width: 180,
-                height: 44,
-                backgroundColor: "#333",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 24,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#fff",
-                  textAlign: "center",
-                  fontSize: 16,
-                }}
-              >
-                Cancel
-              </Text>
-            </View>
-          </TouchableHighlight>
-        </>
-      )}
+              </View>
+            </TouchableHighlight>
+          </>
+        )}
     </View>
   );
 }

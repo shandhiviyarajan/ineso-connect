@@ -6,19 +6,10 @@ import {
   StyleSheet,
   ActivityIndicator,
   Dimensions,
-  Alert,
-  TouchableHighlight,
-  Modal,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ActionActivateDevice,
-  ActionSearchDeviceSuccess,
-} from "../../../core/redux/actions/qrActions";
 import { aesDecrypt } from "../../../core/utils/Backend";
-import { AppCustomHeader } from "../../molecules/AppHeader";
 import { Message } from "../../molecules/Toast";
 import QRScanner from "./Scanner";
 import { apiSearchDevices } from "../../../core/API/apiQR";
@@ -35,8 +26,6 @@ function QRActivate() {
   const [isLoading, setLoading] = React.useState(false);
 
   const [qr_code, setQRCode] = React.useState(null);
-
-  const dispatchAction = useDispatch();
 
   const handleReadQR = (e) => {
     if (e && e.data && !isLoading) {
@@ -56,6 +45,11 @@ function QRActivate() {
               device: response.data.data[0],
             });
           } else {
+            Message(
+              "warning",
+              "Device not found",
+              "QR searched device is not found"
+            );
             navigation.navigate("DeviceNotFound");
           }
         })
