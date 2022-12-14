@@ -395,7 +395,7 @@ export const Device = ({ navigation }) => {
                   {activeDevice.lastMeasurement &&
                     activeDevice.lastMeasurement.time &&
                     moment(activeDevice.lastMeasurement.time).format(
-                      "DD-MMM-YYYY hh:mm A"
+                      "DD-MM-YYYY hh:mm A"
                     )}
                 </Text>
               </View>
@@ -500,8 +500,7 @@ export const Device = ({ navigation }) => {
                                     fontSize: 16,
                                   }}
                                 >
-                                  Date:{" "}
-                                  {moment(cycle.date).format("D - MMM - yyyy")}
+                                  Date: {moment(cycle.date).format("D-MM-yyyy")}
                                 </Text>
                               </View>
                               <Image
@@ -658,7 +657,7 @@ export const Device = ({ navigation }) => {
                                 marginRight: 12,
                               }}
                             >
-                              {moment(cycle.date).format("D / MMM / yyyy")}
+                              {moment(cycle.date).format("D-MM-yyyy")}
                             </Text>
                             <Text
                               style={{
