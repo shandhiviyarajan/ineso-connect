@@ -37,7 +37,9 @@ function QRSearchSuccess({ route, navigation }) {
     }
   };
 
+  const [progress, setProgress] = React.useState(false);
   const handleActivateDevice = () => {
+    setProgress(true);
     apiActiveDevice({
       clientId,
       deviceId: `${device.vendor}:${device.serial}`,
@@ -52,7 +54,18 @@ function QRSearchSuccess({ route, navigation }) {
         navigation.navigate("All devices");
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 409) {
+          Message(
+            "error",
+            "Device already activated",
+            "QR code device activation failed"
+          );
+        } else {
+          Message("error", "Error", "QR code device activation failed");
+        }
+      })
+      .finally(() => {
+        setProgress(false);
       });
   };
   React.useEffect(() => {
@@ -85,8 +98,8 @@ function QRSearchSuccess({ route, navigation }) {
 
       {device &&
         device.metadata &&
-        device.metadata.maintenance.filter((c) => c.state === "in_use").length >
-          0 && (
+        device.metadata.maintenance.filter((c) => c.state === "in_use")
+          .length === 0 && (
           <>
             <Text
               style={{
@@ -131,8 +144,8 @@ function QRSearchSuccess({ route, navigation }) {
 
       {device &&
         device.metadata &&
-        device.metadata.maintenance.filter((c) => c.state === "in_use")
-          .length === 0 && (
+        device.metadata.maintenance.filter((c) => c.state === "in_use").length >
+          0 && (
           <>
             <View>
               <Image
@@ -184,11 +197,41 @@ function QRSearchSuccess({ route, navigation }) {
                       fontSize: 16,
                     }}
                   >
-                    Commission Device
+                    {!progress && "Yes"}
+                    {progress && <ActivityIndicator color="#fff" />}
                   </Text>
                 )}
               </View>
             </TouchableHighlight>
+
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => {
+                navigation.navigate("Devices");
+              }}
+            >
+              <View
+                style={{
+                  width: 180,
+                  height: 44,
+                  backgroundColor: "#333",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 24,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#fff",
+                    textAlign: "center",
+                    fontSize: 16,
+                  }}
+                >
+                  No
+                </Text>
+              </View>
+            </TouchableHighlight>
+
             {device && (
               <TouchableHighlight
                 underlayColor="transparent"
@@ -216,34 +259,6 @@ function QRSearchSuccess({ route, navigation }) {
                 </View>
               </TouchableHighlight>
             )}
-
-            <TouchableHighlight
-              underlayColor="transparent"
-              onPress={() => {
-                navigation.navigate("Devices");
-              }}
-            >
-              <View
-                style={{
-                  width: 180,
-                  height: 44,
-                  backgroundColor: "#333",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: 24,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#fff",
-                    textAlign: "center",
-                    fontSize: 16,
-                  }}
-                >
-                  Cancel
-                </Text>
-              </View>
-            </TouchableHighlight>
           </>
         )}
     </View>
