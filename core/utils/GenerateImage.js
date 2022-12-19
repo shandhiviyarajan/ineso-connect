@@ -1,5 +1,6 @@
 
 const GenerateImage = model => {
+    console.log(model);
     switch (model) {
         case 'UL2014A_DCDO_868':
             return require("../../catalog/UL2014A_DCDO_868/picture.png");
@@ -183,7 +184,11 @@ const GenerateImage = model => {
             return require('../../catalog/WD700_UMB/picture.png');
         case 'PLACEPOD_S':
             return require('../../catalog/PLACEPOD_S/picture.png');
+
+        case 'PMO_D725A':
+            return require('../../catalog/PMO_D725A/picture.png');
         default:
+
 
             return require('../../catalog/ineso/device_placeholder.png');
     }
