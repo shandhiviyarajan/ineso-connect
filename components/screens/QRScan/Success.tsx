@@ -98,8 +98,8 @@ function QRSearchSuccess({ route, navigation }) {
 
       {device &&
         device.metadata &&
-        device.metadata.maintenance.filter((c) => c.state === "in_use")
-          .length === 0 && (
+        device.metadata.maintenance.filter((c) => c.state === "in_use").length >
+          0 && (
           <>
             <Text
               style={{
@@ -144,8 +144,8 @@ function QRSearchSuccess({ route, navigation }) {
 
       {device &&
         device.metadata &&
-        device.metadata.maintenance.filter((c) => c.state === "in_use").length >
-          0 && (
+        device.metadata.maintenance.filter((c) => c.state === "in_use")
+          .length === 0 && (
           <>
             <View>
               <Image
@@ -167,11 +167,14 @@ function QRSearchSuccess({ route, navigation }) {
 
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 18,
                 marginVertical: 24,
+                paddingHorizontal: 24,
+                textAlign: "center",
               }}
             >
-              Do you want to commission this device ?
+              {progress && <>Commissioning in progress, please wait</>}
+              {!progress && <>Do you want to commission this device ?</>}
             </Text>
 
             <TouchableHighlight
