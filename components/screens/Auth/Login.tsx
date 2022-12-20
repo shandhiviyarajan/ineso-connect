@@ -64,7 +64,6 @@ export const Login = () => {
   //handle login
   const handleLogin = () => {
     if (validateForm()) {
-      console.log(payload);
       dispatch(LoginAction(payload));
     }
   };

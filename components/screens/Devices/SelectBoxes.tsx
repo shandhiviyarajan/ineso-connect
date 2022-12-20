@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +21,10 @@ export const SelectBoxes = ({ navigation }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   //dispatcher
   const dispatchAction = useDispatch();
+
+  // //all devices
+  // const devices = useSelector((state) => state.device.devices);
+
   //clients
   const clients = useSelector((state) => state.client.clients);
   const client = useSelector((state) => state.client.client.data);
@@ -36,8 +40,7 @@ export const SelectBoxes = ({ navigation }) => {
     groupId: false,
   });
 
-  useEffect(() => {
-    console.log(clientId, siteId, groupId);
+  React.useEffect(() => {
     (async () => {
       setToken(isAuthenticated);
       dispatchAction(MeAction());
@@ -48,7 +51,9 @@ export const SelectBoxes = ({ navigation }) => {
   React.useEffect(() => {
     dispatchAction(
       ActionFetchDevices({
-        clientId: clientId ? clientId : clients.data[0].id,
+        clientId: clientId
+          ? clientId
+          : clients && clients.data && clients.data[0].id,
         siteId: siteId ? siteId : false,
         groupId: groupId ? groupId : false,
       })
