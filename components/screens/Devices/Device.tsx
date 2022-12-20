@@ -7,9 +7,11 @@ import {
   Text,
   TouchableHighlight,
   View,
+  BackHandler,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+import { TabActions } from "@react-navigation/native";
 
 import { measurementKeys } from "../../../core/constants";
 import { RenameMaintenence } from "../../../core/utils/Maintenance";
@@ -31,6 +33,8 @@ export const Device = ({ navigation }) => {
   function CommissionList({ children }) {
     return <View>{children}</View>;
   }
+
+  //backhandler
 
   const getWarrantyDays = (date) => {
     let d = new Date(date);
@@ -220,6 +224,11 @@ export const Device = ({ navigation }) => {
   let timer = null;
   React.useEffect(() => {
     if (activeDevice) {
+      BackHandler.addEventListener("hardwareBackPress", () => {
+        const jumpToAction = TabActions.jumpTo("Devices");
+        navigation.dispatch(jumpToAction);
+      });
+
       let deviceMeasurements = Object.entries(
         activeDevice && activeDevice.lastMeasurement
           ? activeDevice.lastMeasurement
@@ -304,6 +313,7 @@ export const Device = ({ navigation }) => {
             contentContainerStyle={{
               padding: 12,
               backgroundColor: "#F2F5F9",
+              paddingBottom: 120,
             }}
           >
             <View style={styles.card}>

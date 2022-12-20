@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableHighlight, View } from "react-native";
+import { TabActions } from "@react-navigation/native";
 
 function DeviceNotFound({ navigation }) {
   return (
@@ -27,7 +28,11 @@ function DeviceNotFound({ navigation }) {
         }}
         onPress={() => {
           navigation.navigate("Dashboard");
-          navigation.jumpTo("Devices");
+          const jumpToAction = TabActions.jumpTo("Devices");
+          navigation.dispatch(jumpToAction);
+
+          //
+          //  navigation.jumpTo("Devices");
         }}
       >
         <View>

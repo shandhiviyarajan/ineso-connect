@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   View,
@@ -41,16 +41,22 @@ function QRActivate() {
         .then((response) => {
           setLoading(false);
           if (response && response.data.data[0]) {
-            navigation.navigate("QRActivation", {
-              device: response.data.data[0],
-            });
+            navigation.dispatch(
+              StackActions.replace("QRActivation", {
+                device: response.data.data[0],
+              })
+            );
+            // navigation.navigate("QRActivation", {
+            //   device: response.data.data[0],
+            // });
           } else {
             Message(
               "warning",
               "Device not found",
               "QR searched device is not found"
             );
-            navigation.navigate("DeviceNotFound");
+
+            navigation.dispatch(StackActions.replace("DeviceNotFound"));
           }
         })
         .catch((error) => {
@@ -59,7 +65,7 @@ function QRActivate() {
             "QR Code search failed",
             "QR search request failed "
           );
-          navigation.navigate("DeviceNotFound");
+          navigation.dispatch(StackActions.replace("DeviceNotFound"));
         });
     }
   };

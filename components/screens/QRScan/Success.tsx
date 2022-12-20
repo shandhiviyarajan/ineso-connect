@@ -9,10 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { apiActiveDevice } from "../../../core/API/apiQR";
 import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
-import {
-  ActionActivateDevice,
-  ActionActivateDeviceSuccess,
-} from "../../../core/redux/actions/qrActions";
+import { ActionActivateDeviceSuccess } from "../../../core/redux/actions/qrActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Message } from "../../molecules/Toast";
@@ -27,13 +24,13 @@ function QRSearchSuccess({ route, navigation }) {
 
   const handleViewDevice = () => {
     if (device) {
-      navigation.navigate("All devices");
+      navigation.dispatch("All devices");
     }
   };
 
   const redirectToDevice = () => {
     if (device) {
-      navigation.navigate("All devices");
+      navigation.dispatch("All devices");
     }
   };
 
@@ -57,8 +54,7 @@ function QRSearchSuccess({ route, navigation }) {
             clientId,
           })
         );
-
-        navigation.navigate("All devices");
+        navigation.dispatch("All devices");
       })
       .catch((error) => {
         if (error.response.status === 409) {
