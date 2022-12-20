@@ -14,7 +14,7 @@ const models = [
     { key: "TA120", name_fr: "Sonomètre Pro", name_en: "Sonometer Pro" },
     { key: "SAMPOLS", name_fr: "", name_en: "Sampols" },
     { key: "SEN-041", name_fr: "", name_en: "Indoor Air Quality Sensor Standard" },
-    { key: "SENSE", name_fr: "", name_en: "Sense" },
+    { key: "SENSE", name_fr: "", name_en: "Indoor Air Quality Sensor Pro" },
     { key: "Atmo", name_fr: "", name_en: "Water Valve" },
     { key: "SVL-DN15DA-868-BSP-S", name_fr: "", name_en: "Industrial Power Switch 16A" },
     { key: "SSL-868", name_fr: "", name_en: "Weather Station" },
@@ -50,7 +50,6 @@ const vendors = [
 ]
 export const generateModel = (value, type) => {
     let m = models.filter(model => model.key === value);
-
     if (type === "type") {
         return m.length > 0 ? m[0].name_en : ""
     } else {
@@ -61,7 +60,5 @@ export const generateModel = (value, type) => {
 
 export const vendorName = (key) => {
     let v = vendors.filter(vendor => vendor.key === key);
-    console.log(v);
-
     return v.length > 0 ? v[0].name_en : "Ineso"
 }

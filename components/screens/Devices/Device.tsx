@@ -201,6 +201,22 @@ export const Device = ({ navigation }) => {
       </View>
     );
   }
+
+  function DeviceLoader() {
+    return (
+      <>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator />
+        </View>
+      </>
+    );
+  }
   let timer = null;
   React.useEffect(() => {
     if (activeDevice) {
@@ -237,19 +253,12 @@ export const Device = ({ navigation }) => {
   // fetch devices every 120 seconds (2 min)
   return (
     <>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {isLoading && <ActivityIndicator />}
-      </View>
+      {isLoading && <DeviceLoader />}
       {activeDevice && (
-        <>
+        <View>
           <View
             style={{
+              height: 100,
               paddingHorizontal: 16,
               paddingTop: 16,
               paddingBottom: 8,
@@ -258,7 +267,12 @@ export const Device = ({ navigation }) => {
             }}
           >
             <Image
-              source={GenerateImage(activeDevice.metadata.model)}
+              source={GenerateImage(
+                activeDevice &&
+                  activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.model
+              )}
               style={{
                 width: 64,
                 height: 64,
@@ -271,7 +285,10 @@ export const Device = ({ navigation }) => {
               <Text
                 style={{ fontSize: 18, fontWeight: "600", marginBottom: 8 }}
               >
-                {activeDevice.metadata.name}
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.name &&
+                  activeDevice.metadata.name}
               </Text>
               <Text
                 style={{ fontSize: 16, fontWeight: "400", marginBottom: 8 }}
@@ -282,12 +299,7 @@ export const Device = ({ navigation }) => {
               {!activeDevice.online_status && <OffLine />}
             </View>
           </View>
-          <View
-            style={{
-              paddingHorizontal: 0,
-              position: "relative",
-            }}
-          ></View>
+
           <ScrollView
             contentContainerStyle={{
               padding: 12,
@@ -783,7 +795,7 @@ export const Device = ({ navigation }) => {
               <Button primary>Remove Device</Button>
             </View> */}
           </ScrollView>
-        </>
+        </View>
       )}
     </>
   );

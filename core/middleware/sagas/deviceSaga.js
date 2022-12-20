@@ -6,6 +6,7 @@ import { apiFetchDevices, apiFetchDevice } from '../../API/apiDevices';
 export function* watchFechDevices() {
     while (true) {
         const { payload } = yield take(DEVICE_TYPES.GET_DEVICES);
+        console.log("results", payload);
         try {
             const response = yield call(apiFetchDevices, payload);
             yield put({ type: DEVICE_TYPES.GET_DEVICES_SUCCESS, payload: response.data.data });

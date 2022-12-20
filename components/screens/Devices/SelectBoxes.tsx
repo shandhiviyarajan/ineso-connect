@@ -16,20 +16,18 @@ import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
 import { setToken } from "../../../core/interceptors/interceptors";
 import { MeAction } from "../../../core/redux/actions/authActions";
-import { SystemColors } from "../../../core/Styles/theme/colors";
 export const SelectBoxes = ({ navigation }) => {
   //auth status
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   //dispatcher
   const dispatchAction = useDispatch();
-
   //clients
   const clients = useSelector((state) => state.client.clients);
   const client = useSelector((state) => state.client.client.data);
   const clientId = useSelector((state) => state.client.clientId);
   const sites = useSelector((state) => state.site.sites);
   const groups = useSelector((state) => state.group.groups);
-
+  const [defaultClient, setDefaultClient] = React.useState(null);
   const [payload, setPayload] = React.useState({
     clientId: false,
     siteId: false,
@@ -39,8 +37,15 @@ export const SelectBoxes = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       setToken(isAuthenticated);
-      dispatchAction(ActionFetchClients());
       dispatchAction(MeAction());
+      dispatchAction(ActionFetchClients());
+      dispatchAction(
+        ActionFetchDevices({
+          clientId: clients.data[0].id,
+          siteId: false,
+          groupId: false,
+        })
+      );
     })();
   }, []);
 
@@ -115,7 +120,7 @@ export const SelectBoxes = ({ navigation }) => {
     }));
   };
   React.useEffect(() => {
-    if (clients.data && clients.data.length > 0) {
+    if (clients && clients.data && clients.data.length > 0) {
       dispatchAction(
         ActionSetClientId(clients && clients.data && clients.data[0].id)
       );
@@ -129,7 +134,6 @@ export const SelectBoxes = ({ navigation }) => {
       );
 
       //fetch single client for alerts
-
       dispatchAction(
         ActionFetchClient({
           clientId: clients.data[0].id,
@@ -154,9 +158,10 @@ export const SelectBoxes = ({ navigation }) => {
   }, [groups]);
 
   React.useEffect(() => {
-    dispatchAction(ActionUpdatePayload(payload));
-    dispatchAction(ActionFetchDevices(payload));
-    console.log("payload", payload);
+    if (payload) {
+      dispatchAction(ActionUpdatePayload(payload));
+      dispatchAction(ActionFetchDevices(payload));
+    }
   }, [payload]);
 
   //fetch all alerts
@@ -170,8 +175,6 @@ export const SelectBoxes = ({ navigation }) => {
       );
     }
   }, [client]);
-
-  const [defaultClient, setDefaultClient] = React.useState(null);
 
   return (
     <>

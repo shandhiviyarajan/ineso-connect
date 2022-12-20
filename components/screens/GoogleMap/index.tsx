@@ -152,7 +152,7 @@ const DeviceGoogleMaps = ({ navigation }) => {
                         onPress={() => {
                           moveToDevice(device);
                         }}
-                        key={device._id}
+                        key={i + device._id}
                         description={device.metadata.name}
                         coordinate={{
                           latitude: device.metadata.gpsLocation.latitude,

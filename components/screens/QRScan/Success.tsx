@@ -51,6 +51,13 @@ function QRSearchSuccess({ route, navigation }) {
           "Device Activated",
           "QR Code device activation is success"
         );
+
+        dispatchAction(
+          ActionFetchDevice({
+            clientId,
+          })
+        );
+
         navigation.navigate("All devices");
       })
       .catch((error) => {
@@ -106,10 +113,10 @@ function QRSearchSuccess({ route, navigation }) {
                 fontSize: 18,
                 marginVertical: 24,
                 color: "green",
+                paddingHorizontal: 12,
               }}
             >
-              This device is already commissioned & activated (
-              {device.metadata.name})
+              This device is already commissioned & activated
             </Text>
 
             <View>
@@ -121,7 +128,9 @@ function QRSearchSuccess({ route, navigation }) {
                 }}
               />
               <View>
-                <Text style={{ textAlign: "center" }}></Text>
+                <Text style={{ textAlign: "center" }}>
+                  {device.metadata.name}
+                </Text>
               </View>
             </View>
             {redirectToDevice()}
@@ -136,7 +145,7 @@ function QRSearchSuccess({ route, navigation }) {
                   marginVertical: 24,
                 }}
               >
-                <ActivityIndicator />
+                <Text> View device</Text>
               </View>
             </TouchableHighlight>
           </>

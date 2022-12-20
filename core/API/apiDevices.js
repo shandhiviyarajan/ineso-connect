@@ -10,8 +10,6 @@ export const DEVICES = {
     GET_GROUP_DEVICES: (clientId, siteId, groupId) => `/clients/${clientId}/sites/${siteId}/groups/${groupId}/devices`,
     UPDATE_COODINATES: (clientId, gluonId) => `/clients/${clientId}/gluons/${gluonId}/metadata`,
 };
-
-
 let httpRequest;
 //Get all devices for client id
 export const apiFetchDevices = async ({ clientId, siteId, groupId }) => {
@@ -63,7 +61,6 @@ export const apiFetchGroupCategories = async ({ clientId, siteId, groupId }) => 
             });
     });
 };
-
 
 //Get all devices measurement
 export const apiFetchDeviceMeasurement = async ({ clientId, deviceId }) => {
@@ -123,8 +120,6 @@ export const apiFetchGroupDevices = async ({ clientId, siteId, groupId }) => {
 
 
 export const apiUpdateGPSCoodinates = async ({ clientId, gluonId, payload }) => {
-    ///
-
     return await new Promise(async (resolve, reject) => {
         httpRequest = await httpInstance();
 

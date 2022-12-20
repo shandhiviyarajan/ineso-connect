@@ -186,7 +186,7 @@ export const Welcome = ({ navigation }) => {
               paddingTop: 12,
             }}
           >
-            Version 0.1.5 (Prod)
+            Version 0.1.6 (Stage)
           </Text>
         </View>
       </ImageBackground>

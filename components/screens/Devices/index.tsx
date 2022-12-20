@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import { AppCustomHeader } from "../../molecules/AppHeader";
 import moment from "moment";
-import { toCapitalize, removeUnderscore } from "../../../core/utils/Capitalize";
 import {
   ActionFetchDevice,
   ActionFetchDevices,
@@ -594,7 +593,7 @@ const Devices = () => {
                     (device, index) =>
                       device && (
                         <DeviceCard
-                          key={device && device._id}
+                          key={device && index + device._id}
                           device={device}
                           onPress={() => handleDeviceClick(device)}
                         />
