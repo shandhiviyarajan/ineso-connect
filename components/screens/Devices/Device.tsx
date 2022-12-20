@@ -302,7 +302,10 @@ export const Device = ({ navigation }) => {
               <Text
                 style={{ fontSize: 16, fontWeight: "400", marginBottom: 8 }}
               >
-                {generateModel(activeDevice.metadata.model, "type")}
+                {activeDevice &&
+                  activeDevice.metadata &&
+                  activeDevice.metadata.model &&
+                  generateModel(activeDevice.metadata.model, "type")}
               </Text>
               {activeDevice.online_status && <Online />}
               {!activeDevice.online_status && <OffLine />}
@@ -333,7 +336,10 @@ export const Device = ({ navigation }) => {
                   Model : &nbsp;
                 </Text>
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
-                  {activeDevice.metadata.model &&
+                  {activeDevice &&
+                    activeDevice.metadata &&
+                    activeDevice.metadata &&
+                    activeDevice.metadata.model &&
                     generateModel(activeDevice.metadata.model, "model")}
                 </Text>
               </View>

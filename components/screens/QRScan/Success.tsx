@@ -13,6 +13,7 @@ import { ActionActivateDeviceSuccess } from "../../../core/redux/actions/qrActio
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
 import { Message } from "../../molecules/Toast";
+import { StackActions } from "@react-navigation/native";
 
 function QRSearchSuccess({ route, navigation }) {
   const { device } = route.params;
@@ -24,13 +25,13 @@ function QRSearchSuccess({ route, navigation }) {
 
   const handleViewDevice = () => {
     if (device) {
-      navigation.dispatch("All devices");
+      navigation.dispatch(StackActions.replace("All devices"));
     }
   };
 
   const redirectToDevice = () => {
     if (device) {
-      navigation.dispatch("All devices");
+      navigation.dispatch(StackActions.replace("All devices"));
     }
   };
 
@@ -54,7 +55,7 @@ function QRSearchSuccess({ route, navigation }) {
             clientId,
           })
         );
-        navigation.dispatch("All devices");
+        navigation.dispatch(StackActions.replace("All devices"));
       })
       .catch((error) => {
         if (error.response.status === 409) {

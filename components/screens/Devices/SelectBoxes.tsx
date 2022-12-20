@@ -25,6 +25,8 @@ export const SelectBoxes = ({ navigation }) => {
   const clients = useSelector((state) => state.client.clients);
   const client = useSelector((state) => state.client.client.data);
   const clientId = useSelector((state) => state.client.clientId);
+  const siteId = useSelector((state) => state.client.siteId);
+  const groupId = useSelector((state) => state.client.groupId);
   const sites = useSelector((state) => state.site.sites);
   const groups = useSelector((state) => state.group.groups);
   const [defaultClient, setDefaultClient] = React.useState(null);
@@ -35,19 +37,23 @@ export const SelectBoxes = ({ navigation }) => {
   });
 
   useEffect(() => {
+    console.log(clientId, siteId, groupId);
     (async () => {
       setToken(isAuthenticated);
       dispatchAction(MeAction());
       dispatchAction(ActionFetchClients());
-      dispatchAction(
-        ActionFetchDevices({
-          clientId: clients.data[0].id,
-          siteId: false,
-          groupId: false,
-        })
-      );
     })();
   }, []);
+
+  React.useEffect(() => {
+    dispatchAction(
+      ActionFetchDevices({
+        clientId: clientId ? clientId : clients.data[0].id,
+        siteId: siteId ? siteId : false,
+        groupId: groupId ? groupId : false,
+      })
+    );
+  }, [clientId, siteId, groupId]);
 
   const filterDevices = () => {
     navigation.navigate("Devices");
@@ -65,7 +71,6 @@ export const SelectBoxes = ({ navigation }) => {
     );
 
     //fetch single client for alerts
-
     dispatchAction(
       ActionFetchClient({
         clientId: id,
