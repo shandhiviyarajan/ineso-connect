@@ -55,7 +55,7 @@ function QRActivate() {
               "QR searched device is not found"
             );
 
-            navigation.dispatch(StackActions.replace("DeviceNotFound"));
+            navigation.navigate("DeviceNotFound");
           }
         })
         .catch((error) => {

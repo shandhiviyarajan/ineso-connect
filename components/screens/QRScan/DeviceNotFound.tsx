@@ -27,10 +27,8 @@ function DeviceNotFound({ navigation }) {
           marginVertical: 12,
         }}
         onPress={() => {
-          navigation.dispatch(StackActions.replace("Dashboard"));
-          //  navigation.jumpTo("Devices");
-          // const jumpToAction = TabActions.jumpTo("Devices");
-          // navigation.dispatch(jumpToAction);
+          navigation.navigate("Dashboard");
+          navigation.jumpTo("Devices");
         }}
       >
         <View>
