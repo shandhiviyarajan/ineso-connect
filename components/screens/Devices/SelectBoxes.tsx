@@ -33,6 +33,8 @@ export const SelectBoxes = ({ navigation }) => {
   const groupId = useSelector((state) => state.client.groupId);
   const sites = useSelector((state) => state.site.sites);
   const groups = useSelector((state) => state.group.groups);
+  const updated_payload = useSelector((state) => state.qr.payload);
+
   const [defaultClient, setDefaultClient] = React.useState(null);
   const [payload, setPayload] = React.useState({
     clientId: false,
@@ -42,14 +44,27 @@ export const SelectBoxes = ({ navigation }) => {
 
   //set auth tokens
   setToken(isAuthenticated);
-
+  //fetch all clients on initial load
   React.useEffect(() => {
     dispatchAction(MeAction());
-    dispatchAction(ActionFetchClients());
+    if (updated_payload && !updated_payload.clientId) {
+      dispatchAction(ActionFetchClients());
+    }
   }, []);
 
   React.useEffect(() => {
-    if (devices && devices.data && devices.data.length === 0) {
+    if (!(devices && devices.data)) {
+      dispatchAction(
+        ActionSetClientId(clients && clients.data && clients.data[0].id)
+      );
+
+      setDefaultClient(clients && clients.data[0]);
+
+      setPayload((prevState) => ({
+        ...prevState,
+        clientId: clients && clients.data && clients.data[0].id,
+      }));
+
       dispatchAction(
         ActionFetchDevices({
           clientId: clientId
@@ -61,6 +76,40 @@ export const SelectBoxes = ({ navigation }) => {
       );
     }
   }, []);
+
+  //once clients loaded fetch sites & devices
+  React.useEffect(() => {
+    if (clients && clients.data && clients.data.length > 0) {
+      dispatchAction(
+        ActionSetClientId(clients && clients.data && clients.data[0].id)
+      );
+
+      setDefaultClient(clients.data[0]);
+
+      //fetch sites
+      dispatchAction(
+        ActionFetchSites({
+          clientId: clients.data[0].id,
+        })
+      );
+
+      //fetch  alerts
+      dispatchAction(
+        ActionFetchClient({
+          clientId: clients.data[0].id,
+        })
+      );
+    }
+  }, [clients]);
+
+  React.useEffect(() => {
+    if (groups && groups.data) {
+      setPayload((prevState) => ({
+        ...prevState,
+        groupId: `${groups.data[0].vendor}:${groups.data[0].serial}`,
+      }));
+    }
+  }, [groups]);
 
   const filterDevices = () => {
     navigation.navigate("Devices");
@@ -131,43 +180,6 @@ export const SelectBoxes = ({ navigation }) => {
       groupId,
     }));
   };
-  React.useEffect(() => {
-    if (clients && clients.data && clients.data.length > 0) {
-      dispatchAction(
-        ActionSetClientId(clients && clients.data && clients.data[0].id)
-      );
-
-      setDefaultClient(clients.data[0]);
-
-      dispatchAction(
-        ActionFetchSites({
-          clientId: clients.data[0].id,
-        })
-      );
-
-      //fetch single client for alerts
-      dispatchAction(
-        ActionFetchClient({
-          clientId: clients.data[0].id,
-        })
-      );
-
-      setPayload((prevState) => ({
-        ...prevState,
-        clientId: clients.data[0].id,
-        siteId: false,
-        groupId: false,
-      }));
-    }
-  }, [clients]);
-  React.useEffect(() => {
-    if (groups.data) {
-      setPayload((prevState) => ({
-        ...prevState,
-        groupId: `${groups.data[0].vendor}:${groups.data[0].serial}`,
-      }));
-    }
-  }, [groups]);
 
   React.useEffect(() => {
     if (payload) {

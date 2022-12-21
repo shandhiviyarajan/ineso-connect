@@ -22,6 +22,8 @@ function QRSearchSuccess({ route, navigation }) {
   const { device } = route.params;
 
   const clientId = useSelector((state) => state.client.clientId);
+  const siteId = useSelector((state) => state.client.siteId);
+  const groupId = useSelector((state) => state.client.groupId);
   const activate = useSelector((state) => state.qr.activate);
 
   const dispatchAction = useDispatch();
@@ -47,19 +49,25 @@ function QRSearchSuccess({ route, navigation }) {
     })
       .then((response) => {
         dispatchAction(ActionActivateDeviceSuccess(response));
-        Message(
-          "success",
-          "Device Activated",
-          "QR Code device activation is success"
+        Message("success", "Device Activated", "QR code activation successful");
+
+        //fetch device again
+        dispatchAction(
+          ActionFetchDevice({
+            clientId,
+            deviceId: `${device.vendor}:${device.serial}`,
+          })
         );
 
+        //fetch devices again
         dispatchAction(
           ActionFetchDevices({
             clientId,
-            siteId: false,
-            groupId: false,
+            siteId: siteId ? siteId : false,
+            groupId: groupId ? groupId : false,
           })
         );
+
         navigation.dispatch(StackActions.replace("All devices"));
       })
       .catch((error) => {
@@ -67,7 +75,7 @@ function QRSearchSuccess({ route, navigation }) {
           Message(
             "error",
             "Device already activated",
-            "QR code device activation failed"
+            "QR code activation failed"
           );
         } else {
           Message("error", "Error", "QR code device activation failed");

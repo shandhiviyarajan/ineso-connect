@@ -28,7 +28,7 @@ function BottomTabController() {
         tabBarShowLabel: false,
         headerShown: false,
         tabBarActiveTintColor: SystemColors.primary,
-        unmountOnBlur: true,
+        unmountOnBlur: false,
       }}
     >
       <Tab.Screen

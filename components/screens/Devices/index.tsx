@@ -29,10 +29,13 @@ import { Message } from "../../molecules/Toast";
 import { generateModel } from "../../../core/utils/generateModel";
 const Devices = () => {
   const dispatchAction = useDispatch();
+  const updated_payload = useSelector((state) => state.qr.payload);
 
   const navigation = useNavigation();
 
   const clientId = useSelector((state) => state.client.clientId);
+  const siteId = useSelector((state) => state.client.siteId);
+  const groupId = useSelector((state) => state.client.groupId);
 
   const [filter, setFilter] = React.useState(false);
 
@@ -503,7 +506,6 @@ const Devices = () => {
         <Collapsible collapsed={filter}>
           <SelectBoxes navigation={navigation} />
         </Collapsible>
-
         <View
           style={{
             flex: 1,

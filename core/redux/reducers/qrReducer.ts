@@ -7,7 +7,11 @@ const initialState = {
     data: null,
     errors: null,
   },
-  payload: false,
+  payload: {
+    clientId: false,
+    siteId: false,
+    groupId: false,
+  },
 };
 
 const qrReducer = (state = initialState, action) => {

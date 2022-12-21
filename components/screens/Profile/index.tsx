@@ -23,7 +23,7 @@ function Profile() {
   const me = useSelector((state) => state.auth.me.data);
 
   const dispatch = useDispatch();
-
+  //reset all state calls after logout
   const handleLogout = () => {
     persistor.purge();
     (async () => {
@@ -31,7 +31,13 @@ function Profile() {
       dispatch(ActionFetchClientsSuccess(null));
       dispatch(ActionFetchClientSuccess(null));
       dispatch(ActionFetchDevicesSuccess(null));
-      dispatch(ActionUpdatePayload(null));
+      dispatch(
+        ActionUpdatePayload({
+          clientId: false,
+          siteId: false,
+          groupId: false,
+        })
+      );
 
       await removeToken();
       await setToken(null);
