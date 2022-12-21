@@ -588,17 +588,16 @@ const Devices = () => {
                   justifyContent: devices.isLoading ? "center" : "flex-start",
                 }}
               >
-                {currentDevices &&
-                  currentDevices.map(
-                    (device, index) =>
-                      device && (
-                        <DeviceCard
-                          key={device && index + device._id}
-                          device={device}
-                          onPress={() => handleDeviceClick(device)}
-                        />
-                      )
-                  )}
+                {currentDevices.map(
+                  (device, index) =>
+                    device && (
+                      <DeviceCard
+                        key={device && index + device._id}
+                        device={device}
+                        onPress={() => handleDeviceClick(device)}
+                      />
+                    )
+                )}
               </ScrollView>
             )}
         </View>

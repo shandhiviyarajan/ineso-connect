@@ -23,7 +23,7 @@ export const SelectBoxes = ({ navigation }) => {
   const dispatchAction = useDispatch();
 
   // //all devices
-  // const devices = useSelector((state) => state.device.devices);
+  const devices = useSelector((state) => state.device.devices);
 
   //clients
   const clients = useSelector((state) => state.client.clients);
@@ -40,25 +40,27 @@ export const SelectBoxes = ({ navigation }) => {
     groupId: false,
   });
 
+  //set auth tokens
+  setToken(isAuthenticated);
+
   React.useEffect(() => {
-    (async () => {
-      setToken(isAuthenticated);
-      dispatchAction(MeAction());
-      dispatchAction(ActionFetchClients());
-    })();
+    dispatchAction(MeAction());
+    dispatchAction(ActionFetchClients());
   }, []);
 
   React.useEffect(() => {
-    dispatchAction(
-      ActionFetchDevices({
-        clientId: clientId
-          ? clientId
-          : clients && clients.data && clients.data[0].id,
-        siteId: siteId ? siteId : false,
-        groupId: groupId ? groupId : false,
-      })
-    );
-  }, [clientId, siteId, groupId]);
+    if (devices && devices.data && devices.data.length === 0) {
+      dispatchAction(
+        ActionFetchDevices({
+          clientId: clientId
+            ? clientId
+            : clients && clients.data && clients.data[0].id,
+          siteId: siteId ? siteId : false,
+          groupId: groupId ? groupId : false,
+        })
+      );
+    }
+  }, []);
 
   const filterDevices = () => {
     navigation.navigate("Devices");

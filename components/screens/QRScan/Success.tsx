@@ -216,7 +216,7 @@ function QRSearchSuccess({ route, navigation }) {
             <TouchableHighlight
               underlayColor="transparent"
               onPress={() => {
-                navigation.navigate("Devices");
+                navigation.navigate("Dashboard");
               }}
             >
               <View

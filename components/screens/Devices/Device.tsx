@@ -338,7 +338,6 @@ export const Device = ({ navigation }) => {
                 <Text style={{ fontSize: 16, color: "#5E5E5E" }}>
                   {activeDevice &&
                     activeDevice.metadata &&
-                    activeDevice.metadata &&
                     activeDevice.metadata.model &&
                     generateModel(activeDevice.metadata.model, "model")}
                 </Text>
@@ -420,7 +419,8 @@ export const Device = ({ navigation }) => {
                 </Text>
                 <Text style={{ fontSize: 14, color: "#5E5E5E" }}>
                   &nbsp;
-                  {activeDevice.lastMeasurement &&
+                  {activeDevice &&
+                    activeDevice.lastMeasurement &&
                     activeDevice.lastMeasurement.time &&
                     moment(activeDevice.lastMeasurement.time).format(
                       "DD-MM-YYYY hh:mm A"
@@ -475,6 +475,7 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
+                  activeDevice.metadata.maintenance &&
                   activeDevice.metadata.maintenance
                     .filter((c) => c.state === "in_use")
                     .map(
@@ -550,6 +551,7 @@ export const Device = ({ navigation }) => {
             </>
             {activeDevice &&
               activeDevice.metadata &&
+              activeDevice.metadata.maintenance &&
               activeDevice.metadata.maintenance
                 .filter((c) => c.state === "in_use")
                 .map(
@@ -557,6 +559,7 @@ export const Device = ({ navigation }) => {
                     i === 0 && (
                       <>
                         <Text
+                          key={"cycle2" + i}
                           style={{
                             fontSize: 20,
                             fontWeight: "500",
@@ -663,10 +666,11 @@ export const Device = ({ navigation }) => {
               <View style={styles.card}>
                 {activeDevice &&
                   activeDevice.metadata &&
+                  activeDevice.metadata.lifecycle &&
                   activeDevice.metadata.lifecycle.map(
                     (cycle, i) =>
                       i === 0 && (
-                        <View key={"cycle" + i}>
+                        <View key={"cycle3" + i}>
                           <View
                             style={{
                               flexDirection: "row",
@@ -747,60 +751,63 @@ export const Device = ({ navigation }) => {
               </Button>
             </View> */}
 
-            {activeDevice.metadata.gpsLocation && (
-              <>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "500",
-                    marginBottom: 12,
-                  }}
-                >
-                  Last location
-                </Text>
-                <View style={styles.card}>
-                  <TouchableHighlight
-                    underlayColor="#fff"
+            {activeDevice &&
+              activeDevice.metadata &&
+              activeDevice.metadata.gpsLocation &&
+              activeDevice.metadata.gpsLocation && (
+                <>
+                  <Text
                     style={{
-                      padding: 0,
-                    }}
-                    onPress={() => {
-                      navigation.navigate("EditGPS", {
-                        activeDevice,
-                      });
+                      fontSize: 20,
+                      fontWeight: "500",
+                      marginBottom: 12,
                     }}
                   >
-                    <View
+                    Last location
+                  </Text>
+                  <View style={styles.card}>
+                    <TouchableHighlight
+                      underlayColor="#fff"
                       style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        padding: 0,
+                      }}
+                      onPress={() => {
+                        navigation.navigate("EditGPS", {
+                          activeDevice,
+                        });
                       }}
                     >
-                      <Text
+                      <View
                         style={{
-                          flex: 4,
-                          fontSize: 16,
-                          fontWeight: "400",
-                          paddingRight: 12,
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        Tap to edit GPS coordinates of the device
-                      </Text>
-                      <Image
-                        source={require("../../../assets/images/lastlocation.png")}
-                        style={{
-                          resizeMode: "contain",
-                          width: 72,
-                          height: 72,
-                          tintColor: SystemColors.primary,
-                        }}
-                      />
-                    </View>
-                  </TouchableHighlight>
-                </View>
-              </>
-            )}
+                        <Text
+                          style={{
+                            flex: 4,
+                            fontSize: 16,
+                            fontWeight: "400",
+                            paddingRight: 12,
+                          }}
+                        >
+                          Tap to edit GPS coordinates of the device
+                        </Text>
+                        <Image
+                          source={require("../../../assets/images/lastlocation.png")}
+                          style={{
+                            resizeMode: "contain",
+                            width: 72,
+                            height: 72,
+                            tintColor: SystemColors.primary,
+                          }}
+                        />
+                      </View>
+                    </TouchableHighlight>
+                  </View>
+                </>
+              )}
             <CommissionList></CommissionList>
 
             {/* <View

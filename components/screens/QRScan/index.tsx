@@ -39,7 +39,6 @@ function QRActivate() {
         qr_code: aesDecrypt(qr),
       })
         .then((response) => {
-          setLoading(false);
           if (response && response.data.data[0]) {
             navigation.dispatch(
               StackActions.replace("QRActivation", {
@@ -66,6 +65,9 @@ function QRActivate() {
             "QR search request failed "
           );
           navigation.dispatch(StackActions.replace("DeviceNotFound"));
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
