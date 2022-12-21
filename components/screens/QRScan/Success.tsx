@@ -8,7 +8,10 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { apiActiveDevice } from "../../../core/API/apiQR";
-import { ActionFetchDevice } from "../../../core/redux/actions/deviceActions";
+import {
+  ActionFetchDevice,
+  ActionFetchDevices,
+} from "../../../core/redux/actions/deviceActions";
 import { ActionActivateDeviceSuccess } from "../../../core/redux/actions/qrActions";
 import { SystemColors } from "../../../core/Styles/theme/colors";
 import GenerateImage from "../../../core/utils/GenerateImage";
@@ -51,8 +54,10 @@ function QRSearchSuccess({ route, navigation }) {
         );
 
         dispatchAction(
-          ActionFetchDevice({
+          ActionFetchDevices({
             clientId,
+            siteId: false,
+            groupId: false,
           })
         );
         navigation.dispatch(StackActions.replace("All devices"));
