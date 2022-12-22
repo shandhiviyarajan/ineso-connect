@@ -14,7 +14,10 @@ import { ActionFetchGroups } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevices } from "../../../core/redux/actions/deviceActions";
 import { ActionFetchAlert } from "../../../core/redux/actions/alertActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
-import { setToken } from "../../../core/interceptors/interceptors";
+import {
+  setToken,
+  setClientToken,
+} from "../../../core/interceptors/interceptors";
 import { MeAction } from "../../../core/redux/actions/authActions";
 export const SelectBoxes = ({ navigation }) => {
   //auth status
@@ -45,7 +48,6 @@ export const SelectBoxes = ({ navigation }) => {
   //initial load
   React.useEffect(() => {
     (async () => {
-      //set auth tokens
       setToken(isAuthenticated);
       //get profile
       dispatchAction(MeAction());
@@ -54,6 +56,7 @@ export const SelectBoxes = ({ navigation }) => {
     })();
   }, []);
 
+  //initial load after fetch clients
   React.useEffect(() => {
     if (clients && clients.data) {
       dispatchAction(
@@ -89,12 +92,13 @@ export const SelectBoxes = ({ navigation }) => {
         );
         //if not set the first client on the selection
         setSelectedClient(clients.data[0]);
-      }
 
-      setPayload((prevState) => ({
-        ...prevState,
-        clientId: clients && clients.data && clients.data[0].id,
-      }));
+        //update payload
+        setPayload((prevState) => ({
+          ...prevState,
+          clientId: clients && clients.data && clients.data[0].id,
+        }));
+      }
 
       //fetch sites
       dispatchAction(
@@ -199,6 +203,9 @@ export const SelectBoxes = ({ navigation }) => {
 
   return (
     <>
+      <Text>{JSON.stringify(clients)}</Text>
+      <Text>{JSON.stringify(clientId)}</Text>
+      <Text>{JSON.stringify(payload)}</Text>
       <View
         style={{
           alignItems: "center",
