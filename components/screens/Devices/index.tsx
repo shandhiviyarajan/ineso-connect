@@ -111,7 +111,7 @@ const Devices = () => {
         devices &&
         devices.data.sort((a, b) => a.online_status - b.online_status);
 
-      setCurrentDevices(sort_by_online);
+      setCurrentDevices(devices.data);
     }
   }, [devices]);
 

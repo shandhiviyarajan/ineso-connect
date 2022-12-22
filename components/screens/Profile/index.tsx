@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, Text, TouchableHighlight, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeToken,
@@ -15,9 +14,11 @@ import {
   ActionFetchClientsSuccess,
   ActionFetchClientSuccess,
 } from "../../../core/redux/actions/clientsActions";
+import { ActionFetchGroupsSuccess } from "../../../core/redux/actions/groupActions";
 import { ActionFetchDevicesSuccess } from "../../../core/redux/actions/deviceActions";
 import { ActionUpdatePayload } from "../../../core/redux/actions/qrActions";
 import { persistor } from "../../../core/store";
+import { ActionFetchSitesSuccess } from "../../../core/redux/actions/siteActions";
 function Profile() {
   const isLoading = useSelector((state) => state.auth.me.isLoading);
   const me = useSelector((state) => state.auth.me.data);
@@ -29,6 +30,8 @@ function Profile() {
     (async () => {
       dispatch(LoginSuccessAction(null));
       dispatch(ActionFetchClientsSuccess(null));
+      dispatch(ActionFetchGroupsSuccess(null));
+      dispatch(ActionFetchSitesSuccess(null));
       dispatch(ActionFetchClientSuccess(null));
       dispatch(ActionFetchDevicesSuccess(null));
       dispatch(

@@ -17,6 +17,7 @@ export const DEVICE_TYPES = {
 };
 //Fetch sites actions
 export const ActionFetchDevices = (payload) => {
+    console.log("fetch device", payload);
     return {
         type: DEVICE_TYPES.GET_DEVICES,
         payload,

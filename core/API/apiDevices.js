@@ -21,11 +21,15 @@ export const apiFetchDevices = async ({ clientId, siteId, groupId }) => {
     } else if (clientId) {
         url = `/clients/${clientId}/devices`;
     }
+    console.log("url", url);
+
     return await new Promise(async (resolve, reject) => {
         httpRequest = await httpInstance();
+        console.log("httprequrest", httpRequest);
         httpRequest.get(url)
             .then((response) => {
                 resolve(response);
+                console.log(response);
             })
             .catch((error) => {
                 reject(error);

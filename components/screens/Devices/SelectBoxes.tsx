@@ -49,69 +49,33 @@ export const SelectBoxes = ({ navigation }) => {
   React.useEffect(() => {
     (async () => {
       setToken(isAuthenticated);
-      //get profile
-      dispatchAction(MeAction());
       //get all clients
       dispatchAction(ActionFetchClients());
+      //get profile
+      dispatchAction(MeAction());
     })();
   }, []);
 
   //initial load after fetch clients
   React.useEffect(() => {
-    if (clients && clients.data) {
+    if (clients.data) {
       dispatchAction(
-        ActionSetClientId(clients && clients.data && clients.data[0].id)
+        ActionSetClientId(
+          clients && clients.data && clients.data[0] && clients.data[0].id
+        )
       );
 
-      setSelectedClient(clients.data[0]);
-      dispatchAction(
-        ActionFetchDevices({
-          clientId: clientId
-            ? clientId
-            : clients && clients.data && clients.data[0].id,
-          siteId: siteId ? siteId : false,
-          groupId: groupId ? groupId : false,
-        })
-      );
-    }
-  }, [clients]);
+      setSelectedClient(clients && clients.data && clients.data[0]);
 
-  //once clients loaded fetch sites & devices
+      setPayload((prevState) => ({
+        ...prevState,
+        clientId:
+          clients && clients.data && clients.data[0] && clients.data[0].id,
+      }));
 
-  React.useEffect(() => {
-    if (clients && clients.data && clients.data.length > 0) {
-      //set client id if available on state
-      if (clientId) {
-        setSelectedClient(
-          clients.data.filter((client) => client.id === clientId)[0]
-        );
-      } else {
-        //set client id for global state
-        dispatchAction(
-          ActionSetClientId(clients && clients.data && clients.data[0].id)
-        );
-        //if not set the first client on the selection
-        setSelectedClient(clients.data[0]);
-
-        //update payload
-        setPayload((prevState) => ({
-          ...prevState,
-          clientId: clients && clients.data && clients.data[0].id,
-        }));
-      }
-
-      //fetch sites
-      dispatchAction(
-        ActionFetchSites({
-          clientId: clients.data[0].id,
-        })
-      );
-
-      //fetch  alerts
-      dispatchAction(
-        ActionFetchClient({
-          clientId: clients.data[0].id,
-        })
+      //handle client selelct
+      handleClientSelect(
+        clients && clients.data && clients.data[0] && clients.data[0]
       );
     }
   }, [clients]);
@@ -203,9 +167,6 @@ export const SelectBoxes = ({ navigation }) => {
 
   return (
     <>
-      <Text>{JSON.stringify(clients)}</Text>
-      <Text>{JSON.stringify(clientId)}</Text>
-      <Text>{JSON.stringify(payload)}</Text>
       <View
         style={{
           alignItems: "center",
